@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const DishTypeController_1 = require("../controllers/DishTypeController");
+const router = (0, express_1.Router)();
+router.post("/", DishTypeController_1.createDishType);
+router.get("/", DishTypeController_1.getDishTypes);
+router.get("/:id", DishTypeController_1.getDishType);
+router.put("/:id", DishTypeController_1.updateDishType);
+router.delete("/:id", DishTypeController_1.deleteDishType);
+exports.default = router;
