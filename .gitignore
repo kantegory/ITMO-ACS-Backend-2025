@@ -4,3 +4,5 @@ node_modules/
 *.swp
 *~
 *.bak
+dist
+node_modules
