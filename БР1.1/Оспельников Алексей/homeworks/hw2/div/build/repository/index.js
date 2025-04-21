@@ -1,0 +1,20 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.reviewRepository = exports.rentRepository = exports.messageRepository = exports.propertyRepository = exports.userRepository = void 0;
+const data_source_1 = require("../data-source");
+const User_1 = require("../entity/User");
+const userService_1 = require("../service/userService");
+const Message_1 = require("../entity/Message");
+const messageService_1 = require("../service/messageService");
+const Property_1 = require("../entity/Property");
+const propertyService_1 = require("../service/propertyService");
+const Review_1 = require("../entity/Review");
+const reviewService_1 = require("../service/reviewService");
+const Rent_1 = require("../entity/Rent");
+const rentService_1 = require("../service/rentService");
+exports.userRepository = new userService_1.UserService(data_source_1.AppDataSource.getRepository(User_1.User));
+exports.propertyRepository = new propertyService_1.PropertyService(data_source_1.AppDataSource.getRepository(Property_1.Property));
+exports.messageRepository = new messageService_1.MessageService(data_source_1.AppDataSource.getRepository(Message_1.Message));
+exports.rentRepository = new rentService_1.RentService(data_source_1.AppDataSource.getRepository(Rent_1.Rent));
+exports.reviewRepository = new reviewService_1.ReviewService(data_source_1.AppDataSource.getRepository(Review_1.Review));
+//# sourceMappingURL=index.js.map
