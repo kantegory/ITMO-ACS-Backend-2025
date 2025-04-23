@@ -1,45 +1,110 @@
-import { Request, Response } from 'express';
 import {ObjectLiteral, Repository} from 'typeorm';
+import {
+    Route,
+    Get,
+    Post,
+    Put,
+    Delete,
+    Body,
+    Path,
+    SuccessResponse,
+    Tags
+} from "tsoa";
 
 export class CrudController<T extends ObjectLiteral> {
     constructor(
-        private readonly repository: Repository<T>,
+        protected readonly repository: Repository<T>,
         private readonly exposedFields: (keyof T)[] = []
-    ) {}
+    ) {
+    }
 
-    getAll = async (_req: Request, res: Response) => {
+    /**
+     * Get all items
+     * @returns Array of items
+     */
+    @Get()
+    public async getAll(): Promise<T[]> {
         const items = await this.repository.find();
-        res.json(this.filterFields(items));
-    };
+        // @ts-ignore
+        return this.filterFields(items);
+    }
 
-    getOne = async (req: Request, res: Response) => {
-        const item = await this.repository.findOneBy({ id: +req.params.id } as any);
-        if (!item) return res.status(404).json({ message: 'Not found' });
-        res.json(this.filterFields(item));
-    };
+    /**
+     * Get an item by ID
+     * @param id The ID of the item to retrieve
+     * @returns The item with the specified ID
+     */
+    @Get("{id}")
+    public async getOne(@Path() id: number): Promise<T | { [k: string]: T[keyof T]; } | { [k: string]: T[keyof T]; }[]> {
+        if (isNaN(id)) {
+            throw new Error('Invalid ID format');
+        }
 
-    create = async (req: Request, res: Response) => {
-        const created = this.repository.create(req.body);
+        const item = await this.repository.findOneBy({id: id} as any);
+        if (!item) {
+            throw new Error('Item not found');
+        }
+
+        return this.filterFields(item);
+    }
+
+    /**
+     * Create a new item
+     * @param requestBody The item data
+     * @returns The created item
+     */
+    @Post()
+    @SuccessResponse("201", "Created")
+    public async create(@Body() requestBody: Partial<T>): Promise<T> {
+        // @ts-ignore
+        const created = this.repository.create(requestBody);
         const saved = await this.repository.save(created);
-        res.status(201).json(this.filterFields(saved));
-    };
+        // @ts-ignore
+        return this.filterFields(saved);
+    }
 
-    update = async (req: Request, res: Response) => {
-        const item = await this.repository.findOneBy({ id: +req.params.id } as any);
-        if (!item) return res.status(404).json({ message: 'Not found' });
+    /**
+     * Update an existing item
+     * @param id The ID of the item to update
+     * @param requestBody The updated item data
+     * @returns The updated item
+     */
+    @Put("{id}")
+    public async update(@Path() id: number, @Body() requestBody: Partial<T>): Promise<T> {
+        if (isNaN(id)) {
+            throw new Error('Invalid ID format');
+        }
 
-        this.repository.merge(item, req.body);
+        const item = await this.repository.findOneBy({id: id} as any);
+        if (!item) {
+            throw new Error('Item not found');
+        }
+
+        // @ts-ignore
+        this.repository.merge(item, requestBody);
         const updated = await this.repository.save(item);
-        res.json(this.filterFields(updated));
-    };
+        // @ts-ignore
+        return this.filterFields(updated);
+    }
 
-    delete = async (req: Request, res: Response) => {
-        const result = await this.repository.delete(req.params.id);
-        if (result.affected === 0) return res.status(404).json({ message: 'Not found' });
-        res.status(204).send();
-    };
+    /**
+     * Delete an item
+     * @param id The ID of the item to delete
+     */
+    @Delete("{id}")
+    @SuccessResponse("204", "No Content")
+    public async remove(@Path() id: number): Promise<void> {
+        if (isNaN(id)) {
+            throw new Error('Invalid ID format');
+        }
 
-    private filterFields(data: T | T[]) {
+        const result = await this.repository.delete(id);
+        if (result.affected === 0) {
+            throw new Error('Item not found');
+        }
+    }
+
+    protected filterFields(data: T | T[]) {
         if (!this.exposedFields.length) return data;
 
         const filter = (item: T) =>

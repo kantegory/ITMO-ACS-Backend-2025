@@ -1,98 +1,123 @@
-import {createCrudRouter} from './crudRouterFactory';
-import {AppDataSource} from '../data-source';
-import {Recipe} from "../models/Recipe";
+import { Router, Request, Response } from 'express';
+import { AppDataSource } from '../data-source';
+import { Recipe } from '../models/Recipe';
+import { RecipeController } from '../controllers/RecipeController';
+import { authenticate } from '../middleware/authMiddleware';
 
-/**
- * @openapi
- * tags:
- *   - name: Recipes
- *     description: Operations about recipes
- */
+const recipeRouter = Router();
+const recipeRepository = AppDataSource.getRepository(Recipe);
 
-/**
- * @openapi
- * /api/recipes:
- *   get:
- *     tags:
- *       - Recipes
- *     summary: Get all recipes
- *     responses:
- *       200:
- *         description: A list of recipes
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Recipe'
- *   post:
- *     tags:
- *       - Recipes
- *     summary: Create a new recipe
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/Recipe'
- *     responses:
- *       201:
- *         description: Recipe created
- */
+// Create the recipe controller with the fields to expose in the API
+const recipeController = new RecipeController(
+    recipeRepository,
+    ['id', 'title', 'description', 'ingredients', 'content', 'author', 'tags', 'createdAt', 'updatedAt']
+);
 
-/**
- * @openapi
- * /api/recipes/{id}:
- *   get:
- *     tags:
- *       - Recipes
- *     summary: Get a recipe by ID
- *     parameters:
- *       - name: id
- *         in: path
- *         required: true
- *         schema:
- *           type: integer
- *     responses:
- *       200:
- *         description: A recipe
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Recipe'
- *   put:
- *     tags:
- *       - Recipes
- *     summary: Update a recipe by ID
- *     parameters:
- *       - name: id
- *         in: path
- *         required: true
- *         schema:
- *           type: integer
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/Recipe'
- *     responses:
- *       200:
- *         description: Recipe updated
- *   delete:
- *     tags:
- *       - Recipes
- *     summary: Delete a recipe by ID
- *     parameters:
- *       - name: id
- *         in: path
- *         required: true
- *         schema:
- *           type: integer
- *     responses:
- *       204:
- *         description: Recipe deleted
- */
-const userRouter = createCrudRouter(AppDataSource, Recipe, '/recipes', ['id', 'title', 'description', 'ingredients', 'content', 'author', 'tags', 'likes']);
+// Get all recipes
+recipeRouter.get('/', async (req: Request, res: Response) => {
+    try {
+        const result = await recipeController.getAll();
+        res.status(200).json(result);
+    } catch (error: any) {
+        res.status(500).json({ message: error.message });
+    }
+});
 
-export default userRouter;
+// Get a recipe by ID
+recipeRouter.get('/:id', async (req: Request, res: Response) => {
+    try {
+        const id = parseInt(req.params.id);
+        const result = await recipeController.getOne(id);
+        res.status(200).json(result);
+    } catch (error: any) {
+        res.status(404).json({ message: error.message });
+    }
+});
+
+// Create a new recipe (requires authentication)
+recipeRouter.post('/', authenticate, async (req: Request, res: Response) => {
+    try {
+        // Set the author to the authenticated user
+        req.body.author = { id: req.user.id };
+        
+        const result = await recipeController.create(req.body);
+        res.status(201).json(result);
+    } catch (error: any) {
+        res.status(400).json({ message: error.message });
+    }
+});
+
+// Update a recipe (requires authentication)
+recipeRouter.put('/:id', authenticate, async (req: Request, res: Response) => {
+    try {
+        const id = parseInt(req.params.id);
+        
+        // Check if the user is the author of the recipe
+        const recipe = await recipeRepository.findOne({
+            where: { id },
+            relations: ['author']
+        });
+        
+        if (!recipe) {
+            return res.status(404).json({ message: 'Recipe not found' });
+        }
+        
+        if (recipe.author.id !== req.user.id) {
+            return res.status(403).json({ message: 'You can only update your own recipes' });
+        }
+        
+        const result = await recipeController.update(id, req.body);
+        res.status(200).json(result);
+    } catch (error: any) {
+        res.status(400).json({ message: error.message });
+    }
+});
+
+// Delete a recipe (requires authentication)
+recipeRouter.delete('/:id', authenticate, async (req: Request, res: Response) => {
+    try {
+        const id = parseInt(req.params.id);
+        
+        // Check if the user is the author of the recipe
+        const recipe = await recipeRepository.findOne({
+            where: { id },
+            relations: ['author']
+        });
+        
+        if (!recipe) {
+            return res.status(404).json({ message: 'Recipe not found' });
+        }
+        
+        if (recipe.author.id !== req.user.id) {
+            return res.status(403).json({ message: 'You can only delete your own recipes' });
+        }
+        
+        await recipeController.remove(id);
+        res.status(204).send();
+    } catch (error: any) {
+        res.status(400).json({ message: error.message });
+    }
+});
+
+// Get recipes by author ID
+recipeRouter.get('/author/:authorId', async (req: Request, res: Response) => {
+    try {
+        const authorId = parseInt(req.params.authorId);
+        const result = await recipeController.getRecipesByAuthor(authorId);
+        res.status(200).json(result);
+    } catch (error: any) {
+        res.status(404).json({ message: error.message });
+    }
+});
+
+// Get recipes by tag name
+recipeRouter.get('/tag/:tagName', async (req: Request, res: Response) => {
+    try {
+        const result = await recipeController.getRecipesByTag(req.params.tagName);
+        res.status(200).json(result);
+    } catch (error: any) {
+        res.status(404).json({ message: error.message });
+    }
+});
+
+export default recipeRouter;

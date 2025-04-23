@@ -1,98 +1,79 @@
-import {createCrudRouter} from './crudRouterFactory';
-import {AppDataSource} from '../data-source';
-import {Tag} from "../models/Tag";
+import { Router, Request, Response } from 'express';
+import { AppDataSource } from '../data-source';
+import { Tag } from '../models/Tag';
+import { TagController } from '../controllers/TagController';
+import { authenticate } from '../middleware/authMiddleware';
 
-/**
- * @openapi
- * tags:
- *   - name: Tags
- *     description: Operations about tags
- */
+const tagRouter = Router();
+const tagRepository = AppDataSource.getRepository(Tag);
 
-/**
- * @openapi
- * /api/tags:
- *   get:
- *     tags:
- *       - Tags
- *     summary: Get all tags
- *     responses:
- *       200:
- *         description: A list of tags
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Tag'
- *   post:
- *     tags:
- *       - Tags
- *     summary: Create a new tag
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/Tag'
- *     responses:
- *       201:
- *         description: Tag created
- */
+// Create the tag controller with the fields to expose in the API
+const tagController = new TagController(
+    tagRepository,
+    ['id', 'name', 'recipes']
+);
 
-/**
- * @openapi
- * /api/tags/{id}:
- *   get:
- *     tags:
- *       - Tags
- *     summary: Get a tag by ID
- *     parameters:
- *       - name: id
- *         in: path
- *         required: true
- *         schema:
- *           type: integer
- *     responses:
- *       200:
- *         description: A tag
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Tag'
- *   put:
- *     tags:
- *       - Tags
- *     summary: Update a tag by ID
- *     parameters:
- *       - name: id
- *         in: path
- *         required: true
- *         schema:
- *           type: integer
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/Tag'
- *     responses:
- *       200:
- *         description: Tag updated
- *   delete:
- *     tags:
- *       - Tags
- *     summary: Delete a tag by ID
- *     parameters:
- *       - name: id
- *         in: path
- *         required: true
- *         schema:
- *           type: integer
- *     responses:
- *       204:
- *         description: Tag deleted
- */
-const userRouter = createCrudRouter(AppDataSource, Tag, '/tags', ['id', 'name']);
+// Get all tags
+tagRouter.get('/', async (req: Request, res: Response) => {
+    try {
+        const result = await tagController.getAll();
+        res.status(200).json(result);
+    } catch (error: any) {
+        res.status(500).json({ message: error.message });
+    }
+});
 
-export default userRouter;
+// Get a tag by ID
+tagRouter.get('/:id', async (req: Request, res: Response) => {
+    try {
+        const id = parseInt(req.params.id);
+        const result = await tagController.getOne(id);
+        res.status(200).json(result);
+    } catch (error: any) {
+        res.status(404).json({ message: error.message });
+    }
+});
+
+// Create a new tag (requires authentication)
+tagRouter.post('/', authenticate, async (req: Request, res: Response) => {
+    try {
+        const result = await tagController.create(req.body);
+        res.status(201).json(result);
+    } catch (error: any) {
+        res.status(400).json({ message: error.message });
+    }
+});
+
+// Update a tag (requires authentication)
+tagRouter.put('/:id', authenticate, async (req: Request, res: Response) => {
+    try {
+        const id = parseInt(req.params.id);
+        const result = await tagController.update(id, req.body);
+        res.status(200).json(result);
+    } catch (error: any) {
+        res.status(400).json({ message: error.message });
+    }
+});
+
+// Delete a tag (requires authentication)
+tagRouter.delete('/:id', authenticate, async (req: Request, res: Response) => {
+    try {
+        const id = parseInt(req.params.id);
+        await tagController.remove(id);
+        res.status(204).send();
+    } catch (error: any) {
+        res.status(400).json({ message: error.message });
+    }
+});
+
+// Get a tag by name
+tagRouter.get('/name/:name', async (req: Request, res: Response) => {
+    try {
+        const result = await tagController.getTagByName(req.params.name);
+        res.status(200).json(result);
+    } catch (error: any) {
+        res.status(404).json({ message: error.message });
+    }
+});
+
+export default tagRouter;
