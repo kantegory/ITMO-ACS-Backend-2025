@@ -63,11 +63,14 @@ export class SubscriptionController extends CrudController<Subscription> {
     @Security("jwt")
     @SuccessResponse("201", "Created")
     public async create(@Body() requestBody: Partial<Subscription>): Promise<Subscription> {
+        // Process relationships to ensure only IDs are used
+        const processedBody = this.processRelationships(requestBody);
+
         // Check if subscription already exists
         const existingSubscription = await this.subscriptionRepository.findOne({
             where: {
-                subscriber: { id: (requestBody.subscriber as any).id },
-                creator: { id: (requestBody.creator as any).id }
+                subscriber: { id: (processedBody.subscriber as any).id },
+                creator: { id: (processedBody.creator as any).id }
             }
         });
 
@@ -76,11 +79,11 @@ export class SubscriptionController extends CrudController<Subscription> {
         }
 
         // Prevent self-subscription
-        if ((requestBody.subscriber as any).id === (requestBody.creator as any).id) {
+        if ((processedBody.subscriber as any).id === (processedBody.creator as any).id) {
             throw new Error('Cannot subscribe to yourself');
         }
 
-        const created = this.subscriptionRepository.create(requestBody);
+        const created = this.subscriptionRepository.create(processedBody);
         const saved = await this.subscriptionRepository.save(created);
         return this.filterFields(saved);
     }

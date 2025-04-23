@@ -75,7 +75,10 @@ export class TagController extends CrudController<Tag> {
             }
         }
 
-        const created = this.tagRepository.create(requestBody);
+        // Process relationships to ensure only IDs are used
+        const processedBody = this.processRelationships(requestBody);
+
+        const created = this.tagRepository.create(processedBody);
         const saved = await this.tagRepository.save(created);
         return this.filterFields(saved);
     }
@@ -110,7 +113,10 @@ export class TagController extends CrudController<Tag> {
             throw new Error('Tag not found');
         }
 
-        this.tagRepository.merge(tag, requestBody);
+        // Remove relationship fields from the request body to prevent modifying sub-models
+        const filteredBody = this.removeRelationshipFields(requestBody);
+
+        this.tagRepository.merge(tag, filteredBody);
         const updated = await this.tagRepository.save(tag);
         return this.filterFields(updated);
     }

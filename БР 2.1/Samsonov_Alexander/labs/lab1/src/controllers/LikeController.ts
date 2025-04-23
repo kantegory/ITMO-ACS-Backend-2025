@@ -63,11 +63,14 @@ export class LikeController extends CrudController<Like> {
     @Security("jwt")
     @SuccessResponse("201", "Created")
     public async create(@Body() requestBody: Partial<Like>): Promise<Like> {
+        // Process relationships to ensure only IDs are used
+        const processedBody = this.processRelationships(requestBody);
+
         // Check if like already exists
         const existingLike = await this.likeRepository.findOne({
             where: {
-                user: { id: (requestBody.user as any).id },
-                recipe: { id: (requestBody.recipe as any).id }
+                user: { id: (processedBody.user as any).id },
+                recipe: { id: (processedBody.recipe as any).id }
             }
         });
 
@@ -75,7 +78,7 @@ export class LikeController extends CrudController<Like> {
             throw new Error('User has already liked this recipe');
         }
 
-        const created = this.likeRepository.create(requestBody);
+        const created = this.likeRepository.create(processedBody);
         const saved = await this.likeRepository.save(created);
         return this.filterFields(saved);
     }

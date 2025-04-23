@@ -56,11 +56,47 @@ export class CrudController<T extends ObjectLiteral> {
     @Post()
     @SuccessResponse("201", "Created")
     public async create(@Body() requestBody: Partial<T>): Promise<T> {
+        // Process relationships to ensure only IDs are used
+        const processedBody = this.processRelationships(requestBody);
+
         // @ts-ignore
-        const created = this.repository.create(requestBody);
+        const created = this.repository.create(processedBody);
         const saved = await this.repository.save(created);
         // @ts-ignore
         return this.filterFields(saved);
+    }
+
+    /**
+     * Process relationships in the request body to ensure only IDs are used
+     * @param requestBody The request body to process
+     * @returns The processed request body
+     */
+    protected processRelationships(requestBody: Partial<T>): Partial<T> {
+        const processed = { ...requestBody };
+
+        // Process each property in the request body
+        for (const key in processed) {
+            const value = processed[key as keyof Partial<T>];
+
+            // If the value is an object with an ID, replace it with an object containing only the ID
+            if (value && typeof value === 'object' && 'id' in value) {
+                // @ts-ignore
+                processed[key] = { id: value.id };
+            }
+
+            // If the value is an array of objects with IDs, replace each with an object containing only the ID
+            if (Array.isArray(value)) {
+                // @ts-ignore
+                processed[key] = value.map(item => {
+                    if (item && typeof item === 'object' && 'id' in item) {
+                        return { id: item.id };
+                    }
+                    return item;
+                });
+            }
+        }
+
+        return processed;
     }
 
     /**
@@ -80,11 +116,40 @@ export class CrudController<T extends ObjectLiteral> {
             throw new Error('Item not found');
         }
 
+        // Remove relationship fields from the request body to prevent modifying sub-models
+        const filteredBody = this.removeRelationshipFields(requestBody);
+
         // @ts-ignore
-        this.repository.merge(item, requestBody);
+        this.repository.merge(item, filteredBody);
         const updated = await this.repository.save(item);
         // @ts-ignore
         return this.filterFields(updated);
+    }
+
+    /**
+     * Remove relationship fields from the request body to prevent modifying sub-models
+     * @param requestBody The request body to filter
+     * @returns The filtered request body without relationship fields
+     */
+    protected removeRelationshipFields(requestBody: Partial<T>): Partial<T> {
+        const filtered = { ...requestBody };
+
+        // Process each property in the request body
+        for (const key in filtered) {
+            const value = filtered[key as keyof Partial<T>];
+
+            // Remove objects that represent relationships
+            if (value && typeof value === 'object' && 'id' in value) {
+                delete filtered[key as keyof Partial<T>];
+            }
+
+            // Remove arrays that might represent relationships
+            if (Array.isArray(value) && value.length > 0 && typeof value[0] === 'object') {
+                delete filtered[key as keyof Partial<T>];
+            }
+        }
+
+        return filtered;
     }
 
     /**

@@ -64,7 +64,10 @@ export class CommentController extends CrudController<Comment> {
     @Security("jwt")
     @SuccessResponse("201", "Created")
     public async create(@Body() requestBody: Partial<Comment>): Promise<Comment> {
-        const created = this.commentRepository.create(requestBody);
+        // Process relationships to ensure only IDs are used
+        const processedBody = this.processRelationships(requestBody);
+
+        const created = this.commentRepository.create(processedBody);
         const saved = await this.commentRepository.save(created);
         return this.filterFields(saved);
     }
@@ -88,7 +91,10 @@ export class CommentController extends CrudController<Comment> {
             throw new Error('Comment not found');
         }
 
-        this.commentRepository.merge(comment, requestBody);
+        // Remove relationship fields from the request body to prevent modifying sub-models
+        const filteredBody = this.removeRelationshipFields(requestBody);
+
+        this.commentRepository.merge(comment, filteredBody);
         const updated = await this.commentRepository.save(comment);
         return this.filterFields(updated);
     }

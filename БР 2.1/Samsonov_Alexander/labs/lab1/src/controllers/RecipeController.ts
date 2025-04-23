@@ -67,7 +67,10 @@ export class RecipeController extends CrudController<Recipe> {
     @Security("jwt")
     @SuccessResponse("201", "Created")
     public async create(@Body() requestBody: Partial<Recipe>): Promise<Recipe> {
-        const created = this.recipeRepository.create(requestBody);
+        // Process relationships to ensure only IDs are used
+        const processedBody = this.processRelationships(requestBody);
+
+        const created = this.recipeRepository.create(processedBody);
         const saved = await this.recipeRepository.save(created);
         return this.filterFields(saved);
     }
@@ -91,7 +94,10 @@ export class RecipeController extends CrudController<Recipe> {
             throw new Error('Recipe not found');
         }
 
-        this.recipeRepository.merge(recipe, requestBody);
+        // Remove relationship fields from the request body to prevent modifying sub-models
+        const filteredBody = this.removeRelationshipFields(requestBody);
+
+        this.recipeRepository.merge(recipe, filteredBody);
         const updated = await this.recipeRepository.save(recipe);
         return this.filterFields(updated);
     }
