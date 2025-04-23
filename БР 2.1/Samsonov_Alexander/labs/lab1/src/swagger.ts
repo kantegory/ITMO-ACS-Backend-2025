@@ -15,6 +15,7 @@ export const swaggerSpec = swaggerJSDoc({
                         id: {type: 'integer', example: 1},
                         name: {type: 'string', example: 'Alice'},
                         email: {type: 'string', example: 'alice@example.com'},
+                        password: {type: 'string', format: 'password', example: 'password123'},
                     },
                 },
                 Tag: {
