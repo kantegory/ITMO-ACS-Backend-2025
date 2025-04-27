@@ -7,6 +7,108 @@
 		"requestBodies": {},
 		"responses": {},
 		"schemas": {
+			"UserResponseDto": {
+				"description": "DTO for user response (excludes sensitive information)",
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double",
+						"description": "The unique identifier for the user",
+						"example": 1
+					},
+					"name": {
+						"type": "string",
+						"description": "The user's full name",
+						"example": "John Doe"
+					},
+					"email": {
+						"type": "string",
+						"description": "The user's email address",
+						"example": "john.doe@example.com"
+					}
+				},
+				"required": [
+					"id",
+					"name",
+					"email"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"UpdateUserDto": {
+				"description": "DTO for user update",
+				"properties": {
+					"name": {
+						"type": "string",
+						"description": "The user's full name",
+						"example": "John Doe"
+					},
+					"email": {
+						"type": "string",
+						"description": "The user's email address",
+						"example": "john.doe@example.com"
+					},
+					"password": {
+						"type": "string",
+						"description": "The user's password",
+						"example": "password123"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"TagResponseDto": {
+				"description": "DTO for tag response",
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double",
+						"description": "The unique identifier for the tag",
+						"example": 1
+					},
+					"name": {
+						"type": "string",
+						"description": "The tag name",
+						"example": "dessert"
+					}
+				},
+				"required": [
+					"id",
+					"name"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"CreateTagDto": {
+				"description": "DTO for tag creation",
+				"properties": {
+					"name": {
+						"type": "string",
+						"description": "The tag name",
+						"example": "dessert"
+					}
+				},
+				"required": [
+					"name"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"UpdateTagDto": {
+				"description": "DTO for tag update",
+				"properties": {
+					"name": {
+						"type": "string",
+						"description": "The tag name",
+						"example": "dessert"
+					}
+				},
+				"required": [
+					"name"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
 			"Ingredient": {
 				"properties": {
 					"quantity": {
@@ -67,58 +169,92 @@
 					}
 				]
 			},
-			"Recipe": {
+			"RecipeResponseDto": {
+				"description": "DTO for recipe response",
 				"properties": {
 					"id": {
 						"type": "number",
-						"format": "double"
+						"format": "double",
+						"description": "The unique identifier for the recipe",
+						"example": 1
 					},
 					"title": {
-						"type": "string"
+						"type": "string",
+						"description": "The recipe title",
+						"example": "Delicious Chocolate Cake"
 					},
 					"description": {
-						"type": "string"
+						"type": "string",
+						"description": "The recipe description",
+						"example": "A rich and moist chocolate cake that's perfect for any occasion."
 					},
 					"ingredients": {
 						"items": {
 							"$ref": "#/components/schemas/Ingredient"
 						},
-						"type": "array"
+						"type": "array",
+						"description": "The recipe ingredients",
+						"example": [
+							{
+								"name": "flour",
+								"quantity": "2 cups"
+							},
+							{
+								"name": "sugar",
+								"quantity": "1 cup"
+							}
+						]
 					},
 					"content": {
 						"items": {
 							"$ref": "#/components/schemas/RecipeContentBlock"
 						},
-						"type": "array"
+						"type": "array",
+						"description": "The recipe content blocks",
+						"example": [
+							{
+								"type": "text",
+								"content": "Mix all dry ingredients."
+							},
+							{
+								"type": "image",
+								"url": "https://example.com/image.jpg",
+								"alt": "Mixing bowl"
+							}
+						]
 					},
 					"author": {
-						"$ref": "#/components/schemas/User"
+						"$ref": "#/components/schemas/UserResponseDto",
+						"description": "The recipe author"
 					},
 					"tags": {
 						"items": {
-							"$ref": "#/components/schemas/Tag"
+							"$ref": "#/components/schemas/TagResponseDto"
 						},
-						"type": "array"
+						"type": "array",
+						"description": "The recipe tags"
 					},
-					"likes": {
-						"items": {
-							"$ref": "#/components/schemas/Like"
-						},
-						"type": "array"
+					"likesCount": {
+						"type": "number",
+						"format": "double",
+						"description": "The number of likes the recipe has",
+						"example": 42
 					},
-					"comments": {
-						"items": {
-							"$ref": "#/components/schemas/Comment"
-						},
-						"type": "array"
+					"commentsCount": {
+						"type": "number",
+						"format": "double",
+						"description": "The number of comments the recipe has",
+						"example": 10
 					},
 					"createdAt": {
 						"type": "string",
-						"format": "date-time"
+						"format": "date-time",
+						"description": "The date the recipe was created"
 					},
 					"updatedAt": {
 						"type": "string",
-						"format": "date-time"
+						"format": "date-time",
+						"description": "The date the recipe was last updated"
 					}
 				},
 				"required": [
@@ -129,455 +265,216 @@
 					"content",
 					"author",
 					"tags",
-					"likes",
-					"comments",
+					"likesCount",
+					"commentsCount",
 					"createdAt",
 					"updatedAt"
 				],
 				"type": "object",
 				"additionalProperties": false
 			},
-			"User": {
-				"description": "User model",
+			"CreateRecipeDto": {
+				"description": "DTO for recipe creation",
 				"properties": {
-					"id": {
-						"type": "number",
-						"format": "double",
-						"description": "The unique identifier for the user",
-						"example": 1
-					},
-					"name": {
-						"type": "string",
-						"description": "The user's full name",
-						"example": "John Doe"
-					},
-					"email": {
-						"type": "string",
-						"description": "The user's email address",
-						"example": "john.doe@example.com"
-					},
-					"password": {
-						"type": "string",
-						"description": "The user's password (hashed)",
-						"example": "$2b$10$..."
-					},
-					"recipes": {
-						"items": {
-							"$ref": "#/components/schemas/Recipe"
-						},
-						"type": "array",
-						"description": "Recipes created by the user"
-					},
-					"likes": {
-						"items": {
-							"$ref": "#/components/schemas/Like"
-						},
-						"type": "array",
-						"description": "Likes given by the user"
-					},
-					"comments": {
-						"items": {
-							"$ref": "#/components/schemas/Comment"
-						},
-						"type": "array",
-						"description": "Comments made by the user"
-					},
-					"subscriptions": {
-						"items": {
-							"$ref": "#/components/schemas/Subscription"
-						},
-						"type": "array",
-						"description": "Users that this user is subscribed to"
-					},
-					"subscribers": {
-						"items": {
-							"$ref": "#/components/schemas/Subscription"
-						},
-						"type": "array",
-						"description": "Users that are subscribed to this user"
-					}
-				},
-				"required": [
-					"id",
-					"name",
-					"email",
-					"password",
-					"recipes",
-					"likes",
-					"comments",
-					"subscriptions",
-					"subscribers"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"Like": {
-				"properties": {
-					"id": {
-						"type": "number",
-						"format": "double"
-					},
-					"user": {
-						"$ref": "#/components/schemas/User"
-					},
-					"recipe": {
-						"$ref": "#/components/schemas/Recipe"
-					},
-					"createdAt": {
-						"type": "string",
-						"format": "date-time"
-					}
-				},
-				"required": [
-					"id",
-					"user",
-					"recipe",
-					"createdAt"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"Comment": {
-				"properties": {
-					"id": {
-						"type": "number",
-						"format": "double"
-					},
-					"content": {
-						"type": "string"
-					},
-					"user": {
-						"$ref": "#/components/schemas/User"
-					},
-					"recipe": {
-						"$ref": "#/components/schemas/Recipe"
-					},
-					"createdAt": {
-						"type": "string",
-						"format": "date-time"
-					}
-				},
-				"required": [
-					"id",
-					"content",
-					"user",
-					"recipe",
-					"createdAt"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"Subscription": {
-				"properties": {
-					"id": {
-						"type": "number",
-						"format": "double"
-					},
-					"subscriber": {
-						"$ref": "#/components/schemas/User"
-					},
-					"creator": {
-						"$ref": "#/components/schemas/User"
-					},
-					"createdAt": {
-						"type": "string",
-						"format": "date-time"
-					}
-				},
-				"required": [
-					"id",
-					"subscriber",
-					"creator",
-					"createdAt"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"Tag": {
-				"properties": {
-					"id": {
-						"type": "number",
-						"format": "double"
-					},
-					"name": {
-						"type": "string"
-					},
-					"recipes": {
-						"items": {
-							"$ref": "#/components/schemas/Recipe"
-						},
-						"type": "array"
-					}
-				},
-				"required": [
-					"id",
-					"name",
-					"recipes"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"Pick_User.Exclude_keyofUser.password__": {
-				"properties": {
-					"id": {
-						"type": "number",
-						"format": "double",
-						"description": "The unique identifier for the user",
-						"example": 1
-					},
-					"name": {
-						"type": "string",
-						"description": "The user's full name",
-						"example": "John Doe"
-					},
-					"email": {
-						"type": "string",
-						"description": "The user's email address",
-						"example": "john.doe@example.com"
-					},
-					"recipes": {
-						"items": {
-							"$ref": "#/components/schemas/Recipe"
-						},
-						"type": "array",
-						"description": "Recipes created by the user"
-					},
-					"likes": {
-						"items": {
-							"$ref": "#/components/schemas/Like"
-						},
-						"type": "array",
-						"description": "Likes given by the user"
-					},
-					"comments": {
-						"items": {
-							"$ref": "#/components/schemas/Comment"
-						},
-						"type": "array",
-						"description": "Comments made by the user"
-					},
-					"subscriptions": {
-						"items": {
-							"$ref": "#/components/schemas/Subscription"
-						},
-						"type": "array",
-						"description": "Users that this user is subscribed to"
-					},
-					"subscribers": {
-						"items": {
-							"$ref": "#/components/schemas/Subscription"
-						},
-						"type": "array",
-						"description": "Users that are subscribed to this user"
-					}
-				},
-				"required": [
-					"id",
-					"name",
-					"email",
-					"recipes",
-					"likes",
-					"comments",
-					"subscriptions",
-					"subscribers"
-				],
-				"type": "object",
-				"description": "From T, pick a set of properties whose keys are in the union K"
-			},
-			"Omit_User.password_": {
-				"$ref": "#/components/schemas/Pick_User.Exclude_keyofUser.password__",
-				"description": "Construct a type with the properties of T except for those in type K."
-			},
-			"AuthResponse": {
-				"properties": {
-					"user": {
-						"$ref": "#/components/schemas/Omit_User.password_"
-					},
-					"token": {
-						"type": "string"
-					}
-				},
-				"required": [
-					"user",
-					"token"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"RegisterRequest": {
-				"properties": {
-					"name": {
-						"type": "string"
-					},
-					"email": {
-						"type": "string"
-					},
-					"password": {
-						"type": "string"
-					}
-				},
-				"required": [
-					"name",
-					"email",
-					"password"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"LoginRequest": {
-				"properties": {
-					"email": {
-						"type": "string"
-					},
-					"password": {
-						"type": "string"
-					}
-				},
-				"required": [
-					"email",
-					"password"
-				],
-				"type": "object",
-				"additionalProperties": false
-			},
-			"Partial_Tag_": {
-				"properties": {
-					"id": {
-						"type": "number",
-						"format": "double"
-					},
-					"name": {
-						"type": "string"
-					},
-					"recipes": {
-						"items": {
-							"$ref": "#/components/schemas/Recipe"
-						},
-						"type": "array"
-					}
-				},
-				"type": "object",
-				"description": "Make all properties in T optional"
-			},
-			"Partial_Subscription_": {
-				"properties": {
-					"id": {
-						"type": "number",
-						"format": "double"
-					},
-					"subscriber": {
-						"$ref": "#/components/schemas/User"
-					},
-					"creator": {
-						"$ref": "#/components/schemas/User"
-					},
-					"createdAt": {
-						"type": "string",
-						"format": "date-time"
-					}
-				},
-				"type": "object",
-				"description": "Make all properties in T optional"
-			},
-			"Partial_Recipe_": {
-				"properties": {
-					"id": {
-						"type": "number",
-						"format": "double"
-					},
 					"title": {
-						"type": "string"
+						"type": "string",
+						"description": "The recipe title",
+						"example": "Delicious Chocolate Cake"
 					},
 					"description": {
-						"type": "string"
+						"type": "string",
+						"description": "The recipe description",
+						"example": "A rich and moist chocolate cake that's perfect for any occasion."
 					},
 					"ingredients": {
 						"items": {
 							"$ref": "#/components/schemas/Ingredient"
 						},
-						"type": "array"
+						"type": "array",
+						"description": "The recipe ingredients",
+						"example": [
+							{
+								"name": "flour",
+								"quantity": "2 cups"
+							},
+							{
+								"name": "sugar",
+								"quantity": "1 cup"
+							}
+						]
 					},
 					"content": {
 						"items": {
 							"$ref": "#/components/schemas/RecipeContentBlock"
 						},
-						"type": "array"
+						"type": "array",
+						"description": "The recipe content blocks",
+						"example": [
+							{
+								"type": "text",
+								"content": "Mix all dry ingredients."
+							},
+							{
+								"type": "image",
+								"url": "https://example.com/image.jpg",
+								"alt": "Mixing bowl"
+							}
+						]
 					},
-					"author": {
-						"$ref": "#/components/schemas/User"
-					},
-					"tags": {
+					"tagIds": {
 						"items": {
-							"$ref": "#/components/schemas/Tag"
+							"type": "number",
+							"format": "double"
 						},
-						"type": "array"
-					},
-					"likes": {
-						"items": {
-							"$ref": "#/components/schemas/Like"
-						},
-						"type": "array"
-					},
-					"comments": {
-						"items": {
-							"$ref": "#/components/schemas/Comment"
-						},
-						"type": "array"
-					},
-					"createdAt": {
-						"type": "string",
-						"format": "date-time"
-					},
-					"updatedAt": {
-						"type": "string",
-						"format": "date-time"
+						"type": "array",
+						"description": "The IDs of tags to associate with the recipe",
+						"example": [
+							1,
+							2
+						]
 					}
 				},
+				"required": [
+					"title",
+					"description",
+					"ingredients",
+					"content",
+					"tagIds"
+				],
 				"type": "object",
-				"description": "Make all properties in T optional"
+				"additionalProperties": false
 			},
-			"Partial_Like_": {
+			"UpdateRecipeDto": {
+				"description": "DTO for recipe update",
 				"properties": {
-					"id": {
-						"type": "number",
-						"format": "double"
-					},
-					"user": {
-						"$ref": "#/components/schemas/User"
-					},
-					"recipe": {
-						"$ref": "#/components/schemas/Recipe"
-					},
-					"createdAt": {
+					"title": {
 						"type": "string",
-						"format": "date-time"
-					}
-				},
-				"type": "object",
-				"description": "Make all properties in T optional"
-			},
-			"Partial_Comment_": {
-				"properties": {
-					"id": {
-						"type": "number",
-						"format": "double"
+						"description": "The recipe title",
+						"example": "Delicious Chocolate Cake"
+					},
+					"description": {
+						"type": "string",
+						"description": "The recipe description",
+						"example": "A rich and moist chocolate cake that's perfect for any occasion."
+					},
+					"ingredients": {
+						"items": {
+							"$ref": "#/components/schemas/Ingredient"
+						},
+						"type": "array",
+						"description": "The recipe ingredients",
+						"example": [
+							{
+								"name": "flour",
+								"quantity": "2 cups"
+							},
+							{
+								"name": "sugar",
+								"quantity": "1 cup"
+							}
+						]
 					},
 					"content": {
-						"type": "string"
+						"items": {
+							"$ref": "#/components/schemas/RecipeContentBlock"
+						},
+						"type": "array",
+						"description": "The recipe content blocks",
+						"example": [
+							{
+								"type": "text",
+								"content": "Mix all dry ingredients."
+							},
+							{
+								"type": "image",
+								"url": "https://example.com/image.jpg",
+								"alt": "Mixing bowl"
+							}
+						]
 					},
-					"user": {
-						"$ref": "#/components/schemas/User"
-					},
-					"recipe": {
-						"$ref": "#/components/schemas/Recipe"
-					},
-					"createdAt": {
-						"type": "string",
-						"format": "date-time"
+					"tagIds": {
+						"items": {
+							"type": "number",
+							"format": "double"
+						},
+						"type": "array",
+						"description": "The IDs of tags to associate with the recipe",
+						"example": [
+							1,
+							2
+						]
 					}
 				},
 				"type": "object",
-				"description": "Make all properties in T optional"
+				"additionalProperties": false
+			},
+			"CreateUserDto": {
+				"description": "DTO for user creation",
+				"properties": {
+					"name": {
+						"type": "string",
+						"description": "The user's full name",
+						"example": "John Doe"
+					},
+					"email": {
+						"type": "string",
+						"description": "The user's email address",
+						"example": "john.doe@example.com"
+					},
+					"password": {
+						"type": "string",
+						"description": "The user's password",
+						"example": "password123"
+					}
+				},
+				"required": [
+					"name",
+					"email",
+					"password"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"LoginResponseDto": {
+				"description": "DTO for login response",
+				"properties": {
+					"token": {
+						"type": "string",
+						"description": "The JWT token for authentication",
+						"example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+					},
+					"user": {
+						"$ref": "#/components/schemas/UserResponseDto",
+						"description": "The user information"
+					}
+				},
+				"required": [
+					"token",
+					"user"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"LoginUserDto": {
+				"description": "DTO for user login",
+				"properties": {
+					"email": {
+						"type": "string",
+						"description": "The user's email address",
+						"example": "john.doe@example.com"
+					},
+					"password": {
+						"type": "string",
+						"description": "The user's password",
+						"example": "password123"
+					}
+				},
+				"required": [
+					"email",
+					"password"
+				],
+				"type": "object",
+				"additionalProperties": false
 			}
 		},
 		"securitySchemes": {
@@ -597,120 +494,16 @@
 		"contact": {}
 	},
 	"paths": {
-		"/users/register": {
-			"post": {
-				"operationId": "Register",
-				"responses": {
-					"201": {
-						"description": "Created",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/AuthResponse"
-								}
-							}
-						}
-					}
-				},
-				"description": "Register a new user",
-				"tags": [
-					"Users"
-				],
-				"security": [],
-				"parameters": [],
-				"requestBody": {
-					"description": "User registration data",
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/RegisterRequest",
-								"description": "User registration data"
-							}
-						}
-					}
-				}
-			}
-		},
-		"/users/login": {
-			"post": {
-				"operationId": "Login",
-				"responses": {
-					"200": {
-						"description": "The user and authentication token",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/AuthResponse"
-								}
-							}
-						}
-					}
-				},
-				"description": "Login a user",
-				"tags": [
-					"Users"
-				],
-				"security": [],
-				"parameters": [],
-				"requestBody": {
-					"description": "User login credentials",
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/LoginRequest",
-								"description": "User login credentials"
-							}
-						}
-					}
-				}
-			}
-		},
-		"/users/email/{email}": {
+		"/users/{userId}": {
 			"get": {
-				"operationId": "GetUserByEmail",
+				"operationId": "GetUserById",
 				"responses": {
 					"200": {
-						"description": "The user with the specified email",
+						"description": "Ok",
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/User"
-								}
-							}
-						}
-					}
-				},
-				"description": "Get a user by email",
-				"tags": [
-					"Users"
-				],
-				"security": [],
-				"parameters": [
-					{
-						"description": "The email of the user to retrieve",
-						"in": "path",
-						"name": "email",
-						"required": true,
-						"schema": {
-							"type": "string"
-						},
-						"example": "john.doe@example.com"
-					}
-				]
-			}
-		},
-		"/users/{id}": {
-			"get": {
-				"operationId": "GetOne",
-				"responses": {
-					"200": {
-						"description": "The user with the specified ID",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/User"
+									"$ref": "#/components/schemas/UserResponseDto"
 								}
 							}
 						}
@@ -723,22 +516,107 @@
 				"security": [],
 				"parameters": [
 					{
-						"description": "The ID of the user to retrieve",
 						"in": "path",
-						"name": "id",
+						"name": "userId",
 						"required": true,
 						"schema": {
 							"format": "double",
 							"type": "number"
-						},
-						"example": 1
+						}
+					}
+				]
+			},
+			"put": {
+				"operationId": "UpdateUser",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/UserResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Update a user",
+				"tags": [
+					"Users"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "userId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateUserDto"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/users": {
+			"get": {
+				"operationId": "GetUserByEmail",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"$ref": "#/components/schemas/UserResponseDto"
+										},
+										{
+											"items": {
+												"$ref": "#/components/schemas/UserResponseDto"
+											},
+											"type": "array"
+										}
+									]
+								}
+							}
+						}
+					}
+				},
+				"description": "Get a user by email",
+				"tags": [
+					"Users"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "email",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
 					}
 				]
 			}
 		},
 		"/tags": {
 			"get": {
-				"operationId": "GetAll",
+				"operationId": "GetTags",
 				"responses": {
 					"200": {
 						"description": "Ok",
@@ -746,7 +624,7 @@
 							"application/json": {
 								"schema": {
 									"items": {
-										"$ref": "#/components/schemas/Tag"
+										"$ref": "#/components/schemas/TagResponseDto"
 									},
 									"type": "array"
 								}
@@ -762,14 +640,14 @@
 				"parameters": []
 			},
 			"post": {
-				"operationId": "Create",
+				"operationId": "CreateTag",
 				"responses": {
-					"201": {
-						"description": "Created",
+					"200": {
+						"description": "Ok",
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/Tag"
+									"$ref": "#/components/schemas/TagResponseDto"
 								}
 							}
 						}
@@ -790,23 +668,23 @@
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/Partial_Tag_"
+								"$ref": "#/components/schemas/CreateTagDto"
 							}
 						}
 					}
 				}
 			}
 		},
-		"/tags/{id}": {
+		"/tags/{tagId}": {
 			"get": {
-				"operationId": "GetOne",
+				"operationId": "GetTagById",
 				"responses": {
 					"200": {
 						"description": "Ok",
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/Tag"
+									"$ref": "#/components/schemas/TagResponseDto"
 								}
 							}
 						}
@@ -820,7 +698,7 @@
 				"parameters": [
 					{
 						"in": "path",
-						"name": "id",
+						"name": "tagId",
 						"required": true,
 						"schema": {
 							"format": "double",
@@ -830,20 +708,20 @@
 				]
 			},
 			"put": {
-				"operationId": "Update",
+				"operationId": "UpdateTag",
 				"responses": {
 					"200": {
 						"description": "Ok",
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/Tag"
+									"$ref": "#/components/schemas/TagResponseDto"
 								}
 							}
 						}
 					}
 				},
-				"description": "Update an existing tag",
+				"description": "Update a tag",
 				"tags": [
 					"Tags"
 				],
@@ -855,7 +733,7 @@
 				"parameters": [
 					{
 						"in": "path",
-						"name": "id",
+						"name": "tagId",
 						"required": true,
 						"schema": {
 							"format": "double",
@@ -868,17 +746,17 @@
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/Partial_Tag_"
+								"$ref": "#/components/schemas/UpdateTagDto"
 							}
 						}
 					}
 				}
 			},
 			"delete": {
-				"operationId": "Remove",
+				"operationId": "DeleteTag",
 				"responses": {
 					"204": {
-						"description": "No Content"
+						"description": "No content"
 					}
 				},
 				"description": "Delete a tag",
@@ -893,275 +771,7 @@
 				"parameters": [
 					{
 						"in": "path",
-						"name": "id",
-						"required": true,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					}
-				]
-			}
-		},
-		"/tags/name/{name}": {
-			"get": {
-				"operationId": "GetTagByName",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/Tag"
-								}
-							}
-						}
-					}
-				},
-				"description": "Get a tag by name",
-				"tags": [
-					"Tags"
-				],
-				"security": [],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "name",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				]
-			}
-		},
-		"/subscriptions": {
-			"get": {
-				"operationId": "GetAll",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/Subscription"
-									},
-									"type": "array"
-								}
-							}
-						}
-					}
-				},
-				"description": "Get all subscriptions",
-				"tags": [
-					"Subscriptions"
-				],
-				"security": [],
-				"parameters": []
-			},
-			"post": {
-				"operationId": "Create",
-				"responses": {
-					"201": {
-						"description": "Created",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/Subscription"
-								}
-							}
-						}
-					}
-				},
-				"description": "Create a new subscription",
-				"tags": [
-					"Subscriptions"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/Partial_Subscription_"
-							}
-						}
-					}
-				}
-			}
-		},
-		"/subscriptions/{id}": {
-			"get": {
-				"operationId": "GetOne",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/Subscription"
-								}
-							}
-						}
-					}
-				},
-				"description": "Get a subscription by ID",
-				"tags": [
-					"Subscriptions"
-				],
-				"security": [],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "id",
-						"required": true,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					}
-				]
-			},
-			"delete": {
-				"operationId": "Remove",
-				"responses": {
-					"204": {
-						"description": "No Content"
-					}
-				},
-				"description": "Delete a subscription",
-				"tags": [
-					"Subscriptions"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "id",
-						"required": true,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					}
-				]
-			}
-		},
-		"/subscriptions/subscriber/{subscriberId}": {
-			"get": {
-				"operationId": "GetSubscriptionsBySubscriber",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/Subscription"
-									},
-									"type": "array"
-								}
-							}
-						}
-					}
-				},
-				"description": "Get subscriptions by subscriber ID (users that this user follows)",
-				"tags": [
-					"Subscriptions"
-				],
-				"security": [],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "subscriberId",
-						"required": true,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					}
-				]
-			}
-		},
-		"/subscriptions/creator/{creatorId}": {
-			"get": {
-				"operationId": "GetSubscriptionsByCreator",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/Subscription"
-									},
-									"type": "array"
-								}
-							}
-						}
-					}
-				},
-				"description": "Get subscriptions by creator ID (users that follow this user)",
-				"tags": [
-					"Subscriptions"
-				],
-				"security": [],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "creatorId",
-						"required": true,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					}
-				]
-			}
-		},
-		"/subscriptions/check/{subscriberId}/{creatorId}": {
-			"get": {
-				"operationId": "CheckSubscription",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "boolean"
-								}
-							}
-						}
-					}
-				},
-				"description": "Check if a user is subscribed to a creator",
-				"tags": [
-					"Subscriptions"
-				],
-				"security": [],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "subscriberId",
-						"required": true,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					},
-					{
-						"in": "path",
-						"name": "creatorId",
+						"name": "tagId",
 						"required": true,
 						"schema": {
 							"format": "double",
@@ -1173,7 +783,7 @@
 		},
 		"/recipes": {
 			"get": {
-				"operationId": "GetAll",
+				"operationId": "GetRecipes",
 				"responses": {
 					"200": {
 						"description": "Ok",
@@ -1181,7 +791,7 @@
 							"application/json": {
 								"schema": {
 									"items": {
-										"$ref": "#/components/schemas/Recipe"
+										"$ref": "#/components/schemas/RecipeResponseDto"
 									},
 									"type": "array"
 								}
@@ -1189,22 +799,41 @@
 						}
 					}
 				},
-				"description": "Get all recipes",
+				"description": "Get all recipes with optional filtering",
 				"tags": [
 					"Recipes"
 				],
 				"security": [],
-				"parameters": []
+				"parameters": [
+					{
+						"in": "query",
+						"name": "tagId",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "authorId",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
 			},
 			"post": {
-				"operationId": "Create",
+				"operationId": "CreateRecipe",
 				"responses": {
-					"201": {
-						"description": "Created",
+					"200": {
+						"description": "Ok",
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/Recipe"
+									"$ref": "#/components/schemas/RecipeResponseDto"
 								}
 							}
 						}
@@ -1225,23 +854,23 @@
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/Partial_Recipe_"
+								"$ref": "#/components/schemas/CreateRecipeDto"
 							}
 						}
 					}
 				}
 			}
 		},
-		"/recipes/{id}": {
+		"/recipes/{recipeId}": {
 			"get": {
-				"operationId": "GetOne",
+				"operationId": "GetRecipeById",
 				"responses": {
 					"200": {
 						"description": "Ok",
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/Recipe"
+									"$ref": "#/components/schemas/RecipeResponseDto"
 								}
 							}
 						}
@@ -1255,7 +884,7 @@
 				"parameters": [
 					{
 						"in": "path",
-						"name": "id",
+						"name": "recipeId",
 						"required": true,
 						"schema": {
 							"format": "double",
@@ -1265,20 +894,20 @@
 				]
 			},
 			"put": {
-				"operationId": "Update",
+				"operationId": "UpdateRecipe",
 				"responses": {
 					"200": {
 						"description": "Ok",
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/Recipe"
+									"$ref": "#/components/schemas/RecipeResponseDto"
 								}
 							}
 						}
 					}
 				},
-				"description": "Update an existing recipe",
+				"description": "Update a recipe",
 				"tags": [
 					"Recipes"
 				],
@@ -1290,7 +919,7 @@
 				"parameters": [
 					{
 						"in": "path",
-						"name": "id",
+						"name": "recipeId",
 						"required": true,
 						"schema": {
 							"format": "double",
@@ -1303,17 +932,17 @@
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/Partial_Recipe_"
+								"$ref": "#/components/schemas/UpdateRecipeDto"
 							}
 						}
 					}
 				}
 			},
 			"delete": {
-				"operationId": "Remove",
+				"operationId": "DeleteRecipe",
 				"responses": {
 					"204": {
-						"description": "No Content"
+						"description": "No content"
 					}
 				},
 				"description": "Delete a recipe",
@@ -1328,7 +957,7 @@
 				"parameters": [
 					{
 						"in": "path",
-						"name": "id",
+						"name": "recipeId",
 						"required": true,
 						"schema": {
 							"format": "double",
@@ -1338,550 +967,70 @@
 				]
 			}
 		},
-		"/recipes/author/{authorId}": {
-			"get": {
-				"operationId": "GetRecipesByAuthor",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/Recipe"
-									},
-									"type": "array"
-								}
-							}
-						}
-					}
-				},
-				"description": "Get recipes by author ID",
-				"tags": [
-					"Recipes"
-				],
-				"security": [],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "authorId",
-						"required": true,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					}
-				]
-			}
-		},
-		"/recipes/tag/{tagName}": {
-			"get": {
-				"operationId": "GetRecipesByTag",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/Recipe"
-									},
-									"type": "array"
-								}
-							}
-						}
-					}
-				},
-				"description": "Get recipes by tag name",
-				"tags": [
-					"Recipes"
-				],
-				"security": [],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "tagName",
-						"required": true,
-						"schema": {
-							"type": "string"
-						}
-					}
-				]
-			}
-		},
-		"/likes": {
-			"get": {
-				"operationId": "GetAll",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/Like"
-									},
-									"type": "array"
-								}
-							}
-						}
-					}
-				},
-				"description": "Get all likes",
-				"tags": [
-					"Likes"
-				],
-				"security": [],
-				"parameters": []
-			},
+		"/auth/register": {
 			"post": {
-				"operationId": "Create",
+				"operationId": "Register",
 				"responses": {
-					"201": {
-						"description": "Created",
+					"200": {
+						"description": "Ok",
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/Like"
+									"$ref": "#/components/schemas/UserResponseDto"
 								}
 							}
 						}
 					}
 				},
-				"description": "Create a new like",
+				"description": "Register a new user",
 				"tags": [
-					"Likes"
+					"Authentication"
 				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
+				"security": [],
 				"parameters": [],
 				"requestBody": {
 					"required": true,
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/Partial_Like_"
+								"$ref": "#/components/schemas/CreateUserDto"
 							}
 						}
 					}
 				}
 			}
 		},
-		"/likes/{id}": {
-			"get": {
-				"operationId": "GetOne",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/Like"
-								}
-							}
-						}
-					}
-				},
-				"description": "Get a like by ID",
-				"tags": [
-					"Likes"
-				],
-				"security": [],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "id",
-						"required": true,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					}
-				]
-			},
-			"delete": {
-				"operationId": "Remove",
-				"responses": {
-					"204": {
-						"description": "No Content"
-					}
-				},
-				"description": "Delete a like",
-				"tags": [
-					"Likes"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "id",
-						"required": true,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					}
-				]
-			}
-		},
-		"/likes/recipe/{recipeId}": {
-			"get": {
-				"operationId": "GetLikesByRecipe",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/Like"
-									},
-									"type": "array"
-								}
-							}
-						}
-					}
-				},
-				"description": "Get likes by recipe ID",
-				"tags": [
-					"Likes"
-				],
-				"security": [],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "recipeId",
-						"required": true,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					}
-				]
-			}
-		},
-		"/likes/user/{userId}": {
-			"get": {
-				"operationId": "GetLikesByUser",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/Like"
-									},
-									"type": "array"
-								}
-							}
-						}
-					}
-				},
-				"description": "Get likes by user ID",
-				"tags": [
-					"Likes"
-				],
-				"security": [],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "userId",
-						"required": true,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					}
-				]
-			}
-		},
-		"/likes/check/{userId}/{recipeId}": {
-			"get": {
-				"operationId": "CheckLike",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "boolean"
-								}
-							}
-						}
-					}
-				},
-				"description": "Check if a user has liked a recipe",
-				"tags": [
-					"Likes"
-				],
-				"security": [],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "userId",
-						"required": true,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					},
-					{
-						"in": "path",
-						"name": "recipeId",
-						"required": true,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					}
-				]
-			}
-		},
-		"/comments": {
-			"get": {
-				"operationId": "GetAll",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/Comment"
-									},
-									"type": "array"
-								}
-							}
-						}
-					}
-				},
-				"description": "Get all comments",
-				"tags": [
-					"Comments"
-				],
-				"security": [],
-				"parameters": []
-			},
+		"/auth/login": {
 			"post": {
-				"operationId": "Create",
+				"operationId": "Login",
 				"responses": {
-					"201": {
-						"description": "Created",
+					"200": {
+						"description": "Ok",
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/Comment"
+									"$ref": "#/components/schemas/LoginResponseDto"
 								}
 							}
 						}
 					}
 				},
-				"description": "Create a new comment",
+				"description": "Login with email and password",
 				"tags": [
-					"Comments"
+					"Authentication"
 				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
+				"security": [],
 				"parameters": [],
 				"requestBody": {
 					"required": true,
 					"content": {
 						"application/json": {
 							"schema": {
-								"$ref": "#/components/schemas/Partial_Comment_"
+								"$ref": "#/components/schemas/LoginUserDto"
 							}
 						}
 					}
 				}
-			}
-		},
-		"/comments/{id}": {
-			"get": {
-				"operationId": "GetOne",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/Comment"
-								}
-							}
-						}
-					}
-				},
-				"description": "Get a comment by ID",
-				"tags": [
-					"Comments"
-				],
-				"security": [],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "id",
-						"required": true,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					}
-				]
-			},
-			"put": {
-				"operationId": "Update",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/Comment"
-								}
-							}
-						}
-					}
-				},
-				"description": "Update an existing comment",
-				"tags": [
-					"Comments"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "id",
-						"required": true,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					}
-				],
-				"requestBody": {
-					"required": true,
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/Partial_Comment_"
-							}
-						}
-					}
-				}
-			},
-			"delete": {
-				"operationId": "Remove",
-				"responses": {
-					"204": {
-						"description": "No Content"
-					}
-				},
-				"description": "Delete a comment",
-				"tags": [
-					"Comments"
-				],
-				"security": [
-					{
-						"jwt": []
-					}
-				],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "id",
-						"required": true,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					}
-				]
-			}
-		},
-		"/comments/recipe/{recipeId}": {
-			"get": {
-				"operationId": "GetCommentsByRecipe",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/Comment"
-									},
-									"type": "array"
-								}
-							}
-						}
-					}
-				},
-				"description": "Get comments by recipe ID",
-				"tags": [
-					"Comments"
-				],
-				"security": [],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "recipeId",
-						"required": true,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					}
-				]
-			}
-		},
-		"/comments/user/{userId}": {
-			"get": {
-				"operationId": "GetCommentsByUser",
-				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"items": {
-										"$ref": "#/components/schemas/Comment"
-									},
-									"type": "array"
-								}
-							}
-						}
-					}
-				},
-				"description": "Get comments by user ID",
-				"tags": [
-					"Comments"
-				],
-				"security": [],
-				"parameters": [
-					{
-						"in": "path",
-						"name": "userId",
-						"required": true,
-						"schema": {
-							"format": "double",
-							"type": "number"
-						}
-					}
-				]
 			}
 		}
 	},

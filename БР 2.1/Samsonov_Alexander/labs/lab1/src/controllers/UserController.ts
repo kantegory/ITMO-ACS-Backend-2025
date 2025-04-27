@@ -1,170 +1,110 @@
-import { Repository } from 'typeorm';
+import { Body, Controller, Get, Path, Put, Route, Security, Tags, Query } from 'tsoa';
+import { AppDataSource } from '../data-source';
 import { User } from '../models/User';
-import { CrudController } from './CrudController';
-import bcrypt from 'bcrypt';
-import { generateToken } from '../middleware/authMiddleware';
-import { 
-    Route, 
-    Get, 
-    Post, 
-    Put, 
-    Delete, 
-    Body, 
-    Path, 
-    Query, 
-    SuccessResponse, 
-    Tags,
-    Security,
-    Example
-} from "tsoa";
-import {AppDataSource} from "../data-source";
+import { UpdateUserDto, UserResponseDto } from '../dtos/UserDto';
 
-interface RegisterRequest {
-    name: string;
-    email: string;
-    password: string;
-}
+@Route('users')
+@Tags('Users')
+export class UserController extends Controller {
+  private userRepository = AppDataSource.getRepository(User);
 
-interface LoginRequest {
-    email: string;
-    password: string;
-}
+  /**
+   * Get a user by ID
+   */
+  @Get('{userId}')
+  public async getUserById(@Path() userId: number): Promise<UserResponseDto> {
+    const user = await this.userRepository.findOne({
+      where: { id: userId }
+    });
 
-interface AuthResponse {
-    user: Omit<User, 'password'>;
-    token: string;
-}
-
-@Route("users")
-@Tags("Users")
-export class UserController extends CrudController<User> {
-    constructor(
-        private readonly userRepository: Repository<User> = AppDataSource.getRepository(User),
-        exposedFields: (keyof User)[] = []
-    ) {
-        super(userRepository, exposedFields);
+    if (!user) {
+      this.setStatus(404);
+      throw new Error('User not found');
     }
 
+    return new UserResponseDto(user);
+  }
 
-    /**
-     * Register a new user
-     * @param requestBody User registration data
-     * @returns The registered user and authentication token
-     */
-    @Post("register")
-    @SuccessResponse("201", "Created")
-    public async register(@Body() requestBody: RegisterRequest): Promise<AuthResponse> {
-        const { name, email, password } = requestBody;
+  /**
+   * Get a user by email
+   */
+  @Get()
+  public async getUserByEmail(@Query() email?: string): Promise<UserResponseDto | UserResponseDto[]> {
+    // If email is provided, find user by email
+    if (email) {
+      const user = await this.userRepository.findOne({
+        where: { email }
+      });
 
-        if (!name || !email || !password) {
-            throw new Error('Name, email, and password are required');
-        }
+      if (!user) {
+        this.setStatus(404);
+        throw new Error('User not found');
+      }
 
-        // Check if user already exists
-        const existingUser = await this.userRepository.findOneBy({ email });
-        if (existingUser) {
-            throw new Error('User with this email already exists');
-        }
-
-        // Hash password
-        const hashedPassword = await bcrypt.hash(password, 10);
-
-        // Create new user
-        const user = this.userRepository.create({
-            name,
-            email,
-            password: hashedPassword
-        });
-
-        const savedUser = await this.userRepository.save(user);
-
-        const token = generateToken({ id: savedUser.id, email: savedUser.email });
-
-        const { password: _, ...userWithoutPassword } = savedUser;
-        return {
-            user: userWithoutPassword as any,
-            token
-        };
+      return new UserResponseDto(user);
     }
 
-    /**
-     * Login a user
-     * @param requestBody User login credentials
-     * @returns The user and authentication token
-     */
-    @Post("login")
-    public async login(@Body() requestBody: LoginRequest): Promise<AuthResponse> {
-        const { email, password } = requestBody;
+    // Otherwise, return all users
+    const users = await this.userRepository.find();
+    return users.map(user => new UserResponseDto(user));
+  }
 
-        if (!email || !password) {
-            throw new Error('Email and password are required');
-        }
+  /**
+   * Update a user
+   */
+  @Put('{userId}')
+  @Security('jwt')
+  public async updateUser(
+    @Path() userId: number,
+    @Body() requestBody: UpdateUserDto
+  ): Promise<UserResponseDto> {
+    // Get the authenticated user from the request
+    const authenticatedUserId = (this.request as any).user.id;
 
-        const user = await this.userRepository
-            .createQueryBuilder('user')
-            .addSelect('user.password')
-            .where('user.email = :email', { email })
-            .getOne();
-
-        if (!user) {
-            throw new Error('Invalid credentials');
-        }
-
-        const isPasswordValid = await bcrypt.compare(password, user.password);
-        if (!isPasswordValid) {
-            throw new Error('Invalid credentials');
-        }
-
-        const token = generateToken({ id: user.id, email: user.email });
-
-        const { password: _, ...userWithoutPassword } = user;
-        return {
-            user: userWithoutPassword as any,
-            token
-        };
+    // Check if the authenticated user is trying to update their own profile
+    if (authenticatedUserId !== userId) {
+      this.setStatus(403);
+      throw new Error('You can only update your own profile');
     }
 
-    /**
-     * Get a user by email
-     * @param email The email of the user to retrieve
-     * @returns The user with the specified email
-     * @example email "john.doe@example.com"
-     */
-    @Get("email/{email}")
-    public async getUserByEmail(@Path() email: string): Promise<User> {
-        if (!email) {
-            throw new Error('Email is required');
-        }
+    // Find the user
+    const user = await this.userRepository.findOne({
+      where: { id: userId }
+    });
 
-        const user = await this.userRepository.findOneBy({ email });
-
-        if (!user) {
-            throw new Error('User not found');
-        }
-
-        // @ts-ignore
-        return this.filterFields(user);
+    if (!user) {
+      this.setStatus(404);
+      throw new Error('User not found');
     }
 
-    /**
-     * Get a user by ID
-     * @param id The ID of the user to retrieve
-     * @returns The user with the specified ID
-     * @example id 1
-     */
-    @Get("{id}")
-    public async getOne(@Path() id: number): Promise<User> {
-        if (isNaN(id)) {
-            throw new Error('Invalid ID format');
-        }
-
-        const user = await this.userRepository.findOneBy({ id });
-
-        if (!user) {
-            throw new Error('User not found');
-        }
-
-        // @ts-ignore
-        return this.filterFields(user);
+    // Update user fields
+    if (requestBody.name) {
+      user.name = requestBody.name;
     }
+
+    if (requestBody.email) {
+      // Check if email is already taken
+      const existingUser = await this.userRepository.findOne({
+        where: { email: requestBody.email }
+      });
+
+      if (existingUser && existingUser.id !== userId) {
+        this.setStatus(400);
+        throw new Error('Email is already taken');
+      }
+
+      user.email = requestBody.email;
+    }
+
+    if (requestBody.password) {
+      // Hash the new password
+      const bcrypt = require('bcrypt');
+      user.password = await bcrypt.hash(requestBody.password, 10);
+    }
+
+    // Save updated user
+    await this.userRepository.save(user);
+
+    return new UserResponseDto(user);
+  }
 }

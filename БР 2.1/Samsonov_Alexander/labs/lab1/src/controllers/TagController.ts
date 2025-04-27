@@ -1,157 +1,132 @@
-import { Repository } from 'typeorm';
+import { Body, Controller, Delete, Get, Path, Post, Put, Route, Security, Tags } from 'tsoa';
+import { AppDataSource } from '../data-source';
 import { Tag } from '../models/Tag';
-import { CrudController } from './CrudController';
-import { 
-    Route, 
-    Get, 
-    Post, 
-    Put, 
-    Delete, 
-    Body, 
-    Path, 
-    SuccessResponse, 
-    Tags,
-    Security
-} from "tsoa";
-import { AppDataSource } from "../data-source";
+import { CreateTagDto, TagResponseDto, UpdateTagDto } from '../dtos/TagDto';
 
-@Route("tags")
-@Tags("Tags")
-export class TagController extends CrudController<Tag> {
-    constructor(
-        private readonly tagRepository: Repository<Tag> = AppDataSource.getRepository(Tag),
-        exposedFields: (keyof Tag)[] = []
-    ) {
-        super(tagRepository, exposedFields);
+@Route('tags')
+@Tags('Tags')
+export class TagController extends Controller {
+  private tagRepository = AppDataSource.getRepository(Tag);
+
+  /**
+   * Get all tags
+   */
+  @Get()
+  public async getTags(): Promise<TagResponseDto[]> {
+    const tags = await this.tagRepository.find();
+    return tags.map(tag => new TagResponseDto(tag));
+  }
+
+  /**
+   * Get a tag by ID
+   */
+  @Get('{tagId}')
+  public async getTagById(@Path() tagId: number): Promise<TagResponseDto> {
+    const tag = await this.tagRepository.findOne({
+      where: { id: tagId }
+    });
+
+    if (!tag) {
+      this.setStatus(404);
+      throw new Error('Tag not found');
     }
 
-    /**
-     * Get all tags
-     */
-    @Get()
-    public async getAll(): Promise<Tag[]> {
-        const tags = await this.tagRepository.find({
-            relations: ['recipes']
-        });
-        return this.filterFields(tags);
+    return new TagResponseDto(tag);
+  }
+
+  /**
+   * Create a new tag
+   */
+  @Post()
+  @Security('jwt')
+  public async createTag(@Body() requestBody: CreateTagDto): Promise<TagResponseDto> {
+    // Check if tag with this name already exists
+    const existingTag = await this.tagRepository.findOne({
+      where: { name: requestBody.name }
+    });
+
+    if (existingTag) {
+      this.setStatus(400);
+      throw new Error('Tag with this name already exists');
     }
 
-    /**
-     * Get a tag by ID
-     */
-    @Get("{id}")
-    public async getOne(@Path() id: number): Promise<Tag> {
-        if (isNaN(id)) {
-            throw new Error('Invalid ID format');
-        }
+    // Create tag
+    const tag = this.tagRepository.create({
+      name: requestBody.name
+    });
 
-        const tag = await this.tagRepository.findOne({
-            where: { id },
-            relations: ['recipes']
-        });
+    // Save tag
+    await this.tagRepository.save(tag);
 
-        if (!tag) {
-            throw new Error('Tag not found');
-        }
+    return new TagResponseDto(tag);
+  }
 
-        return this.filterFields(tag);
+  /**
+   * Update a tag
+   */
+  @Put('{tagId}')
+  @Security('jwt')
+  public async updateTag(
+    @Path() tagId: number,
+    @Body() requestBody: UpdateTagDto
+  ): Promise<TagResponseDto> {
+    // Find the tag
+    const tag = await this.tagRepository.findOne({
+      where: { id: tagId }
+    });
+
+    if (!tag) {
+      this.setStatus(404);
+      throw new Error('Tag not found');
     }
 
-    /**
-     * Create a new tag
-     */
-    @Post()
-    @Security("jwt")
-    @SuccessResponse("201", "Created")
-    public async create(@Body() requestBody: Partial<Tag>): Promise<Tag> {
-        // Check if tag with the same name already exists
-        if (requestBody.name) {
-            const existingTag = await this.tagRepository.findOne({
-                where: { name: requestBody.name }
-            });
+    // Check if tag with this name already exists
+    if (requestBody.name !== tag.name) {
+      const existingTag = await this.tagRepository.findOne({
+        where: { name: requestBody.name }
+      });
 
-            if (existingTag) {
-                throw new Error('Tag with this name already exists');
-            }
-        }
-
-        // Process relationships to ensure only IDs are used
-        const processedBody = this.processRelationships(requestBody);
-
-        const created = this.tagRepository.create(processedBody);
-        const saved = await this.tagRepository.save(created);
-        return this.filterFields(saved);
+      if (existingTag) {
+        this.setStatus(400);
+        throw new Error('Tag with this name already exists');
+      }
     }
 
-    /**
-     * Update an existing tag
-     */
-    @Put("{id}")
-    @Security("jwt")
-    public async update(@Path() id: number, @Body() requestBody: Partial<Tag>): Promise<Tag> {
-        if (isNaN(id)) {
-            throw new Error('Invalid ID format');
-        }
+    // Update tag
+    tag.name = requestBody.name;
 
-        // Check if tag with the same name already exists
-        if (requestBody.name) {
-            const existingTag = await this.tagRepository.findOne({
-                where: { name: requestBody.name }
-            });
+    // Save updated tag
+    await this.tagRepository.save(tag);
 
-            if (existingTag && existingTag.id !== id) {
-                throw new Error('Tag with this name already exists');
-            }
-        }
+    return new TagResponseDto(tag);
+  }
 
-        const tag = await this.tagRepository.findOne({
-            where: { id },
-            relations: ['recipes']
-        });
+  /**
+   * Delete a tag
+   */
+  @Delete('{tagId}')
+  @Security('jwt')
+  public async deleteTag(@Path() tagId: number): Promise<void> {
+    // Find the tag
+    const tag = await this.tagRepository.findOne({
+      where: { id: tagId },
+      relations: ['recipes']
+    });
 
-        if (!tag) {
-            throw new Error('Tag not found');
-        }
-
-        // Remove relationship fields from the request body to prevent modifying sub-models
-        const filteredBody = this.removeRelationshipFields(requestBody);
-
-        this.tagRepository.merge(tag, filteredBody);
-        const updated = await this.tagRepository.save(tag);
-        return this.filterFields(updated);
+    if (!tag) {
+      this.setStatus(404);
+      throw new Error('Tag not found');
     }
 
-    /**
-     * Delete a tag
-     */
-    @Delete("{id}")
-    @Security("jwt")
-    @SuccessResponse("204", "No Content")
-    public async remove(@Path() id: number): Promise<void> {
-        if (isNaN(id)) {
-            throw new Error('Invalid ID format');
-        }
-
-        const result = await this.tagRepository.delete(id);
-        if (result.affected === 0) {
-            throw new Error('Tag not found');
-        }
+    // Check if tag is used in any recipes
+    if (tag.recipes && tag.recipes.length > 0) {
+      this.setStatus(400);
+      throw new Error('Cannot delete tag that is used in recipes');
     }
 
-    /**
-     * Get a tag by name
-     */
-    @Get("name/{name}")
-    public async getTagByName(@Path() name: string): Promise<Tag> {
-        const tag = await this.tagRepository.findOne({
-            where: { name },
-            relations: ['recipes']
-        });
+    // Delete the tag
+    await this.tagRepository.remove(tag);
 
-        if (!tag) {
-            throw new Error('Tag not found');
-        }
-
-        return this.filterFields(tag);
-    }
+    this.setStatus(204);
+  }
 }
