@@ -34,7 +34,7 @@ export class Recipe {
     @Column("text")
     description!: string;
 
-    @Column("simple-array")
+    @Column("jsonb")
     ingredients!: Ingredient[];
 
     @Column("jsonb")

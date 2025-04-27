@@ -11,64 +11,60 @@ declare global {
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret_key';
 
-
-export const authenticate = (req: Request, res: Response, next: NextFunction) => {
-    const authHeader = req.headers.authorization;
-    const token = authHeader && authHeader.split(' ')[1]; // Bearer TOKEN format
-
-    if (!token) {
-        return res.status(401).json({message: 'Authentication required'});
-    }
-
-    try {
-        req.user = jwt.verify(token, JWT_SECRET);
-        next();
-    } catch (error) {
-        return res.status(403).json({message: 'Invalid or expired token'});
-    }
-};
-
 export const generateToken = (payload: any): string => {
     return jwt.sign(payload, JWT_SECRET, {expiresIn: '24h'});
 };
 
-/**
- * This function is used by tsoa for authentication.
- * It verifies the JWT token in the Authorization header.
- * @param request The Express request object
- * @param securityName The name of the security definition
- * @param scopes The scopes required for the endpoint
- * @returns The decoded JWT payload if authentication is successful
- */
-export const expressAuthentication = async (
-    request: Request, 
-    securityName: string, 
-    scopes?: string[]
-): Promise<any> => {
-    if (securityName === 'jwt') {
-        const authHeader = request.headers.authorization;
-        const token = authHeader && authHeader.split(' ')[1]; // Bearer TOKEN format
 
-        if (!token) {
-            throw new Error('Authentication required');
-        }
+export const authenticate = (req: Request, res: Response, next: NextFunction) => {
+    const authHeader = req.headers.authorization;
+    const token = authHeader && authHeader.split(' ')[1];
 
-        return new Promise((resolve, reject) => {
-            jwt.verify(token, JWT_SECRET, (err: any, decoded: any) => {
-                if (err) {
-                    reject(new Error('Invalid or expired token'));
-                } else {
-                    // Check if the token has the required scopes
-                    if (scopes && scopes.length > 0) {
-                        // Implement scope checking if needed
-                        // For now, we're not using scopes
-                    }
+    console.log('[AUTHENTICATE] Incoming request:', req.method, req.url);
+    console.log('[AUTHENTICATE] Authorization header:', authHeader);
 
-                    resolve(decoded);
-                }
-            });
-        });
+    if (!token) {
+        console.log('[AUTHENTICATE] No token found.');
+        return res.status(401).json({message: 'Authentication required'});
     }
 
-    throw new Error('Unknown security definition');
+    try {
+        const decoded = jwt.verify(token, JWT_SECRET);
+        console.log('[AUTHENTICATE] Token successfully verified:', decoded);
+        req.user = decoded;
+        next();
+    } catch (error) {
+        console.error('[AUTHENTICATE] Token verification failed:', error);
+        return res.status(403).json({message: 'Invalid or expired token'});
+    }
+};
+
+export const expressAuthentication = async (
+    request: Request,
+    securityName: string,
+    scopes?: string[]
+): Promise<any> => {
+    console.log('[EXPRESS_AUTHENTICATION] securityName:', securityName);
+    const authHeader = request.headers.authorization;
+    const token = authHeader && authHeader.split(' ')[1];
+
+    console.log('[EXPRESS_AUTHENTICATION] Authorization header:', authHeader);
+
+    if (!token) {
+        console.log('[EXPRESS_AUTHENTICATION] No token provided.');
+        throw new Error('Authentication required');
+    }
+
+    return new Promise((resolve, reject) => {
+        jwt.verify(token, JWT_SECRET, (err, decoded) => {
+            if (err) {
+                console.error('[EXPRESS_AUTHENTICATION] Token verification error:', err);
+                reject(new Error('Invalid or expired token'));
+            } else {
+                console.log('[EXPRESS_AUTHENTICATION] Token verified:', decoded);
+                request.user = decoded;
+                resolve(decoded);
+            }
+        });
+    });
 };
