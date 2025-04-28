@@ -1,0 +1,1012 @@
+{
+	"openapi": "3.0.0",
+	"components": {
+		"examples": {},
+		"headers": {},
+		"parameters": {},
+		"requestBodies": {},
+		"responses": {},
+		"schemas": {
+			"UserRole": {
+				"enum": [
+					"employer",
+					"jobseeker",
+					"admin"
+				],
+				"type": "string"
+			},
+			"Industry": {
+				"enum": [
+					"technology",
+					"finance",
+					"healthcare",
+					"education",
+					"manufacturing",
+					"other"
+				],
+				"type": "string"
+			},
+			"EmployerProfile": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"company": {
+						"$ref": "#/components/schemas/Company"
+					},
+					"user": {
+						"$ref": "#/components/schemas/User"
+					},
+					"phone": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"id",
+					"createdAt",
+					"updatedAt",
+					"company",
+					"user",
+					"phone"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Company": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"name": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"industry": {
+						"$ref": "#/components/schemas/Industry"
+					},
+					"website": {
+						"type": "string"
+					},
+					"address": {
+						"type": "string"
+					},
+					"phone": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string"
+					},
+					"foundedDate": {
+						"type": "string"
+					},
+					"employeesCount": {
+						"type": "number",
+						"format": "double"
+					},
+					"employerProfiles": {
+						"items": {
+							"$ref": "#/components/schemas/EmployerProfile"
+						},
+						"type": "array"
+					},
+					"vacancies": {
+						"items": {
+							"$ref": "#/components/schemas/Vacancy"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"id",
+					"createdAt",
+					"updatedAt",
+					"name",
+					"industry",
+					"employerProfiles",
+					"vacancies"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ProficiencyLevel": {
+				"enum": [
+					"beginner",
+					"intermediate",
+					"advanced",
+					"expert"
+				],
+				"type": "string"
+			},
+			"Vacancy": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"company": {
+						"$ref": "#/components/schemas/Company"
+					},
+					"employerProfile": {
+						"$ref": "#/components/schemas/EmployerProfile"
+					},
+					"title": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"requirements": {
+						"type": "string"
+					},
+					"salaryMin": {
+						"type": "number",
+						"format": "double"
+					},
+					"salaryMax": {
+						"type": "number",
+						"format": "double"
+					},
+					"industry": {
+						"$ref": "#/components/schemas/Industry"
+					},
+					"experienceRequired": {
+						"type": "number",
+						"format": "double"
+					},
+					"postedDate": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"expireDate": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"vacancySkills": {
+						"items": {
+							"$ref": "#/components/schemas/VacancySkill"
+						},
+						"type": "array"
+					},
+					"applications": {
+						"items": {
+							"$ref": "#/components/schemas/Application"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"id",
+					"createdAt",
+					"updatedAt",
+					"company",
+					"employerProfile",
+					"title",
+					"description",
+					"industry",
+					"postedDate",
+					"vacancySkills",
+					"applications"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"VacancySkill": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"masteryLevel": {
+						"$ref": "#/components/schemas/ProficiencyLevel"
+					},
+					"vacancy": {
+						"$ref": "#/components/schemas/Vacancy"
+					},
+					"skill": {
+						"$ref": "#/components/schemas/Skill"
+					}
+				},
+				"required": [
+					"id",
+					"createdAt",
+					"updatedAt",
+					"masteryLevel",
+					"vacancy",
+					"skill"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"User": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"email": {
+						"type": "string"
+					},
+					"passwordHash": {
+						"type": "string"
+					},
+					"role": {
+						"$ref": "#/components/schemas/UserRole"
+					},
+					"employerProfile": {
+						"$ref": "#/components/schemas/EmployerProfile"
+					},
+					"jobSeekerProfile": {
+						"$ref": "#/components/schemas/JobSeekerProfile"
+					}
+				},
+				"required": [
+					"id",
+					"createdAt",
+					"updatedAt",
+					"email",
+					"passwordHash",
+					"role"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"JobSeekerProfile": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"user": {
+						"$ref": "#/components/schemas/User"
+					},
+					"fullName": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"id",
+					"createdAt",
+					"updatedAt",
+					"user",
+					"fullName"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ResumeSkill": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"masteryLevel": {
+						"$ref": "#/components/schemas/ProficiencyLevel"
+					},
+					"resume": {
+						"$ref": "#/components/schemas/Resume"
+					},
+					"skill": {
+						"$ref": "#/components/schemas/Skill"
+					}
+				},
+				"required": [
+					"id",
+					"createdAt",
+					"updatedAt",
+					"masteryLevel",
+					"resume",
+					"skill"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Resume": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"profile": {
+						"$ref": "#/components/schemas/JobSeekerProfile"
+					},
+					"resumePath": {
+						"type": "string"
+					},
+					"resumeSkills": {
+						"items": {
+							"$ref": "#/components/schemas/ResumeSkill"
+						},
+						"type": "array"
+					},
+					"experiences": {
+						"items": {
+							"$ref": "#/components/schemas/WorkExperience"
+						},
+						"type": "array"
+					},
+					"educations": {
+						"items": {
+							"$ref": "#/components/schemas/Education"
+						},
+						"type": "array"
+					},
+					"applications": {
+						"items": {
+							"$ref": "#/components/schemas/Application"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"id",
+					"createdAt",
+					"updatedAt",
+					"profile",
+					"resumePath",
+					"resumeSkills",
+					"experiences",
+					"educations",
+					"applications"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"WorkExperience": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"resume": {
+						"$ref": "#/components/schemas/Resume"
+					},
+					"company": {
+						"type": "string"
+					},
+					"title": {
+						"type": "string"
+					},
+					"startDate": {
+						"type": "string"
+					},
+					"endDate": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"id",
+					"createdAt",
+					"updatedAt",
+					"resume",
+					"company",
+					"title",
+					"startDate"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"EducationDegree": {
+				"enum": [
+					"high_school",
+					"associate",
+					"bachelor",
+					"master",
+					"doctorate",
+					"other"
+				],
+				"type": "string"
+			},
+			"Education": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"resume": {
+						"$ref": "#/components/schemas/Resume"
+					},
+					"institution": {
+						"type": "string"
+					},
+					"degree": {
+						"$ref": "#/components/schemas/EducationDegree"
+					},
+					"startDate": {
+						"type": "string"
+					},
+					"endDate": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"id",
+					"createdAt",
+					"updatedAt",
+					"resume",
+					"institution",
+					"degree",
+					"startDate"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ApplicationStatus": {
+				"enum": [
+					"applied",
+					"reviewed",
+					"interview",
+					"offered",
+					"rejected",
+					"withdrawn"
+				],
+				"type": "string"
+			},
+			"Application": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"vacancy": {
+						"$ref": "#/components/schemas/Vacancy"
+					},
+					"resume": {
+						"$ref": "#/components/schemas/Resume"
+					},
+					"status": {
+						"$ref": "#/components/schemas/ApplicationStatus"
+					},
+					"appliedDate": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"cvText": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"id",
+					"createdAt",
+					"updatedAt",
+					"vacancy",
+					"resume",
+					"status",
+					"appliedDate"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Skill": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"name": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"vacancySkills": {
+						"items": {
+							"$ref": "#/components/schemas/VacancySkill"
+						},
+						"type": "array"
+					},
+					"resumeSkills": {
+						"items": {
+							"$ref": "#/components/schemas/ResumeSkill"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"id",
+					"createdAt",
+					"updatedAt",
+					"name",
+					"vacancySkills",
+					"resumeSkills"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Error": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"message": {
+						"type": "string"
+					},
+					"stack": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"name",
+					"message"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Partial_User_": {
+				"properties": {
+					"email": {
+						"type": "string"
+					},
+					"passwordHash": {
+						"type": "string"
+					},
+					"role": {
+						"$ref": "#/components/schemas/UserRole"
+					},
+					"employerProfile": {
+						"$ref": "#/components/schemas/EmployerProfile"
+					},
+					"jobSeekerProfile": {
+						"$ref": "#/components/schemas/JobSeekerProfile"
+					},
+					"id": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"type": "object",
+				"description": "Make all properties in T optional"
+			},
+			"RegisterRequest": {
+				"properties": {
+					"email": {
+						"type": "string"
+					},
+					"password": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"email",
+					"password"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"AuthResponse": {
+				"properties": {
+					"accessToken": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"accessToken"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"LoginRequest": {
+				"properties": {
+					"email": {
+						"type": "string"
+					},
+					"password": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"email",
+					"password"
+				],
+				"type": "object",
+				"additionalProperties": false
+			}
+		},
+		"securitySchemes": {}
+	},
+	"info": {
+		"title": "hw2",
+		"version": "1.0.0",
+		"contact": {}
+	},
+	"paths": {
+		"/users/byEmail": {
+			"get": {
+				"operationId": "GetOneByEmail",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/User"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Error"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"User"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "email",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/users": {
+			"get": {
+				"operationId": "List",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/User"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"User"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": []
+			},
+			"post": {
+				"operationId": "Create",
+				"responses": {
+					"201": {
+						"description": "",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/User"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"User"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Partial_User_"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/users/{id}": {
+			"get": {
+				"operationId": "Detail",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/User"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"User"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			},
+			"put": {
+				"operationId": "Update",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/User"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"User"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Partial_User_"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"operationId": "Delete",
+				"responses": {
+					"204": {
+						"description": ""
+					}
+				},
+				"tags": [
+					"User"
+				],
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/auth/register": {
+			"post": {
+				"operationId": "Register",
+				"responses": {
+					"201": {
+						"description": "Created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/User"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad Request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Error"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Auth"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/RegisterRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/auth/login": {
+			"post": {
+				"operationId": "Login",
+				"responses": {
+					"200": {
+						"description": "OK",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/AuthResponse"
+								}
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Error"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Auth"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/LoginRequest"
+							}
+						}
+					}
+				}
+			}
+		}
+	},
+	"servers": [
+		{
+			"url": "/api"
+		}
+	]
+}
