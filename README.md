@@ -120,7 +120,7 @@
 
 ### ДЗ2: Работа с TypeORM
 
-**Срок:** *в данный момент не определён*
+**Срок:** 21.04.2025
 
 **Задание:**
 
@@ -132,7 +132,7 @@
 
 ### ЛР1: Реализация boilerplate
 
-**Срок:** *в данный момент не определён*
+**Срок:** 28.04.2025
 
 **Задание:**
 
@@ -146,17 +146,21 @@
 
 Необходимо сделать отчёт по [шаблону](https://docs.google.com/document/d/1aAUawxv6_5k_Na7bLqrfUFANodyl89uPHXY4IKXS8WE/edit?usp=sharing)
 
-Пример: *в данный момент дорабатывается*
+Пример: [express-typeorm-boilerplate](https://github.com/kantegory/express-typeorm-boilerplate)
 
 # 2. Тестирование, разработка и документирование RESTful API
 
-## 2.1 REST, RESTful, SOAP, GraphQL
+## 2.1 REST, RESTful
 
-*Материалы находятся в разработке.*
+[Презентация](https://disk.yandex.ru/i/MuL7VmFKmXSM9A)
+
+**Можно почитать:**
+
+- Сайт, посвящённый REST и RESTful: https://restfulapi.net/
 
 ### ЛР2: Реализация REST API на основе boilerplate
 
-**Срок:** *в данный момент не определён*
+**Срок:** 12.05.2025
 
 **Задание:**
 
@@ -164,13 +168,23 @@
 
 Необходимо сделать отчёт по [шаблону](https://docs.google.com/document/d/1aAUawxv6_5k_Na7bLqrfUFANodyl89uPHXY4IKXS8WE/edit?usp=sharing)
 
-## 2.2 Тестирование, документация
+## 2.2 Документирование API
 
-*Материалы находятся в разработке.*
+[Презентация](https://disk.yandex.ru/i/-lpIh8uTMn7BPw)
+
+**Можно почитать:**
+
+- Документация tsoa: https://tsoa-community.github.io/docs/getting-started.html
+- Документация routing-controllers-openapi: https://github.com/epiphone/routing-controllers-openapi
+- Документация swagger-jsdoc: https://github.com/Surnet/swagger-jsdoc
+- Пример автодокументирования с tsoa: https://github.com/kantegory/mentoring/tree/master/30_express_swagger_tsoa_example
+- Пример автодокументирования с routing-controllers: https://github.com/kantegory/mentoring/tree/master/29_express_swagger_routing_controllers_example
+- Пример автодокументирования с swagger-jsdoc: https://github.com/kantegory/mentoring/tree/master/16_express_swagger_example
+- Пример документирования в Postman: https://github.com/kantegory/mentoring/tree/master/24_postman_example
 
 ### ДЗ3: Документирование API средствами swagger и Postman
 
-**Срок:** *в данный момент не определён*
+**Срок:** 12.05.2025
 
 **Задание:**
 
@@ -178,6 +192,8 @@
 - реализовать документацию API средствами Postman.
 
 Необходимо сделать отчёт по [шаблону](https://docs.google.com/document/d/1aAUawxv6_5k_Na7bLqrfUFANodyl89uPHXY4IKXS8WE/edit?usp=sharing)
+
+## 2.3 Тестирование API
 
 ### ДЗ4: Тестирование API средствами Postman
 
