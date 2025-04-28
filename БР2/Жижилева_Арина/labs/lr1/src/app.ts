@@ -1,21 +1,20 @@
-import express from 'express';
-import mongoose from 'mongoose';
-import userRoutes from './routes/userRoutes';
-import blogPostRoutes from './routes/blogPostRoutes';
-import userWorkoutProgressRoutes from './routes/userWorkoutProgressRoutes';
-import userMeasurementsProgressRoutes from './routes/userMeasurementsProgressRoutes';
-import workoutPlanRoutes from './routes/workoutPlanRoutes';
-import workoutRoutes from './routes/workoutRoutes';
+import express from "express";
+import userRoutes from "./routes/user.routes";
+import blogPostRoutes from "./routes/blogPost.routes";
+import userMeasurementsProgressRoutes from "./routes/userMeasurementsProgress.routes";
+import workoutPlanRoutes from "./routes/workoutPlan.routes";
+import workoutRoutes from "./routes/workout.routes";
+import userWorkoutProgressRoutes from "./routes/userWorkoutProgress.routes";
 
 const app = express();
 app.use(express.json());
-app.use('/api', userRoutes);
+
+// Роуты
+app.use("/users", userRoutes);
+app.use("/posts", blogPostRoutes);
+app.use("/measurements", userMeasurementsProgressRoutes);
+app.use("/plans", workoutPlanRoutes);
+app.use("/workouts", workoutRoutes);
+app.use("/workout-progress", userWorkoutProgressRoutes);
 
 export default app;
-
-app.use('/api', blogPostRoutes);
-app.use('/api', userWorkoutProgressRoutes);
-app.use('/api', userMeasurementsProgressRoutes);
-app.use('/api', workoutPlanRoutes);
-app.use('/api', workoutRoutes);
-app.use('/api', userRoutes);

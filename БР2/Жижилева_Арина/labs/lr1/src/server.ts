@@ -1,17 +1,13 @@
-import dataSource from "./config/data-source";
-import {app} from "./app";
+import { AppDataSource } from "./database/data-source";
+import app from "./app";
 
-const port = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
 
-dataSource
-    .initialize()
-    .then(() => {
-        console.log('Data Source has been initialized!');
-    })
-    .catch((err) => {
-        console.error('Error during Data Source initialization:', err);
+AppDataSource.initialize()
+  .then(() => {
+    console.log("Database connected!");
+    app.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT}`);
     });
-
-app.listen(port, () =>
-    console.log(`Example app listening at http://localhost:${port}`)
-);
+  })
+  .catch((error) => console.error("Database connection error:", error));
