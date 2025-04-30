@@ -1,11 +1,11 @@
 import "reflect-metadata";
-import { DataSource } from "typeorm";
-import { User } from "./models/User";
-import { BlogPost } from "./models/BlogPost";
-import { UserMeasurementsProgress } from "./models/UserMeasurementsProgress";
-import { WorkoutPlan } from "./models/WorkoutPlan";
-import { Workout } from "./models/Workout";
-import { UserWorkoutProgress } from "./models/UserWorkoutProgress";
+import { DataSource } from 'typeorm';
+import { User } from "../entities/User";
+import { BlogPost } from "../entities/BlogPost";
+import { UserMeasurementsProgress } from "../entities/UserMeasurementsProgress";
+import { WorkoutPlan } from "../entities/WorkoutPlan";
+import { Workout } from "../entities/Workout";
+import { UserWorkoutProgress } from "../entities/UserWorkoutProgress";
 
 export const AppDataSource = new DataSource({
   type: "postgres",
@@ -14,7 +14,7 @@ export const AppDataSource = new DataSource({
   username: "postgres",
   password: "Arina2992",
   database: "fitness_app",
-  synchronize: true,  // на разработке ок, потом лучше через миграции
+  synchronize: true,
   logging: false,
   entities: [User, BlogPost, UserMeasurementsProgress, WorkoutPlan, Workout, UserWorkoutProgress],
   migrations: [],

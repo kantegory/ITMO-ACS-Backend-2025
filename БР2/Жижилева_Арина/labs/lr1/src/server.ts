@@ -5,9 +5,9 @@ const PORT = process.env.PORT || 3000;
 
 AppDataSource.initialize()
   .then(() => {
-    console.log("Database connected!");
+    console.log("📦 Database connected!");
     app.listen(PORT, () => {
-      console.log(`Server is running on port ${PORT}`);
+      console.log(`🚀 Server is running on port ${PORT}`);
     });
   })
-  .catch((error) => console.error("Database connection error:", error));
+  .catch((error) => console.error("❌ Database connection error:", error));
