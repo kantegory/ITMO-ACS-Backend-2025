@@ -1,5 +1,8 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from "typeorm";
 import { User } from "./User";
+import { PostComment } from "./PostComment";
+import { PostLike } from "./PostLike";
+import { PostTag } from "./PostTag";
 
 @Entity()
 export class BlogPost {
@@ -12,7 +15,7 @@ export class BlogPost {
   @Column()
   title!: string;
 
-  @Column()
+  @Column("text")
   content!: string;
 
   @Column()
@@ -20,4 +23,13 @@ export class BlogPost {
 
   @Column()
   date!: Date;
+
+  @OneToMany(() => PostComment, (comment) => comment.post)
+  comments!: PostComment[];
+
+  @OneToMany(() => PostLike, (like) => like.post)
+  likes!: PostLike[];
+
+  @OneToMany(() => PostTag, (tag) => tag.post)
+  tags!: PostTag[];
 }

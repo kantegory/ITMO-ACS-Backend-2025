@@ -5,6 +5,9 @@ import userMeasurementsProgressRoutes from "./routes/userMeasurementsProgress.ro
 import workoutPlanRoutes from "./routes/workoutPlan.routes";
 import workoutRoutes from "./routes/workout.routes";
 import userWorkoutProgressRoutes from "./routes/userWorkoutProgress.routes";
+import postLikeRoutes from "./routes/postLike.routes";
+import postCommentRoutes from "./routes/postComment.routes";
+import postTagRoutes from "./routes/postTag.routes";
 
 const app = express();
 app.use(express.json());
@@ -16,5 +19,7 @@ app.use("/measurements", userMeasurementsProgressRoutes);
 app.use("/plans", workoutPlanRoutes);
 app.use("/workouts", workoutRoutes);
 app.use("/workout-progress", userWorkoutProgressRoutes);
-
+app.use("/like", postLikeRoutes);
+app.use("/comment", postCommentRoutes);
+app.use("/tag", postTagRoutes);
 export default app;
