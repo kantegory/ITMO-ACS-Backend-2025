@@ -1,0 +1,26 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const userRoutes_1 = __importDefault(require("./userRoutes"));
+const properties_1 = __importDefault(require("./properties"));
+const rentals_1 = __importDefault(require("./rentals"));
+const chats_1 = __importDefault(require("./chats"));
+const favorites_1 = __importDefault(require("./favorites"));
+const booking_requests_1 = __importDefault(require("./booking-requests"));
+const reviewRoutes_1 = __importDefault(require("./reviewRoutes"));
+const complaints_1 = __importDefault(require("./complaints"));
+const property_images_1 = __importDefault(require("./property-images"));
+const router = (0, express_1.Router)();
+router.use('/users', userRoutes_1.default);
+router.use('/properties', properties_1.default);
+router.use('/rentals', rentals_1.default);
+router.use('/chats', chats_1.default);
+router.use('/favorites', favorites_1.default);
+router.use('/booking-requests', booking_requests_1.default);
+router.use('/reviews', reviewRoutes_1.default);
+router.use('/complaints', complaints_1.default);
+router.use('/property-images', property_images_1.default);
+exports.default = router;
