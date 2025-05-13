@@ -1,0 +1,36 @@
+{
+  "name": "order-service",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "TS_NODE_PROJECT=tsconfig.json ts-node -r reflect-metadata src/index.ts",
+    "dev": "TS_NODE_PROJECT=tsconfig.json nodemon --exec \"ts-node -r reflect-metadata src/index.ts\"",
+    "build": "tsc",
+    "migration:generate": "TS_NODE_PROJECT=tsconfig.json  ts-node --transpile-only node_modules/typeorm/cli.js migration:generate src/migrations/InitMigration -d src/data-source.ts",
+    "migration:run": "TS_NODE_PROJECT=tsconfig.json  ts-node -r tsconfig-paths/register node_modules/typeorm/cli.js migration:run -d src/data-source.ts",
+    "migration:revert": "TS_NODE_PROJECT=tsconfig.json  ts-node --transpile-only node_modules/typeorm/cli.js migration:revert -d src/data-source.ts"
+},
+  "dependencies": {
+    "axios": "^1.6.0",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.1",
+    "class-validator-jsonschema": "^5.0.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "pg": "^8.14.1",
+    "reflect-metadata": "^0.2.2",
+    "routing-controllers": "^0.11.2",
+    "routing-controllers-openapi": "^5.0.0",
+    "swagger-ui-express": "^5.0.1",
+    "typeorm": "^0.3.23"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.1",
+    "@types/swagger-ui-express": "^4.1.8",
+    "nodemon": "^3.1.10",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.8.3"
+  }
+}
