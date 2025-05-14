@@ -10,6 +10,7 @@ import propertyRouter from "./router/PropertyRouter";
 AppDataSource.initialize()
   .then(async () => {
 
+
     const swaggerJSDoc = require('swagger-jsdoc');
     const swaggerUi = require('swagger-ui-express');
 
