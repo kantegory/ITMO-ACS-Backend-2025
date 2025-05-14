@@ -7,6 +7,7 @@ export class RentService {
     const rents = await this.rentRepository.find();
     return rents;
   }
+  
   async findOne(id: number) {
     const rents = await this.rentRepository.findOne({ where: { id } });
     return rents;
