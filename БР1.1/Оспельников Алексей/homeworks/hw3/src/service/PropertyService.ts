@@ -33,7 +33,7 @@ export class PropertyService {
       try {
         this.propertyRepository.merge(property, data);
         const savedProperty = await this.propertyRepository.save(property);
-        return { 'status': 201, 'data': savedProperty, message: 'Successfully updated' };
+        return { 'status': 200, 'data': savedProperty, message: 'Successfully updated' };
       } 
       catch (error) {
         return { 'status': 500, 'data': null, message: 'Wrong Parameters' };
@@ -48,7 +48,7 @@ export class PropertyService {
 
     if (property) {
       await this.propertyRepository.remove(property);
-      return { 'status': 204, 'message': "Property Deleted successfully" };
+      return { 'status': 200, 'message': "Property Deleted successfully" };
     } else {
       return { 'status': 404, 'message': "Property not found" };
     }

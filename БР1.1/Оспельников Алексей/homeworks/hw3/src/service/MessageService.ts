@@ -33,7 +33,7 @@ export class MessageService {
       try {
         this.messageRepository.merge(message, data);
         const savedMessage = await this.messageRepository.save(message);
-        return { 'status': 201, 'data': savedMessage, message: 'Successfully updated' };
+        return { 'status': 200, 'data': savedMessage, message: 'Successfully updated' };
       } 
       catch (error) {
         return { 'status': 500, 'data': null, message: 'Wrong Parameters' };
@@ -48,7 +48,7 @@ export class MessageService {
 
     if (message) {
       await this.messageRepository.remove(message);
-      return { 'status': 204, 'message': "Message Deleted successfully" };
+      return { 'status': 200, 'message': "Message Deleted successfully" };
     } else {
       return { 'status': 404, 'message': "Message not found" };
     }

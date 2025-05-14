@@ -33,7 +33,7 @@ export class ReviewService {
       try {
         this.reviewRepository.merge(review, data);
         const savedReview = await this.reviewRepository.save(review);
-        return { 'status': 201, 'data': savedReview, message: 'Successfully updated' };
+        return { 'status': 200, 'data': savedReview, message: 'Successfully updated' };
       } 
       catch (error) {
         return { 'status': 500, 'data': null, message: 'Wrong Parameters' };
@@ -48,7 +48,7 @@ export class ReviewService {
 
     if (review) {
       await this.reviewRepository.remove(review);
-      return { 'status': 204, 'message': "Review Deleted successfully" };
+      return { 'status': 200, 'message': "Review Deleted successfully" };
     } else {
       return { 'status': 404, 'message': "Review not found" };
     }

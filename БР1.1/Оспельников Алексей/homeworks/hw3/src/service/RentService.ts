@@ -33,7 +33,7 @@ export class RentService {
       try {
         this.rentRepository.merge(rent, data);
         const savedRent = await this.rentRepository.save(rent);
-        return { 'status': 201, 'data': savedRent, message: 'Successfully updated' };
+        return { 'status': 200, 'data': savedRent, message: 'Successfully updated' };
       } 
       catch (error) {
         return { 'status': 500, 'data': null, message: 'Wrong Parameters' };
@@ -48,7 +48,7 @@ export class RentService {
 
     if (rent) {
       await this.rentRepository.remove(rent);
-      return { 'status': 204, 'message': "Rent Deleted successfully" };
+      return { 'status': 200, 'message': "Rent Deleted successfully" };
     } else {
       return { 'status': 404, 'message': "Rent not found" };
     }

@@ -42,7 +42,7 @@ export class UserService {
       try {
         this.userRepository.merge(user, data);
         const savedUser = await this.userRepository.save(user);
-        return { 'status': 201, 'data': savedUser, message: 'Successfully updated' };
+        return { 'status': 200, 'data': savedUser, message: 'Successfully updated' };
       } 
       catch (error) {
         return { 'status': 500, 'data': null, message: 'Wrong Parameters' };
@@ -57,7 +57,7 @@ export class UserService {
 
     if (user) {
       await this.userRepository.remove(user);
-      return { 'status': 204, 'message': "User Deleted successfully" };
+      return { 'status': 200, 'message': "User Deleted successfully" };
     } else {
       return { 'status': 404, 'message': "User not found" };
     }
