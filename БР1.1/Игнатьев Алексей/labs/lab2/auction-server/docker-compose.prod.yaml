@@ -1,0 +1,82 @@
+services:
+  auction:
+    container_name: auction
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '8000:8000'
+    env_file:
+      - '.env.build'
+    depends_on:
+      - postgres
+      - minio
+      - redis
+    networks:
+      - auction-network
+
+  postgres:
+    container_name: auction_postgres
+    image: postgres:latest
+    env_file:
+      - '.env.build'
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - 5432:5432
+    volumes:
+      - auction-pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+    networks:
+      - auction-network
+
+  minio:
+    container_name: auction_minio
+    image: minio/minio
+    restart: always
+    ports:
+      - 9000:9000
+      - 9001:9001
+    volumes:
+      - auction-minio-storage:/data
+    env_file:
+      - '.env'
+    environment:
+      MINIO_ROOT_USER: ${POSTGRES_USER}
+      MINIO_ROOT_PASSWORD: ${POSTGRES_PASSWORD}
+      MINIO_ACCESS_KEY: ${MINIO_ACCESS_KEY}
+      MINIO_SECRET_KEY: ${MINIO_SECRET_KEY}
+    command: server --console-address ":9001" /data
+    networks:
+      - auction-network
+
+  redis:
+    container_name: auction_redis
+    image: redis:latest
+    restart: always
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 10s
+      timeout: 60s
+      retries: 5
+      start_period: 10s
+    networks:
+      - auction-network
+
+volumes:
+  auction-pgdata:
+  auction-pgadmin-data:
+  auction-minio-storage:
+
+networks:
+  auction-network:
+    driver: bridge
