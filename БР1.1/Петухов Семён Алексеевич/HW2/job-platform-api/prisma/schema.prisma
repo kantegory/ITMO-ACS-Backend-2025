@@ -1,0 +1,135 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         Int      @id @default(autoincrement())
+  username   String   @unique
+  email      String   @unique
+  password   String
+  role       String
+  company_id Int?
+  company    Company? @relation(fields: [company_id], references: [id])
+
+  resumes    Resume[]
+  applications Application[]
+  motivationLetters MotivationLetter[]
+}
+
+model Resume {
+  id              Int     @id @default(autoincrement())
+  user_id         Int     @unique
+  full_name       String
+  date_of_birth   DateTime
+  work_experience Int
+  salary          Float
+  education_id    Int?
+  additional_info String?
+
+  user       User      @relation(fields: [user_id], references: [id])
+  education  Education? @relation(fields: [education_id], references: [id])
+  skills     ResumeSkills[]
+  work_experiences WorkExperience[]
+  applications Application[]
+}
+
+model WorkExperience {
+  id          Int    @id @default(autoincrement())
+  resume_id   Int
+  company     String
+  role        String
+  description String
+  duration    Int
+
+  resume Resume @relation(fields: [resume_id], references: [id])
+}
+
+model Skill {
+  id          Int    @id @default(autoincrement())
+  skill_name  String
+  description String?
+
+  resumeSkills  ResumeSkills[]
+  vacancySkills VacancySkills[]
+}
+
+model ResumeSkills {
+  id        Int   @id @default(autoincrement())
+  resume_id Int
+  skill_id  Int
+
+  resume Resume @relation(fields: [resume_id], references: [id])
+  skill  Skill  @relation(fields: [skill_id], references: [id])
+}
+
+model Education {
+  id              Int     @id @default(autoincrement())
+  education_level String
+
+  resumes Resume[]
+}
+
+model Company {
+  id          Int    @id @default(autoincrement())
+  name        String
+  description String?
+  location    String?
+
+  users    User[]
+  vacancies Vacancy[]
+}
+
+model Vacancy {
+  id           Int    @id @default(autoincrement())
+  title        String
+  description  String
+  industry     String
+  requirements String
+  salary       Float
+  work_exp     Int
+  company_id   Int
+
+  company Company @relation(fields: [company_id], references: [id])
+  vacancySkills VacancySkills[]
+  applications Application[]
+  motivationLetters MotivationLetter[]
+}
+
+model VacancySkills {
+  id         Int @id @default(autoincrement())
+  vacancy_id Int
+  skill_id   Int
+
+  vacancy Vacancy @relation(fields: [vacancy_id], references: [id])
+  skill   Skill   @relation(fields: [skill_id], references: [id])
+}
+
+model Application {
+  id         Int      @id @default(autoincrement())
+  resume_id  Int
+  user_id    Int
+  vacancy_id Int
+  status     String
+  created_at DateTime @default(now())
+
+  user    User    @relation(fields: [user_id], references: [id])
+  resume  Resume  @relation(fields: [resume_id], references: [id])
+  vacancy Vacancy @relation(fields: [vacancy_id], references: [id])
+}
+
+model MotivationLetter {
+  id         Int      @id @default(autoincrement())
+  user_id    Int
+  vacancy_id Int
+  title      String
+  content    String
+  created_at DateTime @default(now())
+
+  user    User    @relation(fields: [user_id], references: [id])
+  vacancy Vacancy @relation(fields: [vacancy_id], references: [id])
+}
