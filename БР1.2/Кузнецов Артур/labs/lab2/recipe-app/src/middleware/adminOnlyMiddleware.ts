@@ -1,0 +1,11 @@
+import { Response, NextFunction } from 'express';
+import { AuthRequest } from './authMiddleware';
+
+export const adminOnlyMiddleware = (req: AuthRequest, res: Response, next: NextFunction) => {
+    console.log(req.user);
+    if (!req.user || req.user.role !== 'admin') {
+        res.status(403).json({ message: 'Access denied.' });
+        return;
+    }
+    next();
+};
