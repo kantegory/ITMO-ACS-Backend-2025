@@ -1,0 +1,58 @@
+@startuml
+
+
+skinparam linetype ortho
+
+
+entity "Users" as U {
+ *id : SERIAL <<PK>>
+ --
+ *nickname : varchar(50)
+ *email : varchar(100)
+ *password_hash : varchar(255)
+ google_2fa_secret : varchar(32)
+ is_2fa_enabled : boolean
+}
+
+
+entity "Friendships" as F {
+ *user_id1 : int <<FK>>  -- FK to Users.id
+ *user_id2 : int <<FK>>  -- FK to Users.id
+ status : varchar(10)
+ created_at : timestamp
+}
+
+
+entity "Movie_Matches" as M {
+ *user_id1 : int <<FK>>  -- FK to Users.id
+ *user_id2 : int <<FK>>  -- FK to Users.id
+ *movie_id : int <<FK>>  -- FK to Movies.movie_id
+ matched_at : timestamp
+}
+
+
+entity "Movies" as MOV {
+ *movie_id : int <<PK>>
+ title : varchar(255)
+ description : text
+ poster_url : varchar(255)
+ duration : int
+ release_date : date
+}
+
+
+note "user_id1 < user_id2 enforced in Friendships and Movie_Matches" as N1
+N1 .. F
+N1 .. M
+
+
+U ||--o{ F : friend1
+U ||--o{ F : friend2
+U ||--o{ M : participant1
+U ||--o{ M : participant2
+
+
+MOV ||--o{ M : "matches"
+
+
+@enduml
