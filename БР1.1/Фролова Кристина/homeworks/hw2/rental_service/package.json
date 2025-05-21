@@ -1,0 +1,26 @@
+{
+  "name": "rental-service",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "tsx src/app.ts",
+    "dev": "tsx src/app.ts"
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "express": "5.0.0",
+    "http-errors": "~1.6.3",
+    "morgan": "~1.9.1",
+    "pg": "^8.14.1",
+    "postgresql": "^0.0.1",
+    "reflect-metadata": "^0.2.2",
+    "typeorm": "^0.3.22"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.1",
+    "@types/node": "^22.14.1",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.3"
+  }
+}
