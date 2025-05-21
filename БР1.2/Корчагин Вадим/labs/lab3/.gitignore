@@ -1,0 +1,49 @@
+.idea/
+.vscode/
+node_modules/
+build/
+tmp/
+temp/
+
+# dependencies
+node_modules/
+
+# build artifacts
+dist/
+build/
+*.tsbuildinfo
+
+# environment variables
+.env
+.env.local
+
+# DB migrations & seeds (если не нужны в гите)
+src/seeds/
+
+# Swagger auto-generated file
+src/swagger-output.json
+
+# logs
+logs/
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+*.sw?
+
+# coverage
+coverage/
+.nyc_output/
+
+# misc
+*.bak
+*.tmp
+
+postman.json
+swagger.json
+wrapped-postman.json

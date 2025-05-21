@@ -1,0 +1,88 @@
+services:
+  blog-service:
+    build:
+      context: ../lab3/src/microservices/blog-service
+    container_name: blog-service
+    ports:
+      - "4004:4004"
+    env_file:
+      - ../lab3/src/microservices/blog-service/.env.example
+    depends_on:
+      - postgres
+    command: sh -c "pnpm install && pnpm migration:run && pnpm start"
+
+  workout-service:
+    build:
+      context: ../lab3/src/microservices/workout-service
+    container_name: workout-service
+    ports:
+      - "4001:4001"
+    env_file:
+      - ../lab3/src/microservices/workout-service/.env.example
+    depends_on:
+      - postgres
+    command: sh -c "pnpm install && pnpm migration:run && pnpm start"
+
+  order-service:
+    build:
+      context: ../lab3/src/microservices/order-service
+    container_name: order-service
+    ports:
+      - "4003:4003"
+    env_file:
+      - ../lab3/src/microservices/order-service/.env.example
+    depends_on:
+      - postgres
+    command: sh -c "pnpm install && pnpm migration:run && pnpm start"
+
+  progress-service:
+    build:
+      context: ../lab3/src/microservices/progress-service
+    container_name: progress-service
+    ports:
+      - "4002:4002"
+    env_file:
+      - ../lab3/src/microservices/progress-service/.env.example
+    depends_on:
+      - postgres
+    command: sh -c "pnpm install && pnpm migration:run && pnpm start"
+
+
+  auth-service:
+    build:
+      context: ../lab3/src/microservices/auth-service
+    container_name: auth-service
+    ports:
+      - "4000:4000"
+    env_file:
+      - ../lab3/src/microservices/auth-service/.env.example
+    depends_on:
+      - postgres
+    command: sh -c "pnpm install && pnpm migration:run && pnpm start"
+
+
+  postgres:
+    image: postgres:15
+    container_name: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    ports:
+      - "5432:5432"
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"   # порт для AMQP-протокола
+      - "15672:15672" # порт для веб-интерфейса
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+
+volumes:
+  pgdata:
