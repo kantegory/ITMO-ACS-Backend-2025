@@ -1,0 +1,2207 @@
+{
+	"info": {
+		"_postman_id": "4aa63000-e68c-4f1a-8447-bc706911e597",
+		"name": "RealEstate API",
+		"description": "Автодокументация REST API для проекта RealEstate",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25956602"
+	},
+	"item": [
+		{
+			"name": "api",
+			"item": [
+				{
+					"name": "auth",
+					"item": [
+						{
+							"name": "register",
+							"item": [
+								{
+									"name": "Register new user",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"email\": \"hLCPj8sE3Xn@xHhWu.ij\",\n  \"password\": \"ut eu laboris\",\n  \"name\": \"ullamco\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/auth/register",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"auth",
+												"register"
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Untitled Example",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													},
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"email\": \"hLCPj8sE3Xn@xHhWu.ij\",\n  \"password\": \"ut eu laboris\",\n  \"name\": \"ullamco\"\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/auth/register",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"auth",
+														"register"
+													]
+												}
+											},
+											"status": "Created",
+											"code": 201,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"value\": \"reference #/components/schemas/AuthResponse not found in the OpenAPI spec\"\n}"
+										},
+										{
+											"name": "Untitled Example",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													},
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"email\": \"hLCPj8sE3Xn@xHhWu.ij\",\n  \"password\": \"ut eu laboris\",\n  \"name\": \"ullamco\"\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/auth/register",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"auth",
+														"register"
+													]
+												}
+											},
+											"status": "Bad Request",
+											"code": 400,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"value\": \"reference #/components/schemas/ErrorResponse not found in the OpenAPI spec\"\n}"
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "login",
+							"item": [
+								{
+									"name": "Login and get JWT token",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"email\": \"f6NrebGh7CLM@khipfPQllbBWJSZykJahca.snym\",\n  \"password\": \"velit Ut fugiat\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/auth/login",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"auth",
+												"login"
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Untitled Example",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													},
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"email\": \"f6NrebGh7CLM@khipfPQllbBWJSZykJahca.snym\",\n  \"password\": \"velit Ut fugiat\"\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/auth/login",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"auth",
+														"login"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"value\": \"reference #/components/schemas/TokenResponse not found in the OpenAPI spec\"\n}"
+										},
+										{
+											"name": "Untitled Example",
+											"originalRequest": {
+												"method": "POST",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													},
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"email\": \"f6NrebGh7CLM@khipfPQllbBWJSZykJahca.snym\",\n  \"password\": \"velit Ut fugiat\"\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/auth/login",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"auth",
+														"login"
+													]
+												}
+											},
+											"status": "Unauthorized",
+											"code": 401,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"value\": \"reference #/components/schemas/ErrorResponse not found in the OpenAPI spec\"\n}"
+										}
+									]
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "users",
+					"item": [
+						{
+							"name": "me",
+							"item": [
+								{
+									"name": "Get current user",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/users/me",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"users",
+												"me"
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Untitled Example",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/users/me",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"users",
+														"me"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"value\": \"reference #/components/schemas/UserResponse not found in the OpenAPI spec\"\n}"
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "{id}",
+							"item": [
+								{
+									"name": "Get user by id",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/users/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"users",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "NaN",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Untitled Example",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/users/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"users",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"value\": \"reference #/components/schemas/UserResponse not found in the OpenAPI spec\"\n}"
+										}
+									]
+								},
+								{
+									"name": "Update user",
+									"request": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"name\": \"culpa dolore\",\n  \"email\": \"TlaEaPoB2e3@CGPTR.ti\",\n  \"phone\": \"amet tempor commodo\",\n  \"password\": \"sed ani\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/users/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"users",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "NaN",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Untitled Example",
+											"originalRequest": {
+												"method": "PATCH",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													},
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"name\": \"culpa dolore\",\n  \"email\": \"TlaEaPoB2e3@CGPTR.ti\",\n  \"phone\": \"amet tempor commodo\",\n  \"password\": \"sed ani\"\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/users/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"users",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"value\": \"reference #/components/schemas/UserResponse not found in the OpenAPI spec\"\n}"
+										}
+									]
+								},
+								{
+									"name": "Delete user",
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/users/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"users",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "NaN",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "by-email",
+							"item": [
+								{
+									"name": "Get user by email",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/users/by-email?email=pariatu",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"users",
+												"by-email"
+											],
+											"query": [
+												{
+													"key": "email",
+													"value": "pariatu"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Untitled Example",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/users/by-email?email=pariatu",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"users",
+														"by-email"
+													],
+													"query": [
+														{
+															"key": "email",
+															"value": "pariatu"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"value\": \"reference #/components/schemas/UserResponse not found in the OpenAPI spec\"\n}"
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "Create user",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"sunt sed ut\",\n  \"email\": \"yzIxIRH@ywoRhMGbZnetxLhsVs.eiuu\",\n  \"password\": \"in dolore consect\",\n  \"phone\": \"dolor exercitation minim dolore\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/users/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"users",
+										""
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Untitled Example",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"name\": \"sunt sed ut\",\n  \"email\": \"yzIxIRH@ywoRhMGbZnetxLhsVs.eiuu\",\n  \"password\": \"in dolore consect\",\n  \"phone\": \"dolor exercitation minim dolore\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/users/",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"users",
+												""
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"value\": \"reference #/components/schemas/UserResponse not found in the OpenAPI spec\"\n}"
+								}
+							]
+						},
+						{
+							"name": "List users",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/users/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"users",
+										""
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Untitled Example",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/users/",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"users",
+												""
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "[\n  {\n    \"value\": \"reference #/components/schemas/UserResponse not found in the OpenAPI spec\"\n  },\n  {\n    \"value\": \"reference #/components/schemas/UserResponse not found in the OpenAPI spec\"\n  }\n]"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "properties",
+					"item": [
+						{
+							"name": "{id}",
+							"item": [
+								{
+									"name": "Get property by id",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/properties/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"properties",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "NaN",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Untitled Example",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/properties/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"properties",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"owner_id\": -12877149,\n  \"type\": \"mag\",\n  \"title\": \"sed aliquip id est\",\n  \"description\": \"magna commodo nulla\",\n  \"location\": \"esse culpa et\",\n  \"price_per_day\": -56280132.2680214,\n  \"status\": \"nulla ut\"\n}"
+										}
+									]
+								},
+								{
+									"name": "Update property",
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"type\": \"in Ut aliquip id\",\n  \"title\": \"est dolore consequat deserunt\",\n  \"description\": \"dolore irure\",\n  \"location\": \"officia Excepteur adipisicing in\",\n  \"price_per_day\": 10989211.237379149,\n  \"status\": \"velit elit exercitati\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/properties/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"properties",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "NaN",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Untitled Example",
+											"originalRequest": {
+												"method": "PUT",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													},
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"type\": \"in Ut aliquip id\",\n  \"title\": \"est dolore consequat deserunt\",\n  \"description\": \"dolore irure\",\n  \"location\": \"officia Excepteur adipisicing in\",\n  \"price_per_day\": 10989211.237379149,\n  \"status\": \"velit elit exercitati\"\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/properties/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"properties",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"type\": \"in Ut aliquip id\",\n  \"title\": \"est dolore consequat deserunt\",\n  \"description\": \"dolore irure\",\n  \"location\": \"officia Excepteur adipisicing in\",\n  \"price_per_day\": 10989211.237379149,\n  \"status\": \"velit elit exercitati\"\n}"
+										}
+									]
+								},
+								{
+									"name": "Delete property",
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/properties/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"properties",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "NaN",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Create property",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"owner_id\": -12877149,\n  \"type\": \"mag\",\n  \"title\": \"sed aliquip id est\",\n  \"description\": \"magna commodo nulla\",\n  \"location\": \"esse culpa et\",\n  \"price_per_day\": -56280132.2680214,\n  \"status\": \"nulla ut\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/properties/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"properties",
+										""
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Untitled Example",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"owner_id\": -12877149,\n  \"type\": \"mag\",\n  \"title\": \"sed aliquip id est\",\n  \"description\": \"magna commodo nulla\",\n  \"location\": \"esse culpa et\",\n  \"price_per_day\": -56280132.2680214,\n  \"status\": \"nulla ut\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/properties/",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"properties",
+												""
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"owner_id\": -12877149,\n  \"type\": \"mag\",\n  \"title\": \"sed aliquip id est\",\n  \"description\": \"magna commodo nulla\",\n  \"location\": \"esse culpa et\",\n  \"price_per_day\": -56280132.2680214,\n  \"status\": \"nulla ut\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Get all properties",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/properties/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"properties",
+										""
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Untitled Example",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/properties/",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"properties",
+												""
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "[\n  {\n    \"owner_id\": -47588027,\n    \"type\": \"ullamco magna nostrud eiusmod\",\n    \"title\": \"volup\",\n    \"description\": \"dolore ex commodo Duis irure\",\n    \"location\": \"tempor\",\n    \"price_per_day\": -70034974.20048821,\n    \"status\": \"sunt aliquip eiusmod Duis nulla\"\n  },\n  {\n    \"owner_id\": 60488783,\n    \"type\": \"ea dolore\",\n    \"title\": \"reprehenderit labore\",\n    \"description\": \"velit deserunt\",\n    \"location\": \"laboris ipsum eu in\",\n    \"price_per_day\": -90499260.91243017,\n    \"status\": \"dolore et ut\"\n  }\n]"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "bookings",
+					"item": [
+						{
+							"name": "{id}",
+							"item": [
+								{
+									"name": "Get booking by id",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/bookings/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"bookings",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "NaN",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Untitled Example",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/bookings/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"bookings",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"property_id\": -79143750,\n  \"renter_id\": 80755415,\n  \"start_at\": \"5505-02-38T07:06:11d5385\",\n  \"end_at\": \"5098-02-06T24:07:07G666168\",\n  \"total_price\": -58935281.5982588,\n  \"deal_status\": \"pending\"\n}"
+										}
+									]
+								},
+								{
+									"name": "Update booking",
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"start_at\": \"0938-16-03T07:54:42-4246095762\",\n  \"end_at\": \"3959-00-15T29:08:57M6\",\n  \"total_price\": 64141844.54798636,\n  \"deal_status\": \"cancelled\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/bookings/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"bookings",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "NaN",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Untitled Example",
+											"originalRequest": {
+												"method": "PUT",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													},
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"start_at\": \"0938-16-03T07:54:42-4246095762\",\n  \"end_at\": \"3959-00-15T29:08:57M6\",\n  \"total_price\": 64141844.54798636,\n  \"deal_status\": \"cancelled\"\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/bookings/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"bookings",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"start_at\": \"0938-16-03T07:54:42-4246095762\",\n  \"end_at\": \"3959-00-15T29:08:57M6\",\n  \"total_price\": 64141844.54798636,\n  \"deal_status\": \"cancelled\"\n}"
+										}
+									]
+								},
+								{
+									"name": "Delete booking",
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/bookings/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"bookings",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "NaN",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Create booking",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"property_id\": -79143750,\n  \"renter_id\": 80755415,\n  \"start_at\": \"5505-02-38T07:06:11d5385\",\n  \"end_at\": \"5098-02-06T24:07:07G666168\",\n  \"total_price\": -58935281.5982588,\n  \"deal_status\": \"pending\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/bookings/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"bookings",
+										""
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Untitled Example",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"property_id\": -79143750,\n  \"renter_id\": 80755415,\n  \"start_at\": \"5505-02-38T07:06:11d5385\",\n  \"end_at\": \"5098-02-06T24:07:07G666168\",\n  \"total_price\": -58935281.5982588,\n  \"deal_status\": \"pending\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/bookings/",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"bookings",
+												""
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"property_id\": -79143750,\n  \"renter_id\": 80755415,\n  \"start_at\": \"5505-02-38T07:06:11d5385\",\n  \"end_at\": \"5098-02-06T24:07:07G666168\",\n  \"total_price\": -58935281.5982588,\n  \"deal_status\": \"pending\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Get all bookings",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/bookings/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"bookings",
+										""
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Untitled Example",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/bookings/",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"bookings",
+												""
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "[\n  {\n    \"property_id\": 3678880,\n    \"renter_id\": 12946603,\n    \"start_at\": \"9366-03-06T23:23:32U38629Z\",\n    \"end_at\": \"6974-13-08T25:01:11m0365214Z\",\n    \"total_price\": 57366771.33072719,\n    \"deal_status\": \"cancelled\"\n  },\n  {\n    \"property_id\": -2102912,\n    \"renter_id\": 42233570,\n    \"start_at\": \"2034-02-36T19:14:25a991279239\",\n    \"end_at\": \"9247-10-19T29:13:49x9404\",\n    \"total_price\": -25430908.39031747,\n    \"deal_status\": \"pending\"\n  }\n]"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "messages",
+					"item": [
+						{
+							"name": "{id}",
+							"item": [
+								{
+									"name": "Get message by id",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/messages/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"messages",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "NaN",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Untitled Example",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/messages/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"messages",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"sender_id\": -45405068,\n  \"recipient_id\": 59440124,\n  \"booking_id\": -91656853,\n  \"text\": \"in est id\"\n}"
+										}
+									]
+								},
+								{
+									"name": "Update message",
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"text\": \"quis\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/messages/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"messages",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "NaN",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Untitled Example",
+											"originalRequest": {
+												"method": "PUT",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													},
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"text\": \"quis\"\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/messages/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"messages",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"text\": \"quis\"\n}"
+										}
+									]
+								},
+								{
+									"name": "Delete message",
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/messages/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"messages",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "NaN",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Send message",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"sender_id\": -45405068,\n  \"recipient_id\": 59440124,\n  \"booking_id\": -91656853,\n  \"text\": \"in est id\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/messages/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"messages",
+										""
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Untitled Example",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"sender_id\": -45405068,\n  \"recipient_id\": 59440124,\n  \"booking_id\": -91656853,\n  \"text\": \"in est id\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/messages/",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"messages",
+												""
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"sender_id\": -45405068,\n  \"recipient_id\": 59440124,\n  \"booking_id\": -91656853,\n  \"text\": \"in est id\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Get all messages",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/messages/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"messages",
+										""
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Untitled Example",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/messages/",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"messages",
+												""
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "[\n  {\n    \"sender_id\": 49781155,\n    \"recipient_id\": -85675322,\n    \"booking_id\": -42592073,\n    \"text\": \"labore\"\n  },\n  {\n    \"sender_id\": -61672554,\n    \"recipient_id\": -26220916,\n    \"booking_id\": -22504569,\n    \"text\": \"Ut reprehenderit\"\n  }\n]"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "property-photos",
+					"item": [
+						{
+							"name": "{id}",
+							"item": [
+								{
+									"name": "Get photo by id",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/property-photos/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"property-photos",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "NaN",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Untitled Example",
+											"originalRequest": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"url": {
+													"raw": "{{baseUrl}}/api/property-photos/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"property-photos",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"property_id\": -57807687,\n  \"photo_url\": \"in pariatur\",\n  \"description\": \"Excepteur est\"\n}"
+										}
+									]
+								},
+								{
+									"name": "Update photo",
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"photo_url\": \"quis ut mollit aute\",\n  \"description\": \"irure aliquip nostrud dolor\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/property-photos/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"property-photos",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "NaN",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Untitled Example",
+											"originalRequest": {
+												"method": "PUT",
+												"header": [
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													},
+													{
+														"key": "Accept",
+														"value": "application/json"
+													}
+												],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n  \"photo_url\": \"quis ut mollit aute\",\n  \"description\": \"irure aliquip nostrud dolor\"\n}",
+													"options": {
+														"raw": {
+															"headerFamily": "json",
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/property-photos/:id",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"property-photos",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n  \"photo_url\": \"quis ut mollit aute\",\n  \"description\": \"irure aliquip nostrud dolor\"\n}"
+										}
+									]
+								},
+								{
+									"name": "Delete photo",
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/api/property-photos/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"property-photos",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "NaN",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Upload photo",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"property_id\": -57807687,\n  \"photo_url\": \"in pariatur\",\n  \"description\": \"Excepteur est\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/property-photos/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"property-photos",
+										""
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Untitled Example",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"property_id\": -57807687,\n  \"photo_url\": \"in pariatur\",\n  \"description\": \"Excepteur est\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/property-photos/",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"property-photos",
+												""
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"property_id\": -57807687,\n  \"photo_url\": \"in pariatur\",\n  \"description\": \"Excepteur est\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Get all photos",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/property-photos/",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"property-photos",
+										""
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Untitled Example",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/property-photos/",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"property-photos",
+												""
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "[\n  {\n    \"property_id\": 21610814,\n    \"photo_url\": \"aliqua id\",\n    \"description\": \"in sit ex\"\n  },\n  {\n    \"property_id\": 21339633,\n    \"photo_url\": \"dolore quis nulla\",\n    \"description\": \"fugiat dolor\"\n  }\n]"
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:3000"
+		}
+	]
+}
