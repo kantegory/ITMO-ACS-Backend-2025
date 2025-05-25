@@ -1,0 +1,11 @@
+{
+  "name": "job-platform-api",
+  "version": "1.0.0",
+  "description": "API for job platform",
+  "main": "src/app.ts",
+  "scripts": {
+    "dev": "ts-node-dev --respawn src/app.ts"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}
