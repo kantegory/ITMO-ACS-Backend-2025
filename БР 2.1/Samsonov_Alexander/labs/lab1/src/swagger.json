@@ -1,0 +1,1051 @@
+{
+	"openapi": "3.0.0",
+	"components": {
+		"examples": {},
+		"headers": {},
+		"parameters": {},
+		"requestBodies": {},
+		"responses": {},
+		"schemas": {
+			"UserResponseDto": {
+				"description": "DTO for user response (excludes sensitive information)",
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double",
+						"description": "The unique identifier for the user",
+						"example": 1
+					},
+					"name": {
+						"type": "string",
+						"description": "The user's full name",
+						"example": "John Doe"
+					},
+					"email": {
+						"type": "string",
+						"description": "The user's email address",
+						"example": "john.doe@example.com"
+					}
+				},
+				"required": [
+					"id",
+					"name",
+					"email"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"UpdateUserDto": {
+				"description": "DTO for user update",
+				"properties": {
+					"name": {
+						"type": "string",
+						"description": "The user's full name",
+						"example": "John Doe"
+					},
+					"email": {
+						"type": "string",
+						"description": "The user's email address",
+						"example": "john.doe@example.com"
+					},
+					"password": {
+						"type": "string",
+						"description": "The user's password",
+						"example": "password123"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"TagResponseDto": {
+				"description": "DTO for tag response",
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double",
+						"description": "The unique identifier for the tag",
+						"example": 1
+					},
+					"name": {
+						"type": "string",
+						"description": "The tag name",
+						"example": "dessert"
+					}
+				},
+				"required": [
+					"id",
+					"name"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"CreateTagDto": {
+				"description": "DTO for tag creation",
+				"properties": {
+					"name": {
+						"type": "string",
+						"description": "The tag name",
+						"example": "dessert"
+					}
+				},
+				"required": [
+					"name"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"UpdateTagDto": {
+				"description": "DTO for tag update",
+				"properties": {
+					"name": {
+						"type": "string",
+						"description": "The tag name",
+						"example": "dessert"
+					}
+				},
+				"required": [
+					"name"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Ingredient": {
+				"properties": {
+					"quantity": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"quantity",
+					"name"
+				],
+				"type": "object"
+			},
+			"RecipeContentBlock": {
+				"anyOf": [
+					{
+						"properties": {
+							"content": {
+								"type": "string"
+							},
+							"type": {
+								"type": "string",
+								"enum": [
+									"text"
+								],
+								"nullable": false
+							}
+						},
+						"required": [
+							"content",
+							"type"
+						],
+						"type": "object"
+					},
+					{
+						"properties": {
+							"alt": {
+								"type": "string"
+							},
+							"url": {
+								"type": "string"
+							},
+							"type": {
+								"type": "string",
+								"enum": [
+									"image"
+								],
+								"nullable": false
+							}
+						},
+						"required": [
+							"url",
+							"type"
+						],
+						"type": "object"
+					}
+				]
+			},
+			"RecipeResponseDto": {
+				"description": "DTO for recipe response",
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double",
+						"description": "The unique identifier for the recipe",
+						"example": 1
+					},
+					"title": {
+						"type": "string",
+						"description": "The recipe title",
+						"example": "Delicious Chocolate Cake"
+					},
+					"description": {
+						"type": "string",
+						"description": "The recipe description",
+						"example": "A rich and moist chocolate cake that's perfect for any occasion."
+					},
+					"ingredients": {
+						"items": {
+							"$ref": "#/components/schemas/Ingredient"
+						},
+						"type": "array",
+						"description": "The recipe ingredients",
+						"example": [
+							{
+								"name": "flour",
+								"quantity": "2 cups"
+							},
+							{
+								"name": "sugar",
+								"quantity": "1 cup"
+							}
+						]
+					},
+					"content": {
+						"items": {
+							"$ref": "#/components/schemas/RecipeContentBlock"
+						},
+						"type": "array",
+						"description": "The recipe content blocks",
+						"example": [
+							{
+								"type": "text",
+								"content": "Mix all dry ingredients."
+							},
+							{
+								"type": "image",
+								"url": "https://example.com/image.jpg",
+								"alt": "Mixing bowl"
+							}
+						]
+					},
+					"author": {
+						"$ref": "#/components/schemas/UserResponseDto",
+						"description": "The recipe author"
+					},
+					"tags": {
+						"items": {
+							"$ref": "#/components/schemas/TagResponseDto"
+						},
+						"type": "array",
+						"description": "The recipe tags"
+					},
+					"likesCount": {
+						"type": "number",
+						"format": "double",
+						"description": "The number of likes the recipe has",
+						"example": 42
+					},
+					"commentsCount": {
+						"type": "number",
+						"format": "double",
+						"description": "The number of comments the recipe has",
+						"example": 10
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time",
+						"description": "The date the recipe was created"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time",
+						"description": "The date the recipe was last updated"
+					}
+				},
+				"required": [
+					"id",
+					"title",
+					"description",
+					"ingredients",
+					"content",
+					"author",
+					"tags",
+					"likesCount",
+					"commentsCount",
+					"createdAt",
+					"updatedAt"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"CreateRecipeDto": {
+				"description": "DTO for recipe creation",
+				"properties": {
+					"title": {
+						"type": "string",
+						"description": "The recipe title",
+						"example": "Delicious Chocolate Cake"
+					},
+					"description": {
+						"type": "string",
+						"description": "The recipe description",
+						"example": "A rich and moist chocolate cake that's perfect for any occasion."
+					},
+					"ingredients": {
+						"items": {
+							"$ref": "#/components/schemas/Ingredient"
+						},
+						"type": "array",
+						"description": "The recipe ingredients",
+						"example": [
+							{
+								"name": "flour",
+								"quantity": "2 cups"
+							},
+							{
+								"name": "sugar",
+								"quantity": "1 cup"
+							}
+						]
+					},
+					"content": {
+						"items": {
+							"$ref": "#/components/schemas/RecipeContentBlock"
+						},
+						"type": "array",
+						"description": "The recipe content blocks",
+						"example": [
+							{
+								"type": "text",
+								"content": "Mix all dry ingredients."
+							},
+							{
+								"type": "image",
+								"url": "https://example.com/image.jpg",
+								"alt": "Mixing bowl"
+							}
+						]
+					},
+					"tagIds": {
+						"items": {
+							"type": "number",
+							"format": "double"
+						},
+						"type": "array",
+						"description": "The IDs of tags to associate with the recipe",
+						"example": [
+							1,
+							2
+						]
+					}
+				},
+				"required": [
+					"title",
+					"description",
+					"ingredients",
+					"content",
+					"tagIds"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"UpdateRecipeDto": {
+				"description": "DTO for recipe update",
+				"properties": {
+					"title": {
+						"type": "string",
+						"description": "The recipe title",
+						"example": "Delicious Chocolate Cake"
+					},
+					"description": {
+						"type": "string",
+						"description": "The recipe description",
+						"example": "A rich and moist chocolate cake that's perfect for any occasion."
+					},
+					"ingredients": {
+						"items": {
+							"$ref": "#/components/schemas/Ingredient"
+						},
+						"type": "array",
+						"description": "The recipe ingredients",
+						"example": [
+							{
+								"name": "flour",
+								"quantity": "2 cups"
+							},
+							{
+								"name": "sugar",
+								"quantity": "1 cup"
+							}
+						]
+					},
+					"content": {
+						"items": {
+							"$ref": "#/components/schemas/RecipeContentBlock"
+						},
+						"type": "array",
+						"description": "The recipe content blocks",
+						"example": [
+							{
+								"type": "text",
+								"content": "Mix all dry ingredients."
+							},
+							{
+								"type": "image",
+								"url": "https://example.com/image.jpg",
+								"alt": "Mixing bowl"
+							}
+						]
+					},
+					"tagIds": {
+						"items": {
+							"type": "number",
+							"format": "double"
+						},
+						"type": "array",
+						"description": "The IDs of tags to associate with the recipe",
+						"example": [
+							1,
+							2
+						]
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"CreateUserDto": {
+				"description": "DTO for user creation",
+				"properties": {
+					"name": {
+						"type": "string",
+						"description": "The user's full name",
+						"example": "John Doe"
+					},
+					"email": {
+						"type": "string",
+						"description": "The user's email address",
+						"example": "john.doe@example.com"
+					},
+					"password": {
+						"type": "string",
+						"description": "The user's password",
+						"example": "password123"
+					}
+				},
+				"required": [
+					"name",
+					"email",
+					"password"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"LoginResponseDto": {
+				"description": "DTO for login response",
+				"properties": {
+					"token": {
+						"type": "string",
+						"description": "The JWT token for authentication",
+						"example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+					},
+					"user": {
+						"$ref": "#/components/schemas/UserResponseDto",
+						"description": "The user information"
+					}
+				},
+				"required": [
+					"token",
+					"user"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"LoginUserDto": {
+				"description": "DTO for user login",
+				"properties": {
+					"email": {
+						"type": "string",
+						"description": "The user's email address",
+						"example": "john.doe@example.com"
+					},
+					"password": {
+						"type": "string",
+						"description": "The user's password",
+						"example": "password123"
+					}
+				},
+				"required": [
+					"email",
+					"password"
+				],
+				"type": "object",
+				"additionalProperties": false
+			}
+		},
+		"securitySchemes": {
+			"jwt": {
+				"type": "http",
+				"scheme": "bearer",
+				"bearerFormat": "JWT"
+			},
+			"security": [
+				{
+					"jwt": []
+				}
+			],
+			"routes": {
+				"routesDir": "src",
+				"authenticationModule": "src/middleware/authMiddleware.ts"
+			}
+		}
+	},
+	"info": {
+		"title": "lab1",
+		"version": "1.0.0",
+		"license": {
+			"name": "ISC"
+		},
+		"contact": {}
+	},
+	"paths": {
+		"/users/{userId}": {
+			"get": {
+				"operationId": "GetUserById",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/UserResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Get a user by ID",
+				"tags": [
+					"Users"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "userId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			},
+			"put": {
+				"operationId": "UpdateUser",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/UserResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Update a user",
+				"tags": [
+					"Users"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "userId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateUserDto"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/users": {
+			"get": {
+				"operationId": "GetUserByEmail",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"$ref": "#/components/schemas/UserResponseDto"
+										},
+										{
+											"items": {
+												"$ref": "#/components/schemas/UserResponseDto"
+											},
+											"type": "array"
+										}
+									]
+								}
+							}
+						}
+					}
+				},
+				"description": "Get a user by email",
+				"tags": [
+					"Users"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "email",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/tags": {
+			"get": {
+				"operationId": "GetTags",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/TagResponseDto"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"description": "Get all tags",
+				"tags": [
+					"Tags"
+				],
+				"security": [],
+				"parameters": []
+			},
+			"post": {
+				"operationId": "CreateTag",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/TagResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Create a new tag",
+				"tags": [
+					"Tags"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateTagDto"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/tags/{tagId}": {
+			"get": {
+				"operationId": "GetTagById",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/TagResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Get a tag by ID",
+				"tags": [
+					"Tags"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "tagId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			},
+			"put": {
+				"operationId": "UpdateTag",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/TagResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Update a tag",
+				"tags": [
+					"Tags"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "tagId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateTagDto"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"operationId": "DeleteTag",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"description": "Delete a tag",
+				"tags": [
+					"Tags"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "tagId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/recipes": {
+			"get": {
+				"operationId": "GetRecipes",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/RecipeResponseDto"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"description": "Get all recipes with optional filtering",
+				"tags": [
+					"Recipes"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "tagId",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "authorId",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			},
+			"post": {
+				"operationId": "CreateRecipe",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/RecipeResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Create a new recipe",
+				"tags": [
+					"Recipes"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateRecipeDto"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/recipes/{recipeId}": {
+			"get": {
+				"operationId": "GetRecipeById",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/RecipeResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Get a recipe by ID",
+				"tags": [
+					"Recipes"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "recipeId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			},
+			"put": {
+				"operationId": "UpdateRecipe",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/RecipeResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Update a recipe",
+				"tags": [
+					"Recipes"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "recipeId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateRecipeDto"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"operationId": "DeleteRecipe",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"description": "Delete a recipe",
+				"tags": [
+					"Recipes"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "recipeId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/auth/register": {
+			"post": {
+				"operationId": "Register",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/UserResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Register a new user",
+				"tags": [
+					"Authentication"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateUserDto"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/auth/login": {
+			"post": {
+				"operationId": "Login",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/LoginResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"description": "Login with email and password",
+				"tags": [
+					"Authentication"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/LoginUserDto"
+							}
+						}
+					}
+				}
+			}
+		}
+	},
+	"servers": [
+		{
+			"url": "/"
+		}
+	]
+}
