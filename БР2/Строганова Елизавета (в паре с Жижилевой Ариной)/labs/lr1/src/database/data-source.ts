@@ -14,8 +14,8 @@ export const AppDataSource = new DataSource({
   type: "postgres",
   host: "localhost",
   port: 5432,
-  username: "postgres",
-  password: "Arina2992",
+  username: "postgres", // поменяй под свою БД
+  password: "admin",
   database: "fitness_app",
   synchronize: true,  // на разработке ок, потом лучше через миграции
   logging: false,
