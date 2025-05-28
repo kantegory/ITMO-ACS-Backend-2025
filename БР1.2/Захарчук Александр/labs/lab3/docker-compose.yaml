@@ -1,0 +1,83 @@
+services:
+  user-service:
+    build:
+      context: ./user-service
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./user-service/.env
+    depends_on:
+      - postgres-users
+    networks:
+      - recipes_network
+  postgres-users:
+    image: postgres:latest
+    container_name: postgres_users
+    env_file:
+      - ./user-service/.env
+    expose:
+      - 5432
+    volumes:
+      - pgdata-users:/var/lib/postgresql/data/pgdata
+    networks:
+      - recipes_network
+
+  recipe-service:
+    build:
+      context: ./recipe-service
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    env_file:
+      - ./recipe-service/.env
+    depends_on:
+      - postgres-recipes
+    networks:
+      - recipes_network
+
+  postgres-recipes:
+    image: postgres:latest
+    container_name: postgres_recipes
+    env_file:
+      - ./recipe-service/.env
+    expose:
+      - 5432
+    volumes:
+      - pgdata-recipes:/var/lib/postgresql/data/pgdata
+    networks:
+      - recipes_network
+    
+  social-service:
+    build:
+      context: ./social-service
+      dockerfile: Dockerfile
+    ports:
+      - "3002:3002"
+    env_file:
+      - ./social-service/.env
+    depends_on:
+      - postgres-social
+    networks:
+      - recipes_network
+
+  postgres-social:
+    image: postgres:latest
+    container_name: postgres_social
+    env_file:
+      - ./social-service/.env
+    expose:
+      - 5432
+    volumes:
+      - pgdata-social:/var/lib/postgresql/data/pgdata
+    networks:
+      - recipes_network
+
+volumes:
+  pgdata-recipes:
+  pgdata-users:
+  pgdata-social:
+
+networks:
+  recipes_network:
+    driver: bridge
