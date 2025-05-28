@@ -1,0 +1,44 @@
+services:
+  postgres-recipes:
+    image: postgres:latest
+    container_name: postgres_recipes
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: recipes
+      PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata-recipes:/var/lib/postgresql/data/pgdata
+
+  postgres-users:
+    image: postgres:latest
+    container_name: postgres_users
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: users
+      PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata-users:/var/lib/postgresql/data/pgdata
+
+  postgres-social:
+    image: postgres:latest
+    container_name: postgres_social
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: social
+      PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - "5434:5432"
+    volumes:
+      - pgdata-social:/var/lib/postgresql/data/pgdata
+
+volumes:
+  pgdata-recipes:
+  pgdata-users:
+  pgdata-social:
