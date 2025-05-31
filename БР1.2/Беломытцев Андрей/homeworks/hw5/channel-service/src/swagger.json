@@ -1,0 +1,1021 @@
+{
+	"openapi": "3.0.0",
+	"components": {
+		"examples": {},
+		"headers": {},
+		"parameters": {},
+		"requestBodies": {},
+		"responses": {},
+		"schemas": {
+			"ThemeDto": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"name": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"id",
+					"name"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ExtraThemeDto": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"name": {
+						"type": "string"
+					},
+					"channels": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"id",
+					"name"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"DeleteResult": {
+				"description": "Result object returned by DeleteQueryBuilder execution.",
+				"properties": {
+					"raw": {
+						"description": "Raw SQL result returned by executed query."
+					},
+					"affected": {
+						"type": "number",
+						"format": "double",
+						"nullable": true,
+						"description": "Number of affected rows/documents\nNot all drivers support this"
+					}
+				},
+				"required": [
+					"raw"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ReviewDto": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"rate": {
+						"type": "number",
+						"format": "double"
+					},
+					"text": {
+						"type": "string"
+					},
+					"timeCreate": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"channelId": {
+						"type": "string"
+					},
+					"userId": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"id",
+					"rate",
+					"text",
+					"timeCreate"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ReviewCreateDto": {
+				"properties": {
+					"channelId": {
+						"type": "string"
+					},
+					"text": {
+						"type": "string"
+					},
+					"rate": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"channelId",
+					"text",
+					"rate"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ChannelDto": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"url": {
+						"type": "string"
+					},
+					"title": {
+						"type": "string"
+					},
+					"views": {
+						"type": "number",
+						"format": "double"
+					},
+					"subs": {
+						"type": "number",
+						"format": "double"
+					},
+					"videos": {
+						"type": "number",
+						"format": "double"
+					},
+					"lang": {
+						"type": "string"
+					},
+					"iconDefault": {
+						"type": "string"
+					},
+					"iconMedium": {
+						"type": "string"
+					},
+					"iconHigh": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"isApproved": {
+						"type": "boolean"
+					},
+					"timeCreate": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"timeUpdate": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"category": {
+						"type": "number",
+						"format": "double"
+					},
+					"theme": {
+						"type": "number",
+						"format": "double"
+					},
+					"userId": {
+						"type": "number",
+						"format": "double"
+					},
+					"reviews": {
+						"items": {
+							"type": "number",
+							"format": "double"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"id",
+					"url",
+					"title",
+					"views",
+					"subs",
+					"videos",
+					"lang",
+					"iconDefault",
+					"iconMedium",
+					"iconHigh",
+					"description",
+					"isApproved",
+					"timeCreate",
+					"timeUpdate",
+					"category",
+					"theme",
+					"userId"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ChannelCreateDto": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"lang": {
+						"type": "string"
+					},
+					"category": {
+						"type": "string"
+					},
+					"theme": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"id",
+					"lang",
+					"category",
+					"theme"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Partial_ChannelCreateDto_": {
+				"properties": {
+					"id": {
+						"type": "string"
+					},
+					"lang": {
+						"type": "string"
+					},
+					"category": {
+						"type": "string"
+					},
+					"theme": {
+						"type": "string"
+					}
+				},
+				"type": "object",
+				"description": "Make all properties in T optional"
+			},
+			"CategoryDto": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"name": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"id",
+					"name"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ExtraCategoryDto": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"name": {
+						"type": "string"
+					},
+					"channels": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"id",
+					"name"
+				],
+				"type": "object",
+				"additionalProperties": false
+			}
+		},
+		"securitySchemes": {
+			"jwt": {
+				"type": "apiKey",
+				"name": "Authorization",
+				"in": "header"
+			}
+		}
+	},
+	"info": {
+		"title": "lab1",
+		"version": "1.0.0",
+		"license": {
+			"name": "ISC"
+		},
+		"contact": {}
+	},
+	"paths": {
+		"/theme": {
+			"get": {
+				"operationId": "Get",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/ThemeDto"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Theme"
+				],
+				"security": [],
+				"parameters": []
+			},
+			"post": {
+				"operationId": "Create",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ThemeDto"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Theme"
+				],
+				"security": [
+					{
+						"jwt": [
+							"admin"
+						]
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"name": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"name"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/theme/{id}": {
+			"get": {
+				"operationId": "GetOne",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ExtraThemeDto"
+										}
+									],
+									"nullable": true
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Theme"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			},
+			"put": {
+				"operationId": "Update",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ThemeDto"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Theme"
+				],
+				"security": [
+					{
+						"jwt": [
+							"admin"
+						]
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"name": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"name"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"operationId": "Remove",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DeleteResult"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Theme"
+				],
+				"security": [
+					{
+						"jwt": [
+							"admin"
+						]
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/review": {
+			"get": {
+				"operationId": "Get",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/ReviewDto"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Review"
+				],
+				"security": [],
+				"parameters": []
+			},
+			"post": {
+				"operationId": "Create",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ReviewDto"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Review"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ReviewCreateDto"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/review/{id}": {
+			"get": {
+				"operationId": "GetOne",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ReviewDto"
+										}
+									],
+									"nullable": true
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Review"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			},
+			"delete": {
+				"operationId": "Remove",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DeleteResult"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Review"
+				],
+				"security": [
+					{
+						"jwt": [
+							"admin"
+						]
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/channel": {
+			"get": {
+				"operationId": "Get",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/ChannelDto"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Channel"
+				],
+				"security": [],
+				"parameters": []
+			},
+			"post": {
+				"operationId": "Create",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ChannelDto"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Channel"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ChannelCreateDto"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/channel/{id}": {
+			"get": {
+				"operationId": "GetOne",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ChannelDto"
+										}
+									],
+									"nullable": true
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Channel"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						},
+						"example": "UCHnyfMqiRRG1u-2MsSQLbXA"
+					}
+				]
+			},
+			"put": {
+				"operationId": "Update",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ChannelDto"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Channel"
+				],
+				"security": [
+					{
+						"jwt": [
+							"admin"
+						]
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Partial_ChannelCreateDto_"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"operationId": "Remove",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DeleteResult"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Channel"
+				],
+				"security": [
+					{
+						"jwt": [
+							"admin"
+						]
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/category": {
+			"get": {
+				"operationId": "Get",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/CategoryDto"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Category"
+				],
+				"security": [],
+				"parameters": []
+			},
+			"post": {
+				"operationId": "Create",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CategoryDto"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Category"
+				],
+				"security": [
+					{
+						"jwt": [
+							"admin"
+						]
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"name": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"name"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/category/{id}": {
+			"get": {
+				"operationId": "GetOne",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"allOf": [
+										{
+											"$ref": "#/components/schemas/ExtraCategoryDto"
+										}
+									],
+									"nullable": true
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Category"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			},
+			"put": {
+				"operationId": "Update",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CategoryDto"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Category"
+				],
+				"security": [
+					{
+						"jwt": [
+							"admin"
+						]
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"name": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"name"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"operationId": "Remove",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DeleteResult"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Category"
+				],
+				"security": [
+					{
+						"jwt": [
+							"admin"
+						]
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		}
+	},
+	"servers": [
+		{
+			"url": "/"
+		}
+	]
+}
