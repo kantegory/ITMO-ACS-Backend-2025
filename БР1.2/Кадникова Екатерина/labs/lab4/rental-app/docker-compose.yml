@@ -1,0 +1,204 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: richard2023
+      POSTGRES_DB: lab3_db
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    networks:
+      - microservices-network
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  auth-service:
+    build:
+      context: ./auth-service
+      dockerfile: Dockerfile
+    environment:
+      PORT: 3000
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USERNAME: postgres
+      DB_PASSWORD: richard2023
+      DB_NAME: lab3_db
+      JWT_SECRET: richardrichardrichard
+      JWT_EXPIRES_IN: 360000
+    ports:
+      - "3000:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: on-failure
+    networks:
+      - microservices-network
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  user-service:
+    build:
+      context: ./user-service
+      dockerfile: Dockerfile
+    environment:
+      PORT: 3001
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USERNAME: postgres
+      DB_PASSWORD: richard2023
+      DB_NAME: lab3_db
+      JWT_SECRET: richardrichardrichard
+      JWT_EXPIRES_IN: 360000
+      AUTH_SERVICE_URL: http://auth-service:3000
+    ports:
+      - "3001:3001"
+    depends_on:
+      - postgres
+      - auth-service
+    restart: on-failure
+    networks:
+      - microservices-network
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  property-service:
+    build:
+      context: ./property-service
+      dockerfile: Dockerfile
+    environment:
+      PORT: 3002
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USERNAME: postgres
+      DB_PASSWORD: richard2023
+      DB_NAME: lab3_db
+      JWT_SECRET: richardrichardrichard
+      JWT_EXPIRES_IN: 360000
+      AUTH_SERVICE_URL: http://auth-service:3000
+      USER_SERVICE_URL: http://user-service:3001
+    ports:
+      - "3002:3002"
+    depends_on:
+      - postgres
+      - auth-service
+      - user-service
+    restart: on-failure
+    networks:
+      - microservices-network
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  chat-service:
+    build:
+      context: ./chat-service
+      dockerfile: Dockerfile
+    environment:
+      PORT: 3003
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USERNAME: postgres
+      DB_PASSWORD: richard2023
+      DB_NAME: lab3_db
+      JWT_SECRET: richardrichardrichard
+      JWT_EXPIRES_IN: 360000
+      AUTH_SERVICE_URL: http://auth-service:3000
+      USER_SERVICE_URL: http://user-service:3001
+      PROPERTY_SERVICE_URL: http://property-service:3002
+    ports:
+      - "3003:3003"
+    depends_on:
+      - postgres
+      - auth-service
+      - user-service
+      - property-service
+    restart: on-failure
+    networks:
+      - microservices-network
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  rental-service:
+    build:
+      context: ./rental-service
+      dockerfile: Dockerfile
+    environment:
+      PORT: 3004
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USERNAME: postgres
+      DB_PASSWORD: richard2023
+      DB_NAME: lab3_db
+      JWT_SECRET: richardrichardrichard
+      JWT_EXPIRES_IN: 360000
+      AUTH_SERVICE_URL: http://auth-service:3000
+      USER_SERVICE_URL: http://user-service:3001
+      PROPERTY_SERVICE_URL: http://property-service:3002
+    ports:
+      - "3004:3004"
+    depends_on:
+      - postgres
+      - auth-service
+      - user-service
+      - property-service
+    restart: on-failure
+    networks:
+      - microservices-network
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  api-gateway:
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile
+    environment:
+      PORT: 4000
+      AUTH_SERVICE_URL: http://auth-service:3000
+      USER_SERVICE_URL: http://user-service:3001
+      PROPERTY_SERVICE_URL: http://property-service:3002
+      CHAT_SERVICE_URL: http://chat-service:3003
+      RENTAL_SERVICE_URL: http://rental-service:3004
+    ports:
+      - "4000:4000"
+    depends_on:
+      - auth-service
+      - user-service
+      - property-service
+      - chat-service
+      - rental-service
+    restart: on-failure
+    networks:
+      - microservices-network
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  postgres-data:
+
+networks:
+  microservices-network:
+    driver: bridge
