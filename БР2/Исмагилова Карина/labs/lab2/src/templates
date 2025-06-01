@@ -1,0 +1,87 @@
+http://localhost:3000/api/recipes/create
+{
+  "title": "",
+  "description": "",
+  "ingredients": "",
+  "instructions": "",
+  "difficulty_level": "",
+  "preparation_time": 1
+}
+
+
+http://localhost:3000/api/register
+{
+  "email": "Anna@example.com",
+  "password": "securePassword123",
+  "username": "Annet",
+  "bio": "I LOVE Coooooking"
+}
+
+http://localhost:3000/api/login
+
+{
+  "email": "Anna@example.com",
+  "password": "securePassword123"
+}
+
+http://localhost:3000/api/recipes/create
+{
+  "title": "Шоколадный торт",
+  "description": "Очень вкусный домашний торт с шоколадом.",
+  "ingredients": "Мука, яйца, сахар, какао, разрыхлитель, сливочное масло",
+  "instructions": "1. Смешать ингредиенты\n2. Выпекать при 180°С 30 минут",
+  "difficulty_level": "средний",
+  "preparation_time": 45
+}
+
+
+http://localhost:3000/api/rating/create
+{
+  "recipe": {
+    "recipe_id": 4
+  },
+  "rating_value": 4
+}
+
+http://localhost:3000/api/files/create
+{
+  "file_path": "https://encrypted-tbn0 ля ля ля",
+  "recipe": {
+    "recipe_id": 1
+  },
+  "article": {
+    "article_id": 2
+  }
+}
+
+http://localhost:3000/api/favourites/create
+{
+  "recipe": {
+    "recipe_id": 42
+  }
+}
+
+http://localhost:3000/api/comments/create
+{
+  "recipe_id": 3,
+  "text": "This is a great recipe! Loved it."
+}
+
+http://localhost:3000/api/categories/create
+{
+  "category_name": "Завтраки",
+  "recipe": {
+    "recipe_id": 3
+  }
+}
+
+http://localhost:3000/api/articles/create
+{
+  "title": "Как приготовить омлет",
+  "content": "В этой статье расскажем, как приготовить вкусный омлет с помидорами и зеленью.",
+  "files": [
+    {
+      "file_id": 1
+    }
+  ]
+}
