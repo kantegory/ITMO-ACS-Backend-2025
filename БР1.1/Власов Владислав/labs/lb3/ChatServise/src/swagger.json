@@ -1,0 +1,114 @@
+{
+    "openapi": "3.0.0",
+    "info": { 
+        "title": "Сервис чата",
+        "version":"1.0.0"
+    },
+    "paths": { 
+        "/chat/api/messages/create": { 
+            "post": {
+                "tags": ["Messages"],
+                "security": [{
+                    "bearerAuth": []
+                }],
+                "description": "Создать новое сообщение",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "text": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": ["text"],
+                                "example": {
+                                    "text": "string"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает созданный объект"
+                    }
+                }
+            }
+        },
+        "/chat/api/messages/": { 
+            "get": {
+                "tags": ["Messages"],
+                "security": [{
+                    "bearerAuth": []
+                }],
+                "description": "Получить список всех сообщений",
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает список объектов"
+                    }
+                }
+            }
+        },
+        "/chat/api/messages/{id}": { 
+            "get": {
+                "tags": ["Messages"],
+                "security": [{
+                    "bearerAuth": []
+                }],
+                "description": "Получить сообщение по id",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает запрошенный объект"
+                    }
+                }
+            }
+        },
+        "/chat/api/chat_history/": { 
+            "get": {
+                "tags": ["ChatHistory"],
+                "security": [{
+                    "bearerAuth": []
+                }],
+                "description": "Получить список всех событий чата",
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает список объектов"
+                    }
+                }
+            }
+        }
+    },
+    
+    
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT",
+                "description": "JWT токен в формате: Bearer <token>"
+            }
+        }
+    },
+    "tags": [
+        {
+          "name": "Messages",
+          "description": "Управление сообщениями"
+        },
+        {
+            "name": "ChatHistory",
+            "description": "Доступ к истории чата"
+        }
+    ]
+}
