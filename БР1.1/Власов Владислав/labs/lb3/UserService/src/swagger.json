@@ -1,0 +1,235 @@
+{
+    "openapi": "3.0.0",
+    "info": { 
+        "title": "Сервис пользователей",
+        "version":"1.0.0"
+    },
+    "paths": { 
+        "/users/api/auth/login": { 
+            "post": {
+                "tags": ["Authentication"],
+                "description": "Получить токен по данным авторизации",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": { "type": "string" },
+                                    "password": { "type": "string" }
+                                },
+                                "required": ["email", "password"],
+                                "example": {
+                                    "username": "admin",
+                                    "password": "123456"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает токен авторизации"
+                    }
+                
+                }
+            }
+        },
+        "/users/api/users/create": { 
+            "post": {
+                "tags": ["Users"],
+                "security": [{
+                    "bearerAuth": []
+                }],
+                "description": "Создать нового пользователя",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email"
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password"
+                                    }
+                                },
+                                "required": ["email", "name", "password"],
+                                "example": {
+                                    "email": "user@example.com",
+                                    "name": "John Doe",
+                                    "password": "securePassword123!"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает созданный объект"
+                    }
+                }
+            }
+        },
+        "/users/api/users/": { 
+            "get": {
+                "tags": ["Users"],
+                "security": [{
+                    "bearerAuth": []
+                }],
+                "description": "Получить список всех пользователей",
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает список объектов"
+                    }
+                }
+            }
+        },
+        "/users/api/users/{id}": { 
+            "get": {
+                "tags": ["Users"],
+                "security": [{
+                    "bearerAuth": []
+                }],
+                "description": "Получить пользователя по id",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает запрошенный объект"
+                    }
+                }
+            }
+        },
+        "/users/api/users/email/{email}": { 
+            "get": {
+                "tags": ["Users"],
+                "security": [{
+                    "bearerAuth": []
+                }],
+                "description": "Получить пользователя по email",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "path",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает запрошенный объект"
+                    }
+                }
+            }
+        },
+        "/users/api/users/update/{id}": { 
+            "patch": {
+                "tags": ["Users"],
+                "security": [{
+                    "bearerAuth": []
+                }],
+                "description": "Обновить пользователя",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email"
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password"
+                                    }
+                                },
+                                "example": {
+                                    "email": "user@example.com",
+                                    "name": "John Doe",
+                                    "password": "securePassword123!"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает обновлённый объект"
+                    }
+                }
+            }
+        },
+        "/users/api/users/delete/{id}": { 
+            "patch": {
+                "tags": ["Users"],
+                "security": [{
+                    "bearerAuth": []
+                }],
+                "description": "Удалить пользователя",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает сообщение об успехе"
+                    }
+                }
+            }
+        }
+    },
+
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT",
+                "description": "JWT токен в формате: Bearer <token>"
+            }
+        }
+    },
+
+    "tags": [
+        {
+            "name": "Authentication",
+            "description": "Авторизация"
+        },
+        {
+            "name": "Users",
+            "description": "Управление пользователями"
+        }
+    ]
+}
