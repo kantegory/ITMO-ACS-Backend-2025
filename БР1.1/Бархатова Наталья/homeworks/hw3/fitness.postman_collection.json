@@ -1,0 +1,942 @@
+{
+  "info": {
+    "name": "Fitness App API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Коллекция запросов для тестирования Fitness App API"
+  },
+  "item": [
+    {
+      "name": "Auth - Register",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/api/auth/register",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "auth",
+            "register"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"strongPassword123\",\n  \"username\": \"user123\",\n  \"details\": {\n    \"age\": 25,\n    \"gender\": \"male\",\n    \"weight\": 70,\n    \"height\": 180\n  }\n}"
+        }
+      }
+    },
+    {
+      "name": "Auth - Login",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/api/auth/login",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "auth",
+            "login"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"strongPassword123\"\n}"
+        }
+      }
+    },
+    {
+      "name": "User - Create",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer <JWT>"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/api/users",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "users"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"user2@example.com\",\n  \"username\": \"user2\",\n  \"password\": \"password\"\n}"
+        }
+      }
+    },
+    {
+      "name": "User - Get All",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer <JWT>"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/api/users",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "users"
+          ]
+        }
+      }
+    },
+    {
+      "name": "User - Get by Email",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer <JWT>"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/api/users/by-email?email=user@example.com",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "users",
+            "by-email"
+          ],
+          "query": [
+            {
+              "key": "email",
+              "value": "user@example.com"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "User - Get by ID",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer <JWT>"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/api/users/<userId>",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "users",
+            "<userId>"
+          ]
+        }
+      }
+    },
+    {
+      "name": "User - Update",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer <JWT>"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/api/users/<userId>",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "users",
+            "<userId>"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"new@example.com\",\n  \"username\": \"newuser\",\n  \"password\": \"newPassword\"\n}"
+        }
+      }
+    },
+    {
+      "name": "User - Delete",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer <JWT>"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/api/users/<userId>",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "users",
+            "<userId>"
+          ]
+        }
+      }
+    },
+    {
+      "name": "UserDetails - Create",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer <JWT>"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/api/userDetails",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "userDetails"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"age\": 30,\n  \"gender\": \"male\",\n  \"weight\": 75.5,\n  \"height\": 180\n}"
+        }
+      }
+    },
+    {
+      "name": "UserDetails - Get All",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer <JWT>"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/api/userDetails",
+          "host": [
+            "http://localhost:3000"
+          ],
+          "path": [
+            "api",
+            "userDetails"
+          ]
+        }
+      }
+    },
+    {
+      "name": "UserDetails - Get by ID",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer <JWT>"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/api/userDetails/:id",
+          "host": [
+            "http://localhost:3000"
+          ],
+          "path": [
+            "api",
+            "userDetails",
+            ":id"
+          ],
+          "variable": [
+            {
+              "key": "id",
+              "value": "<userDetailsId>"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "UserDetails - Update",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer <JWT>"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/api/userDetails/:id",
+          "host": [
+            "http://localhost:3000"
+          ],
+          "path": [
+            "api",
+            "userDetails",
+            ":id"
+          ],
+          "variable": [
+            {
+              "key": "id",
+              "value": "<userDetailsId>"
+            }
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"age\": 31,\n  \"gender\": \"female\",\n  \"weight\": 70.2,\n  \"height\": 175\n}"
+        }
+      }
+    },
+    {
+      "name": "UserDetails - Delete",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer <JWT>"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/api/userDetails/:id",
+          "host": [
+            "http://localhost:3000"
+          ],
+          "path": [
+            "api",
+            "userDetails",
+            ":id"
+          ],
+          "variable": [
+            {
+              "key": "id",
+              "value": "<userDetailsId>"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Workout - Create",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer <JWT>"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/api/workouts",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "workouts"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"level\": \"easy\",\n  \"workout_type\": \"strength\",\n  \"duration\": 60,\n  \"video\": \"https://youtube.com/example\",\n  \"description\": \"Описание тренировки\",\n  \"guide\": \"Инструкция\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Workout - Get All",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer <JWT>"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/api/workouts",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "workouts"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Workout - Get by ID",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer <JWT>"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/api/workouts/<workoutId>",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "workouts",
+            "<workoutId>"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Workout - Update",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer <JWT>"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/api/workouts/<workoutId>",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "workouts",
+            "<workoutId>"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"level\": \"Easy\",\n  \"workout_type\": \"Strength\",\n  \"duration\": 60,\n  \"video\": \"https://youtube.com/example\",\n  \"description\": \"Обновленное описание\",\n  \"guide\": \"Обновленный гайд\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Workout - Delete",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer <JWT>"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/api/workouts/<workoutId>",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "workouts",
+            "<workoutId>"
+          ]
+        }
+      }
+    },
+    {
+      "name": "TrainingPlan - Create",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer <JWT>"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/api/training_plans",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "training_plans"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"userId\": \"<userId>\",\n  \"workoutId\": \"<workoutId>\",\n  \"completed\": false,\n  \"scheduled_date\": \"2025-06-01T10:00:00Z\",\n  \"difficulty_grade\": 3\n}"
+        }
+      }
+    },
+    {
+      "name": "TrainingPlan - Get All",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer <JWT>"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/api/training_plans",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "training_plans"
+          ]
+        }
+      }
+    },
+    {
+      "name": "TrainingPlan - Get by ID",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer <JWT>"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/api/training_plans/<planId>",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "training_plans",
+            "<planId>"
+          ]
+        }
+      }
+    },
+    {
+      "name": "TrainingPlan - Update",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer <JWT>"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/api/training_plans/<planId>",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "training_plans",
+            "<planId>"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"userId\": \"123e4567-e89b-12d3-a456-426614174000\",\n  \"workoutId\": \"987e6543-e21b-12d3-a456-426614174000\",\n  \"completed\": true,\n  \"scheduled_date\": \"2025-06-01T10:00:00Z\",\n  \"difficulty_grade\": 4\n}"
+        }
+      }
+    },
+    {
+      "name": "TrainingPlan - Delete",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer <JWT>"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/api/training_plans/<planId>",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "training_plans",
+            "<planId>"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Progress - Create",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer <JWT>"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/api/progresses",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "progresses"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"userId\": \"<userId>\",\n  \"current_weight\": 75.5,\n  \"workout_minutes\": 120,\n  \"completed_workouts\": 10\n}"
+        }
+      }
+    },
+    {
+      "name": "Progress - Get All",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer <JWT>"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/api/progresses",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "progresses"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Progress - Get by ID",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer <JWT>"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/api/progresses/<progressId>",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "progresses",
+            "<progressId>"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Progress - Update",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer <JWT>"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/api/progresses/<progressId>",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "progresses",
+            "<progressId>"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"current_weight\": 74.0,\n  \"workout_minutes\": 150,\n  \"completed_workouts\": 12\n}"
+        }
+      }
+    },
+    {
+      "name": "Progress - Delete",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer <JWT>"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/api/progresses/<progressId>",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "progresses",
+            "<progressId>"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Post - Create",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer <JWT>"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/api/posts",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "posts"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"My first post\",\n  \"text\": \"This is the content of the post.\",\n  \"userId\": \"<userId>\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Post - Get All",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer <JWT>"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/api/posts",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "posts"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Post - Get by ID",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer <JWT>"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/api/posts/<postId>",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "posts",
+            "<postId>"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Post - Update",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer <JWT>"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/api/posts/<postId>",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "posts",
+            "<postId>"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Updated title\",\n  \"text\": \"Updated content\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Post - Delete",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer <JWT>"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:3000/api/posts/<postId>",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "3000",
+          "path": [
+            "api",
+            "posts",
+            "<postId>"
+          ]
+        }
+      }
+    }
+  ]
+}
