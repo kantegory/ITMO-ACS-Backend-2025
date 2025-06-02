@@ -1,0 +1,102 @@
+services:
+  db:
+    image: postgres:17-alpine
+    container_name: postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data_lr4:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - backend_lr4_network
+  
+  gateway:
+    build:
+      context: ../gateway
+      dockerfile: ../deploy/Dockerfile
+    container_name: gateway
+    ports:
+      - "3000:3000"
+    environment:
+      - USERS_SERVICE_URL=http://users-service:3000
+      - PROPERTIES_SERVICE_URL=http://property-service:3000
+      - CHATS_SERVICE_URL=http://chats-service:3000
+    depends_on:
+      - db
+      - users-service
+      - property-service
+      - chats-service
+    networks:
+      - backend_lr4_network
+  
+  users-service:
+    build:
+      context: ../user-service
+      dockerfile: ../deploy/Dockerfile
+    container_name: users_service
+    ports:
+      - "3001:3000"
+    depends_on:
+      - db
+    environment:
+      - POSTGRES_HOST=db
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB=users
+      - JWT_SECRET=${JWT_SECRET}
+      - JWT_EXPIRATION=${JWT_EXPIRATION}
+    networks:
+      - backend_lr4_network
+  
+  property-service:
+    build:
+      context: ../property-service
+      dockerfile: ../deploy/Dockerfile
+    container_name: property_service
+    ports:
+      - "3002:3000"
+    depends_on:
+      - db
+    environment:
+      - POSTGRES_HOST=db
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PORT=5432
+      - JWT_SECRET=${JWT_SECRET}
+      - POSTGRES_DB=properties
+    networks:
+      - backend_lr4_network
+  
+  chats-service:
+    build:
+      context: ../chats-service
+      dockerfile: ../deploy/Dockerfile
+    container_name: chats_service
+    ports:
+      - "3003:3000"
+    environment:
+      - POSTGRES_HOST=db
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB=chats
+      - SERVICE_KEY=${SERVICE_KEY}
+      - JWT_SECRET=${JWT_SECRET}
+      - PROPERTY_SERVICE_URL=http://property-service:3000
+    depends_on:
+      - db
+    networks:
+      - backend_lr4_network
+
+volumes:
+  db_data_lr4:
+    driver: local
+
+networks:
+  backend_lr4_network:
+    driver: bridge
