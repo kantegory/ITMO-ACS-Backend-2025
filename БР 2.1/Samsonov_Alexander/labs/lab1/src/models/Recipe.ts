@@ -28,7 +28,7 @@ export class Recipe {
     @PrimaryGeneratedColumn()
     id!: number;
 
-    @Column()
+    @Column({ type: "varchar" })
     title!: string;
 
     @Column("text")

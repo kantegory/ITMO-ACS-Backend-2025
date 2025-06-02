@@ -2,6 +2,7 @@ import { Body, Controller, Get, Path, Put, Route, Security, Tags, Query } from '
 import { AppDataSource } from '../data-source';
 import { User } from '../models/User';
 import { UpdateUserDto, UserResponseDto } from '../dtos/UserDto';
+import bcrypt from 'bcrypt';
 
 @Route('users')
 @Tags('Users')
@@ -58,16 +59,13 @@ export class UserController extends Controller {
     @Path() userId: number,
     @Body() requestBody: UpdateUserDto
   ): Promise<UserResponseDto> {
-    // Get the authenticated user from the request
-    const authenticatedUserId = (this.request as any).user.id;
+    const authenticatedUserId = this.request.user.id;
 
-    // Check if the authenticated user is trying to update their own profile
     if (authenticatedUserId !== userId) {
       this.setStatus(403);
       throw new Error('You can only update your own profile');
     }
 
-    // Find the user
     const user = await this.userRepository.findOne({
       where: { id: userId }
     });
@@ -77,13 +75,11 @@ export class UserController extends Controller {
       throw new Error('User not found');
     }
 
-    // Update user fields
     if (requestBody.name) {
       user.name = requestBody.name;
     }
 
     if (requestBody.email) {
-      // Check if email is already taken
       const existingUser = await this.userRepository.findOne({
         where: { email: requestBody.email }
       });
@@ -97,12 +93,9 @@ export class UserController extends Controller {
     }
 
     if (requestBody.password) {
-      // Hash the new password
-      const bcrypt = require('bcrypt');
       user.password = await bcrypt.hash(requestBody.password, 10);
     }
 
-    // Save updated user
     await this.userRepository.save(user);
 
     return new UserResponseDto(user);

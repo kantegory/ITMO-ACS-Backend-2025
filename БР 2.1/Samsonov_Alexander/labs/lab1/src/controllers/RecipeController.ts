@@ -200,7 +200,7 @@ export class RecipeController extends Controller {
         @Request() request: ExpressRequest,
         @Path() recipeId: number
     ): Promise<void> {
-        const userId = (request as any).user.id;
+        const userId = request.user.id;
 
         const recipe = await this.recipeRepository.findOne({
             where: {id: recipeId},
