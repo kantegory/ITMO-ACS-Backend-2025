@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "target": "ES2019",             // или ES2020/ESNext – важно, чтобы был ES2015+ 
+    "module": "CommonJS",           // либо "ES2020"/"ESNext" + "type": "module" в package.json
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "experimentalDecorators": true, // ← ВКЛЮЧАЕМ ДЕКОРАТОРЫ
+    "emitDecoratorMetadata": true,  // ← ВКЛЮЧАЕМ МЕТАДАННЫЕ ДЛЯ ДЕКОРАТОРОВ
+    "strict": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "dist"
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules"]
+}

@@ -1,0 +1,186 @@
+@startuml
+hide circle
+skinparam linetype ortho
+skinparam shadowing false
+skinparam style strictuml
+
+
+
+    entity Shot {
+    * id : BIGINT
+    --
+        series_id : BIGINT
+        order : POSITIVE SMALLINT
+        x : DECIMAL(4,4)
+        y : DECIMAL(4,4)
+        score : DECIMAL(3,1)
+        time_offset : POSITIVE SMALLINT
+    }
+
+    entity Series {
+        * id : BIGINT
+        --
+        training_id : INT
+        begin_time_offset : POSITIVE SMALLINT
+        end_time_offset : POSITIVE SMALLINT
+    }
+
+    entity Training {
+        * id : INT
+        --
+        athlete_id : INT
+        start_ts : DATETIME
+        end_ts : DATETIME
+        weapon_type_id : SMALLINT
+        target_id : SMALLINT
+        scheduled_date : DATE
+        total_score : SMALLINT
+
+    }
+
+
+        entity QualificationTraining {
+            * id : INT
+            --
+            training_id : INT
+            exercise_id : SMALLINT
+        }
+
+        entity FreeTraining {
+            * id : INT
+            --
+            training_id : INT
+            weapon_type_id : INT
+            target_ID : INT
+        }
+
+
+
+
+
+    entity Note {
+    * id : BIGINT
+    --
+    user_id : INT
+    created_at : DATETIME
+    edited_at : DATETIME
+    content : TEXT
+    }
+
+    entity TrainingNotes {
+        * id : INT
+        --
+        note_id : BIGINT
+        training_id : INT
+    }
+
+    entity SeriesNotes {
+        * id : BIGINT
+        --
+        note_id : BIGINT
+        series_id : BIGINT
+    }
+
+
+together {
+    entity User {
+        * id : INT
+        --
+        username : VARCHAR
+        email : VARCHAR
+        password_hash : VARCHAR
+        first_name : VARCHAR
+        second_name : VARCHAR
+        avatar : BYTEA
+
+    }
+
+    entity Coach {
+        * id : INT
+        --
+        user_id : INT
+    }
+
+    entity Athlete {
+        * id : INT
+        --
+        user_id : INT
+        coach_id : INT
+    }
+
+}
+
+
+
+
+
+
+
+    entity WeaponType {
+    * id : SMALLINT
+    --
+    name : VARCHAR
+    }   
+
+    entity Target {
+    * id : INT
+    --
+        name : VARCHAR
+        description : TEXT
+        image : BYTEA
+    }
+
+    entity Exercise {
+    * id : SMALLINT
+    --
+        weapon_type_id : SMALLINT
+        target_id : SMALLINT
+        shots : SMALLINT
+        shots_in_series : SMALLINT
+        duration : SMALLINT
+        description : TEXT
+    }
+
+
+
+
+
+
+
+
+
+
+' связи
+Training ||--o{ Series            : training_id
+Series ||--o{ Shot  : series_id
+User             ||--o{ Training : athlete_id
+
+WeaponType       ||--o{ FreeTraining : weapon_type_id
+Target           ||--o{ FreeTraining : target_id
+Training         ||--|| FreeTraining : training_id
+
+Exercise         ||--o{ QualificationTraining    : exercise_id
+Training         ||--|| QualificationTraining    : training_id
+
+
+User             ||--o{ Coach     : user_id
+User             ||--o{ Athlete     : user_id
+Athlete             }o--|{ Coach     : coach_id
+
+
+
+WeaponType     ||--o{ Exercise         : weapon_type_id
+Target     ||--o{ Exercise         : target_id
+
+
+Note             }|--|| User      : user_id
+
+
+Note             ||--|| SeriesNotes      : note_id
+Series             ||--o{ SeriesNotes      : series_id
+
+Note             ||--|| TrainingNotes      : note_id
+Training         ||--o{ TrainingNotes      : training_id
+
+
+@enduml
