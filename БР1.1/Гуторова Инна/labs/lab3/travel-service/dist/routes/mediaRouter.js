@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const mediaController_1 = require("../controllers/mediaController");
+const auth_1 = require("../middleware/auth");
+const mediaRouter = (0, express_1.Router)();
+mediaRouter.post('/', auth_1.authenticate, auth_1.authorizeAdmin, mediaController_1.MediaController.create);
+mediaRouter.get('/', mediaController_1.MediaController.getAll);
+mediaRouter.get('/:id', mediaController_1.MediaController.getById);
+mediaRouter.delete('/:id', auth_1.authenticate, auth_1.authorizeAdmin, mediaController_1.MediaController.delete);
+exports.default = mediaRouter;
