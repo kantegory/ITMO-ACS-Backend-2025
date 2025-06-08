@@ -16,6 +16,13 @@ const options = {
             },
         ],
         components: {
+            securitySchemes: {
+                bearerAuth: {
+                    type: 'http',
+                    scheme: 'bearer',
+                    bearerFormat: 'JWT',
+                },
+            },
             schemas: {
                 UserRole: {
                     type: 'string',
@@ -29,9 +36,9 @@ const options = {
                         id: { type: 'integer', example: 1 },
                         username: { type: 'string', example: 'john_doe' },
                         email: { type: 'string', example: 'john@example.com' },
-                        password: { type: 'string', example: 'hashed_password' }, // обычно пароль не показывают, но для примера
+                        password: { type: 'string', example: 'hashed_password' }, // обычно не включается, но может быть полезен на dev-этапе
                         role: { $ref: '#/components/schemas/UserRole' },
-                        companyId: { type: ['integer', 'null'], example: 3, nullable: true }, // id компании или null
+                        companyId: { type: ['integer', 'null'], example: 3, nullable: true },
                         resumes: {
                             type: 'array',
                             items: { type: 'integer' },
@@ -66,8 +73,10 @@ const options = {
                 },
             },
         },
+        // глобальное применение безопасности (опционально)
+        // security: [{ bearerAuth: [] }],
     },
-    apis: ['./routes/*.ts'], // путь к вашим файлам с аннотациями swagger
+    apis: ['./routes/*.ts'], // путь к файлам с аннотациями swagger
 };
 
 const swaggerSpec = swaggerJSDoc(options);

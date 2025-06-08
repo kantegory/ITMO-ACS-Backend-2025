@@ -91,7 +91,7 @@
 
 import {NextFunction, Request, RequestHandler, Response, Router} from "express";
 import * as controller from "../controllers/work_experienceController";
-import { SwaggerDefinition } from 'swagger-jsdoc';
+import { verifyToken } from "../libs/auth";
 
 const asyncHandler = (
     fn: (req: Request, res: Response, next: NextFunction) => Promise<any>
@@ -102,14 +102,14 @@ const asyncHandler = (
 };
 const router = Router();
 
-router.get("/", controller.getAllWorkExperiences);
+router.get("/", verifyToken, controller.getAllWorkExperiences);
 
-router.get("/:id", controller.getWorkExperienceById);
+router.get("/:id", verifyToken, controller.getWorkExperienceById);
 
-router.post("/", asyncHandler(controller.createWorkExperience));
+router.post("/", verifyToken, asyncHandler(controller.createWorkExperience));
 
-router.put("/:id", controller.updateWorkExperience);
+router.put("/:id", verifyToken, controller.updateWorkExperience);
 
-router.delete("/:id", controller.deleteWorkExperience);
+router.delete("/:id", verifyToken, controller.deleteWorkExperience);
 
 export default router;

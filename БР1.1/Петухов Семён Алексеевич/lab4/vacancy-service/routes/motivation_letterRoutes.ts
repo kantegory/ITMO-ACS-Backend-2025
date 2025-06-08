@@ -91,7 +91,7 @@
 
 import {NextFunction, Request, RequestHandler, Response, Router} from "express";
 import * as controller from "../controllers/motivation_letterController";
-
+import { verifyToken } from "../libs/auth";
 const asyncHandler = (
     fn: (req: Request, res: Response, next: NextFunction) => Promise<any>
 ): RequestHandler => {
@@ -101,17 +101,17 @@ const asyncHandler = (
 };
 const router = Router();
 
-router.get("/", controller.getAllLetters);
+router.get("/", verifyToken, controller.getAllLetters);
 
 
-router.get("/:id", controller.getLetterById);
+router.get("/:id", verifyToken, controller.getLetterById);
 
 
-router.post("/", asyncHandler(controller.createLetter));
+router.post("/", verifyToken, asyncHandler(controller.createLetter));
 
 
-router.put("/:id", asyncHandler(controller.updateLetter));
+router.put("/:id", verifyToken, asyncHandler(controller.updateLetter));
 
-router.delete("/:id", controller.deleteLetter);
+router.delete("/:id", verifyToken, controller.deleteLetter);
 
 export default router;

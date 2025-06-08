@@ -90,6 +90,7 @@
  */
 import {NextFunction, Request, RequestHandler, Response, Router} from "express";
 import * as controller from "../controllers/resumeController";
+import { verifyToken } from "../libs/auth";
 
 const asyncHandler = (
     fn: (req: Request, res: Response, next: NextFunction) => Promise<any>
@@ -101,18 +102,17 @@ const asyncHandler = (
 
 const router = Router();
 
-router.get("/", controller.getAllResumes);
+router.get("/", verifyToken, controller.getAllResumes);
 
 
-router.get("/:id", controller.getResumeById);
+router.get("/:id", verifyToken, controller.getResumeById);
 
 
+router.post("/", verifyToken, asyncHandler(controller.createResume));
 
-router.post("/", asyncHandler(controller.createResume));
-
-router.put("/:id", asyncHandler(controller.updateResume));
+router.put("/:id", verifyToken, asyncHandler(controller.updateResume));
 
 
-router.delete("/:id", controller.deleteResume);
+router.delete("/:id", verifyToken, controller.deleteResume);
 
 export default router;

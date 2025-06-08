@@ -3,10 +3,11 @@ import cors from "cors";
 import { swaggerUi, swaggerSpec } from './swagger';
 import { AppDataSource } from "./data-source";
 import userRoutes from "./routes/userRoutes";
-
+import dotenv from "dotenv";
 const app = express();
 app.use(cors());
 app.use(express.json());
+dotenv.config();
 
 app.use('/user-service/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use("/user-service/user", userRoutes);

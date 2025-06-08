@@ -119,26 +119,20 @@
  *       204:
  *         description: Удалено
  */
-import { Router, Request, Response, NextFunction, RequestHandler } from "express";
+import { Router } from "express";
 import * as controller from "../controllers/educationController";
+import { verifyToken } from "../libs/auth";
 
 const router = Router();
 
-const asyncHandler = (
-    fn: (req: Request, res: Response, next: NextFunction) => Promise<any>
-): RequestHandler => {
-    return (req, res, next) => {
-        Promise.resolve(fn(req, res, next)).catch(next);
-    };
-};
 
 router.get("/", controller.getAllEducations);
 router.get("/:id", controller.getEducationById);
 
-router.post("/", asyncHandler(controller.createEducation));
+router.post("/", verifyToken, controller.createEducation);
 
-router.put("/:id", controller.updateEducation);
+router.put("/:id", verifyToken, controller.updateEducation);
 
-router.delete("/:id", controller.deleteEducation);
+router.delete("/:id", verifyToken, controller.deleteEducation);
 
 export default router;

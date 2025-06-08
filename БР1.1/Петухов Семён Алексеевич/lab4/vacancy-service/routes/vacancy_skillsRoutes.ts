@@ -90,7 +90,7 @@
  */
 import {NextFunction, Request, RequestHandler, Response, Router} from "express";
 import * as controller from "../controllers/vacancy_skillsController";
-
+import { verifyToken } from "../libs/auth";
 const asyncHandler = (
     fn: (req: Request, res: Response, next: NextFunction) => Promise<any>
 ): RequestHandler => {
@@ -101,14 +101,14 @@ const asyncHandler = (
 const router = Router();
 
 
-router.get("/", controller.getAllVacancySkills);
+router.get("/", verifyToken, controller.getAllVacancySkills);
 
-router.get("/:id", controller.getVacancySkillById);
+router.get("/:id", verifyToken, controller.getVacancySkillById);
 
-router.post("/", asyncHandler(controller.createVacancySkill));
+router.post("/", verifyToken, asyncHandler(controller.createVacancySkill));
 
-router.put("/:id", asyncHandler(controller.updateVacancySkill));
+router.put("/:id", verifyToken, asyncHandler(controller.updateVacancySkill));
 
-router.delete("/:id", controller.deleteVacancySkill);
+router.delete("/:id", verifyToken, controller.deleteVacancySkill);
 
 export default router;

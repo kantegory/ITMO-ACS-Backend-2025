@@ -7,10 +7,49 @@
 
 /**
  * @swagger
+ * /user/login:
+ *   post:
+ *     tags: [Users]
+ *     summary: Авторизация пользователя
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 example: user@example.com
+ *               password:
+ *                 type: string
+ *                 example: secret123
+ *     responses:
+ *       200:
+ *         description: Успешная авторизация
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                 token:
+ *                   type: string
+ *                 user:
+ *                   $ref: '#/components/schemas/User'
+ *       401:
+ *         description: Неверные данные авторизации
+ */
+
+/**
+ * @swagger
  * /user:
  *   get:
  *     tags: [Users]
  *     summary: Получить список всех пользователей
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: Список пользователей
@@ -42,6 +81,8 @@
  *   get:
  *     tags: [Users]
  *     summary: Получить пользователя по ID
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -59,6 +100,8 @@
  *   put:
  *     tags: [Users]
  *     summary: Обновить данные пользователя
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -78,6 +121,8 @@
  *   delete:
  *     tags: [Users]
  *     summary: Удалить пользователя
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -95,8 +140,9 @@ import {
     createUser,
     updateUser,
     deleteUser,
+    loginUser
 } from "../controllers/userController";
-
+import { verifyToken } from "../controllers/authMiddleware";
 const asyncHandler = (
     fn: (req: Request, res: Response, next: NextFunction) => Promise<any>
 ): RequestHandler => {
@@ -107,14 +153,13 @@ const asyncHandler = (
 
 const router = Router();
 
-router.get("/", getAllUsers);
+router.post("/login", loginUser);
+router.post("/", createUser);
 
-router.get("/:id", getUserById);
-
-router.post("/", asyncHandler(createUser));
-
-router.put("/:id", updateUser);
-
-router.delete("/:id", asyncHandler(deleteUser));
+// Приватные маршруты
+router.get("/", verifyToken, getAllUsers);
+router.get("/:id", verifyToken, getUserById);
+router.put("/:id", verifyToken, updateUser);
+router.delete("/:id", verifyToken, deleteUser);
 
 export default router;

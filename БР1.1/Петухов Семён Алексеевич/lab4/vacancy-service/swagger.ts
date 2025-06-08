@@ -12,10 +12,17 @@ const options = {
         },
         servers: [
             {
-                url: 'http://localhost:3000/vacancy-service/', // URL вашего сервера
+                url: 'http://localhost:3000/vacancy-service/',
             },
         ],
         components: {
+            securitySchemes: {
+                bearerAuth: {
+                    type: 'http',
+                    scheme: 'bearer',
+                    bearerFormat: 'JWT',
+                },
+            },
             schemas: {
                 Company: {
                     type: 'object',
@@ -226,8 +233,13 @@ const options = {
                 },
             },
         },
+        security: [
+            {
+                bearerAuth: [],
+            },
+        ],
     },
-    apis: ['./routes/*.ts'], // путь к вашим файлам с аннотациями swagger
+    apis: ['./routes/*.ts'],
 };
 
 const swaggerSpec = swaggerJSDoc(options);

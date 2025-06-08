@@ -96,7 +96,7 @@
 
 import { Router, Request, Response, NextFunction, RequestHandler } from "express";
 import * as controller from "../controllers/applicationController";
-
+import { verifyToken } from "../libs/auth";
 const router = Router();
 
 const asyncHandler = (
@@ -107,10 +107,10 @@ const asyncHandler = (
     };
 };
 
-router.get("/", controller.getAllApplications);
-router.get("/:id", asyncHandler(controller.getApplicationById));
-router.post("/", asyncHandler(controller.createApplication));
-router.put("/:id", asyncHandler(controller.updateApplication));
-router.delete("/:id", asyncHandler(controller.deleteApplication));
+router.get("/", verifyToken, controller.getAllApplications);
+router.get("/:id", verifyToken, asyncHandler(controller.getApplicationById));
+router.post("/", verifyToken, asyncHandler(controller.createApplication));
+router.put("/:id", verifyToken, asyncHandler(controller.updateApplication));
+router.delete("/:id", verifyToken, asyncHandler(controller.deleteApplication));
 
 export default router;
