@@ -1,0 +1,26 @@
+{
+   "name": "backend-express",
+   "version": "1.0.0",
+   "description": "backend applicaiton in ts for itmo",
+   "main": "index.ts",
+   "dependencies": {
+      "express": "^5.1.0",
+      "pg": "^8.14.1",
+      "reflect-metadata": "^0.2.2",
+      "typeorm": "0.3.22"
+   },
+   "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "dev": "ts-node src/index.ts",
+      "typeorm": "typeorm-ts-node-commonjs"
+   },
+   "author": "",
+   "license": "ISC",
+   "devDependencies": {
+      "@types/node": "^22.14.1",
+      "ts-node": "^10.9.2",
+      "typescript": "^5.8.3",
+      "@types/express": "^5.0.1",
+      "tsx": "^4.19.3"
+   }
+}

@@ -1,0 +1,21 @@
+{
+  "entryFile": "src/server.ts",
+  "noImplicitAdditionalProperties": "throw-on-extras",
+  "controllerPathGlobs": ["src/**/*.controller.ts"],
+  "spec": {
+    "outputDirectory": "build",
+    "specVersion": 3,
+    "securityDefinitions": {
+      "jwt": {
+        "type": "apiKey",
+        "name": "Authorization",
+        "in": "header",
+        "description": "Enter token like: Bearer <your_token>"
+      }
+    }
+  },
+  "routes": {
+    "routesDir": "src/routes",
+    "authenticationModule": "./src/authentication.ts"
+  }
+}

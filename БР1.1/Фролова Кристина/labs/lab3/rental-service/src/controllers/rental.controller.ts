@@ -1,0 +1,92 @@
+import {
+    Body,
+    Controller,
+    Delete,
+    Get,
+    Path,
+    Post,
+    Put,
+    Response,
+    Route,
+    Security,
+    SuccessResponse,
+    Tags
+} from "tsoa";
+import {EntityNotFoundErrorDto} from "@rent/shared";
+import rentalService from "../services/rental.service";
+import {Rental} from "../models/models/rental.model";
+import {RentalResponseDto} from "../models/responses/rental-response.dto";
+import {createRentalRequestToRentalData, toRentalResponseModel} from "../mappers/rental.mapper";
+import {CreateRentalRequestDto} from "../models/requests/rental-create.dto";
+import {UpdateRentalRequestDto} from "../models/requests/rental-update.dto";
+
+@Route("rentals")
+@Tags("Rental")
+export class RentalController extends Controller {
+
+    @Get()
+    @SuccessResponse("200", "Ok")
+    @Security("jwt")
+    @Response<EntityNotFoundErrorDto>(404, "Entity not found")
+    public async getRentals(): Promise<RentalResponseDto[]> {
+        const rentals: Rental[] = await rentalService.getAll();
+        return rentals.map(toRentalResponseModel);
+    }
+
+    @Get("{rentalId}")
+    @SuccessResponse("200", "Ok")
+    @Security("jwt")
+    @Response<EntityNotFoundErrorDto>(404, "Entity not found")
+    public async getRentalById(@Path() rentalId: number): Promise<RentalResponseDto> {
+        const rental = await rentalService.getById(rentalId);
+        return toRentalResponseModel(rental);
+    }
+
+    @Post()
+    @SuccessResponse("201", "Created")
+    @Security("jwt")
+    public async createRental(
+        @Body() createRequest: CreateRentalRequestDto
+    ): Promise<RentalResponseDto> {
+        const rentalData = createRentalRequestToRentalData(createRequest);
+        const rental = await rentalService.create(rentalData);
+        return toRentalResponseModel(rental);
+    }
+
+    @Put("{rentalId}")
+    @SuccessResponse("200", "Updated")
+    @Security("jwt")
+    @Response<EntityNotFoundErrorDto>(404, "Entity not found")
+    public async updateRental(
+        @Path() rentalId: number,
+        @Body() body: UpdateRentalRequestDto
+    ): Promise<RentalResponseDto> {
+        const updated = await rentalService.update(rentalId, body);
+        return toRentalResponseModel(updated);
+    }
+
+    @Delete("{rentalId}")
+    @SuccessResponse("204", "Deleted")
+    @Security("jwt")
+    public async deleteRental(@Path() rentalId: number): Promise<void> {
+        await rentalService.delete(rentalId);
+    }
+
+    // @Get("{ownerId}/owner")
+    // @SuccessResponse("200", "Ok")
+    // @Security("jwt")
+    // @Response<EntityNotFoundErrorDto>(404, "Entity not found")
+    // public async getRentalsByOwnerId(@Path() ownerId: number): Promise<RentalResponseDto[]> {
+    //     const rentals = await rentalService.getRentalsByOwnerId(ownerId);
+    //     return rentals.map(toRentalResponseModel);
+    // }
+
+    @Get("{renterId}/renter")
+    @SuccessResponse("200", "Ok")
+    @Security("jwt")
+    @Response<EntityNotFoundErrorDto>(404, "Entity not found")
+    public async getRentalsByRenterId(@Path() renterId: number): Promise<RentalResponseDto[]> {
+        const rentals = await rentalService.getRentalsByRenterId(renterId);
+        return rentals.map(toRentalResponseModel);
+    }
+}
