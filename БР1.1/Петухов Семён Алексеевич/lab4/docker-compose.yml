@@ -1,0 +1,101 @@
+services:
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: resume_finder
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  user-service:
+    build: ./user-service
+    ports:
+      - "3001:3001"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USERNAME: postgres
+      DB_PASSWORD: 1234
+      DB_DATABASE: resume_finder
+    networks:
+      - app-network
+
+  resume-service:
+    build: ./resume-service
+    ports:
+      - "3002:3002"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USERNAME: postgres
+      DB_PASSWORD: 1234
+      DB_DATABASE: resume_finder
+    networks:
+      - app-network
+
+  vacancy-service:
+    build: ./vacancy-service
+    ports:
+      - "3003:3003"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USERNAME: postgres
+      DB_PASSWORD: 1234
+      DB_DATABASE: resume_finder
+    networks:
+      - app-network
+
+  skill-service:
+    build: ./skill-service
+    ports:
+      - "3005:3005"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USERNAME: postgres
+      DB_PASSWORD: 1234
+      DB_DATABASE: resume_finder
+    networks:
+      - app-network
+
+  gateway:
+    build: ./gateway
+    ports:
+      - "3000:3000"
+    depends_on:
+      - user-service
+      - resume-service
+      - vacancy-service
+      - skill-service
+    networks:
+      - app-network
+
+volumes:
+  pg_data:
+
+networks:
+  app-network:
+    driver: bridge
