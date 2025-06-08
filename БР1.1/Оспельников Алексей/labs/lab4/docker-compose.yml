@@ -1,0 +1,53 @@
+  services:
+    main:
+      build:
+        context: ./main
+      container_name: main
+      ports:
+        - "3000:3000"
+      depends_on:
+        - postgres
+      env_file:
+        - ./main/.env
+
+    messages:
+      build:
+        context: ./messages
+      container_name: messages
+      ports:
+        - "5000:5000"
+      depends_on:
+        - message_db
+      env_file:
+        - ./main/.env
+
+    auth:
+      build:
+        context: ./auth
+      container_name: auth
+      ports:
+        - "9000:9000"
+    message_db:
+      image: "postgres:17.2"
+      container_name: message_db
+      restart: always
+      ports:
+        - "6543:6543"
+      env_file:
+        - ./messages/db.env
+      volumes:
+        - db_data:/var/lib/postgresql/data
+
+    postgres:
+      image: "postgres:17.2"
+      container_name: postgres
+      restart: always
+      env_file:
+        - ./main/db.env
+      volumes:
+        - ./main/init.sql:/docker-entrypoint-initdb.d/init.sql
+        - db_data:/var/lib/postgresql/data
+
+  volumes:
+    db_data: 
+
