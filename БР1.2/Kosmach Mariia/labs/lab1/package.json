@@ -1,0 +1,36 @@
+{
+  "name": "boiler",
+  "version": "1.0.0",
+  "description": "",
+  "main": "build/index.js",
+  "scripts": {
+    "start": "tsx src/app.ts",
+    "dev": "tsx src/app.ts",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@tsoa/runtime": "^6.6.0",
+    "bcrypt": "^5.1.1",
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "express": "5.0.0",
+    "http-errors": "~1.6.3",
+    "joi": "^17.13.3",
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "~1.9.1",
+    "pg": "^8.14.1",
+    "postgresql": "^0.0.1",
+    "reflect-metadata": "^0.2.2",
+    "typeorm": "^0.3.22"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/express": "^5.0.1",
+    "@types/joi": "^17.2.3",
+    "@types/jsonwebtoken": "^9.0.9",
+    "@types/node": "^22.14.1",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.3"
+  },
+  "private": true
+}
