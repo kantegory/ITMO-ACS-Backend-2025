@@ -1,0 +1,104 @@
+version: '3.8'
+
+services:
+  user-service:
+    build: 
+      context: ./user-service
+      dockerfile: Dockerfile
+    environment:
+      NODE_ENV: production
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: password
+      DB_NAME: travel_service_db
+      JWT_SECRET: secret
+      JWT_EXPIRES_IN: 3h
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+    networks:
+      - travel-network
+
+  travel-service:
+    build:
+      context: ./travel-service
+      dockerfile: Dockerfile
+    environment:
+      NODE_ENV: production
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: password
+      DB_NAME: travel_service_db
+      USER_SERVICE_URL: http://user-service:3000
+      AUTH_TIMEOUT: 5000
+    ports:
+      - "3001:3001"
+    depends_on:
+      - postgres
+      - user-service
+    networks:
+      - travel-network
+
+  booking-service:
+    build:
+      context: ./booking-service
+      dockerfile: Dockerfile
+    environment:
+      NODE_ENV: production
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: password
+      DB_NAME: travel_service_db
+      USER_SERVICE_URL: http://user-service:3000
+      AUTH_TIMEOUT: 5000
+    ports:
+      - "3002:3002"
+    depends_on:
+      - postgres
+      - user-service
+      - travel-service
+    networks:
+      - travel-network
+
+  postgres:
+    image: postgres:13-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: travel_service_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - travel-network
+
+  api-gateway:
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile
+    environment:
+      NODE_ENV: production
+      USER_SERVICE_URL: http://user-service:3000
+      TRAVEL_SERVICE_URL: http://travel-service:3001
+      BOOKING_SERVICE_URL: http://booking-service:3002
+      AUTH_TIMEOUT: 5000
+    ports:
+      - "3003:3003"
+    depends_on:
+      - user-service
+      - travel-service
+      - booking-service
+    networks:
+      - travel-network
+
+volumes:
+  postgres_data:
+
+networks:
+  travel-network:
+    driver: bridge
