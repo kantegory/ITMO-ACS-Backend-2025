@@ -1,0 +1,94 @@
+services:
+  users-service:
+    build: ./users-service
+    ports:
+      - "3001:3001"
+    env_file:
+      - .env
+    depends_on:
+      - postgres
+    networks:
+      - app-network
+
+  articles-service:
+    build: ./articles-service
+    ports:
+      - "3004:3004"
+    env_file:
+      - .env
+    networks:
+      - app-network
+
+  feedback-service:
+    build: ./feedback-service
+    ports:
+      - "3005:3005"
+    env_file:
+      - .env
+    networks:
+      - app-network
+
+  files-service:
+    build: ./files-service
+    ports:
+      - "3003:3003"
+    env_file:
+      - .env
+    networks:
+      - app-network
+
+  preference-service:
+    build: ./preference-service
+    ports:
+      - "3006:3006"
+    env_file:
+      - .env
+    networks:
+      - app-network
+
+  recipes-service:
+    build: ./recipes-service
+    ports:
+      - "3002:3002"
+    env_file:
+      - .env
+    networks:
+      - app-network
+
+  gateway:
+    build: ./gateway
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    depends_on:
+      - users-service
+      - articles-service
+      - feedback-service
+      - files-service
+      - preference-service
+      - recipes-service
+    networks:
+      - app-network
+
+  postgres:
+    image: postgres:15
+    container_name: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  pgdata:
