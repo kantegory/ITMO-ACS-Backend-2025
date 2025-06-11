@@ -1,0 +1,181 @@
+version: '3.8'
+
+services:
+  user-db:
+    image: mysql:8.0
+    container_name: user-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: user_service_db
+      MYSQL_USER: mysql
+      MYSQL_PASSWORD: mysql
+    ports:
+      - "3306:3306"
+    volumes:
+      - user_db_data:/var/lib/mysql
+      - ./shared/mysql-init:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+      interval: 10s
+      start_period: 40s
+    networks:
+      - microservices-network
+
+  job-db:
+    image: mysql:8.0
+    container_name: job-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: job_service_db
+      MYSQL_USER: mysql
+      MYSQL_PASSWORD: mysql
+    ports:
+      - "3307:3306"
+    volumes:
+      - job_db_data:/var/lib/mysql
+      - ./shared/mysql-init:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+      interval: 10s
+      start_period: 40s
+    networks:
+      - microservices-network
+
+  application-db:
+    image: mysql:8.0
+    container_name: application-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: application_service_db
+      MYSQL_USER: mysql
+      MYSQL_PASSWORD: mysql
+    ports:
+      - "3308:3306"
+    volumes:
+      - application_db_data:/var/lib/mysql
+      - ./shared/mysql-init:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+      interval: 10s
+      start_period: 40s
+    networks:
+      - microservices-network
+
+  user-service:
+    build: 
+      context: ./microservices/user-service
+      dockerfile: Dockerfile
+    container_name: user-service
+    restart: unless-stopped
+    ports:
+      - "3001:3001"
+    env_file:
+      - ./microservices/user-service/.env
+    depends_on:
+      user-db:
+        condition: service_healthy
+    volumes:
+      - ./microservices/user-service:/app
+      - /app/node_modules
+      - /app/dist
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
+    networks:
+      - microservices-network
+
+  job-service:
+    build: 
+      context: ./microservices/job-service
+      dockerfile: Dockerfile
+    container_name: job-service
+    restart: unless-stopped
+    ports:
+      - "3002:3002"
+    env_file:
+      - ./microservices/job-service/.env
+    depends_on:
+      job-db:
+        condition: service_healthy
+    volumes:
+      - ./microservices/job-service:/app
+      - /app/node_modules
+      - /app/dist
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3002/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
+    networks:
+      - microservices-network
+
+  application-service:
+    build: 
+      context: ./microservices/application-service
+      dockerfile: Dockerfile
+    container_name: application-service
+    restart: unless-stopped
+    ports:
+      - "3003:3003"
+    env_file:
+      - ./microservices/application-service/.env
+    depends_on:
+      application-db:
+        condition: service_healthy
+    volumes:
+      - ./microservices/application-service:/app
+      - /app/node_modules
+      - /app/dist
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3003/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
+    networks:
+      - microservices-network
+
+  nginx:
+    image: nginx:alpine
+    container_name: api-gateway
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./shared/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./shared/nginx/conf.d:/etc/nginx/conf.d:ro
+    depends_on:
+      - user-service
+      - job-service
+      - application-service
+    networks:
+      - microservices-network
+
+volumes:
+  user_db_data:
+    driver: local
+  job_db_data:
+    driver: local
+  application_db_data:
+    driver: local
+
+networks:
+  microservices-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
