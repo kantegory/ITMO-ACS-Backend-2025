@@ -4,20 +4,17 @@
    "description": "Awesome project developed with TypeORM.",
    "type": "commonjs",
    "devDependencies": {
-      "@types/express": "^5.0.2",
       "@types/node": "^22.13.10",
       "ts-node": "^10.9.2",
       "typescript": "^5.8.2"
    },
    "dependencies": {
-      "@types/redis": "^4.0.10",
-      "argon2": "^0.43.0",
+      "axios": "^1.9.0",
+      "bcrypt": "^6.0.0",
       "body-parser": "^1.20.3",
       "express": "^4.21.2",
-      "express-validator": "^7.2.1",
       "jsonwebtoken": "^9.0.2",
       "pg": "^8.14.1",
-      "redis": "^4.7.1",
       "reflect-metadata": "^0.2.2",
       "typeorm": "0.3.22"
    },

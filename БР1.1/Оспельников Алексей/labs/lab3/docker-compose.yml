@@ -27,6 +27,7 @@
       container_name: auth
       ports:
         - "9000:9000"
+
     message_db:
       image: "postgres:17.2"
       container_name: message_db
@@ -46,8 +47,9 @@
         - ./main/db.env
       volumes:
         - ./main/init.sql:/docker-entrypoint-initdb.d/init.sql
-        - db_data:/var/lib/postgresql/data
+        - messages_data:/var/lib/postgresql/data
 
   volumes:
     db_data: 
+    messages_data:
 

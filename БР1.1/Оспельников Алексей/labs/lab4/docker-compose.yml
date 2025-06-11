@@ -21,12 +21,12 @@
       env_file:
         - ./main/.env
 
-    auth:
-      build:
-        context: ./auth
-      container_name: auth
-      ports:
-        - "9000:9000"
+    # auth:
+    #   build:
+    #     context: ./auth
+    #   container_name: auth
+    #   ports:
+    #     - "9000:9000"
     message_db:
       image: "postgres:17.2"
       container_name: message_db

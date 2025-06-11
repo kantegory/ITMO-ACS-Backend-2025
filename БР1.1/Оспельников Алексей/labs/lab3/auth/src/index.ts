@@ -1,10 +1,16 @@
-import * as express from "express"
-import * as bodyParser from "body-parser"
-import { Request, Response } from "express"
-import authRouter from "./routes"
+import { AuthService } from "./service/AuthService";
 
-const app = express()
-app.use(bodyParser.json())
-app.listen(9000)
-app.use("/api", authRouter);
-console.log("Express server has started on port 9000")
+const express = require('express');
+
+const app = express();
+app.use(express.json());
+
+const authService = new AuthService();
+app.post('/register', authService.register);
+
+app.post('/login', authService.login);
+
+const port = process.env.PORT || 9000;
+app.listen(port, () => {
+  console.log(`Authentication service listening on port ${port}`);
+});
