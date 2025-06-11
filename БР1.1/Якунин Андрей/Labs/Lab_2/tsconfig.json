@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",                       // Лучше поддержка современных JS-фич
+    "module": "CommonJS",
+    "lib": ["ES2020"],                        // Указание используемых стандартов JS
+    "strict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true, // Предотвращает баги в импортах
+    "skipLibCheck": true,                     // Отключает проверку типов у node_modules
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "baseUrl": "./",
+    "strictPropertyInitialization": false,
+    "resolveJsonModule": true,               // Если работаешь с JSON
+    "noImplicitAny": true                    // Обязательно для строгой типизации
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
+}
