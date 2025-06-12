@@ -1,0 +1,83 @@
+services:
+  resident-service:
+    build:
+      context: src/resident-service
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    env_file:
+      - src/resident-service/.env
+    depends_on:
+      - postgres-users
+    networks:
+      - hostel_network
+  postgres-users:
+    image: postgres:latest
+    container_name: postgres_users
+    env_file:
+      - src/resident-service/.env
+    expose:
+      - 5432
+    volumes:
+      - pgdata-users:/var/lib/postgresql/data/pgdata
+    networks:
+      - hostel_network
+
+  admin-service:
+    build:
+      context: src/admin-service
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    env_file:
+      - src/admin-service/.env
+    depends_on:
+      - postgres-admin
+    networks:
+      - hostel_network
+
+  postgres-admin:
+    image: postgres:latest
+    container_name: postgres_admin
+    env_file:
+      - src/admin-service/.env
+    expose:
+      - 5432
+    volumes:
+      - pgdata-admin:/var/lib/postgresql/data/pgdata
+    networks:
+      - hostel_network
+    
+  requisite-service:
+    build:
+      context: src/requisite-service
+      dockerfile: Dockerfile
+    ports:
+      - "3002:3002"
+    env_file:
+      - src/requisite-service/.env
+    depends_on:
+      - postgres-requisite
+    networks:
+      - hostel_network
+
+  postgres-requisite:
+    image: postgres:latest
+    container_name: postgres_requisite
+    env_file:
+      - src/requisite-service/.env
+    expose:
+      - 5432
+    volumes:
+      - pgdata-requisite:/var/lib/postgresql/data/pgdata
+    networks:
+      - hostel_network
+
+volumes:
+  pgdata-admin:
+  pgdata-users:
+  pgdata-requisite:
+
+networks:
+  hostel_network:
+    driver: bridge
