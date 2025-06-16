@@ -1,0 +1,34 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - hw6
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Deploy on remote server
+        env:
+          DEPLOY_ENV: ${{ secrets.DEPLOY_ENV }}
+        run: |
+          ssh -o StrictHostKeyChecking=no ubuntu@89.169.182.4 << EOF
+            cd ~
+            rm -rf ITMO-ACS-Backend-2025
+            git clone -b hw6 https://github.com/mariabakhareva/ITMO-ACS-Backend-2025.git
+            cd "ITMO-ACS-Backend-2025/БР2/Maria Bakhareva/homeworks/hw6/deploy"
+            echo "$DEPLOY_ENV" > .env
+
+            docker compose down || true
+            docker compose up -d --build
+          EOF
