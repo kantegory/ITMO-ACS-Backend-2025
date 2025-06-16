@@ -1,0 +1,114 @@
+services:
+  db:
+    image: postgres:16.9-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "${DB_PORT}:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./db-init:/docker-entrypoint-initdb.d/
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  user-service:
+    build: ./user-service
+    restart: always
+    environment:
+      PORT: ${USER_SERVICE_INTERNAL_PORT}
+      DB_HOST: db
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_DATABASE: fitness_users_db # своя бд для каждого сервиса
+      DB_PORT: 5432
+      JWT_SECRET: ${JWT_SECRET}
+    ports:
+      - "${USER_SERVICE_INTERNAL_PORT}:${USER_SERVICE_INTERNAL_PORT}"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  workout-exercise-service:
+    build: ./workout-exercise-service
+    restart: always
+    environment:
+      PORT: ${WORKOUT_EXERCISE_SERVICE_INTERNAL_PORT}
+      DB_HOST: db
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_DATABASE: fitness_workouts_db
+      DB_PORT: 5432
+    ports:
+      - "${WORKOUT_EXERCISE_SERVICE_INTERNAL_PORT}:${WORKOUT_EXERCISE_SERVICE_INTERNAL_PORT}"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  plan-progress-service:
+    build: ./plan-progress-service
+    restart: always
+    environment:
+      PORT: ${PLAN_PROGRESS_SERVICE_INTERNAL_PORT}
+      DB_HOST: db
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_DATABASE: fitness_plans_progress_db
+      DB_PORT: 5432
+      USER_SERVICE_URL: http://user-service:${USER_SERVICE_INTERNAL_PORT}
+      WORKOUT_EXERCISE_SERVICE_URL: http://workout-exercise-service:${WORKOUT_EXERCISE_SERVICE_INTERNAL_PORT}
+    ports:
+      - "${PLAN_PROGRESS_SERVICE_INTERNAL_PORT}:${PLAN_PROGRESS_SERVICE_INTERNAL_PORT}"
+    depends_on:
+      db:
+        condition: service_healthy
+      user-service:
+        condition: service_started
+      workout-exercise-service:
+        condition: service_started
+
+  blog-service:
+    build: ./blog-service
+    restart: always
+    environment:
+      PORT: ${BLOG_SERVICE_INTERNAL_PORT}
+      DB_HOST: db
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_DATABASE: fitness_blog_db
+      DB_PORT: 5432
+    ports:
+      - "${BLOG_SERVICE_INTERNAL_PORT}:${BLOG_SERVICE_INTERNAL_PORT}"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  api-gateway:
+    build: ./api-gateway
+    restart: always
+    environment:
+      PORT: ${API_GATEWAY_INTERNAL_PORT}
+      USER_SERVICE_URL: http://user-service:${USER_SERVICE_INTERNAL_PORT}
+      WORKOUT_EXERCISE_SERVICE_URL: http://workout-exercise-service:${WORKOUT_EXERCISE_SERVICE_INTERNAL_PORT}
+      PLAN_PROGRESS_SERVICE_URL: http://plan-progress-service:${PLAN_PROGRESS_SERVICE_INTERNAL_PORT}
+      BLOG_SERVICE_URL: http://blog-service:${BLOG_SERVICE_INTERNAL_PORT}
+      JWT_SECRET: ${JWT_SECRET}
+    ports:
+      - "${API_GATEWAY_PORT}:${API_GATEWAY_INTERNAL_PORT}"
+    depends_on:
+      user-service:
+        condition: service_started
+      workout-exercise-service:
+        condition: service_started
+      plan-progress-service:
+        condition: service_started
+      blog-service:
+        condition: service_started
+
+volumes:
+  db_data: {}
