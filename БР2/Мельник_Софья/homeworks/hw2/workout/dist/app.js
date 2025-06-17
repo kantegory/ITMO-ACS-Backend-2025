@@ -1,0 +1,25 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+const UserRoutes_1 = __importDefault(require("./routes/UserRoutes"));
+const WorkoutRoutes_1 = __importDefault(require("./routes/WorkoutRoutes"));
+const PlanRoutes_1 = __importDefault(require("./routes/PlanRoutes"));
+const WorkoutPlanRoutes_1 = __importDefault(require("./routes/WorkoutPlanRoutes"));
+const UserProgressRoutes_1 = __importDefault(require("./routes/UserProgressRoutes"));
+const BlogPostRoutes_1 = __importDefault(require("./routes/BlogPostRoutes"));
+const CategoryRoutes_1 = __importDefault(require("./routes/CategoryRoutes"));
+const WorkoutCategoryRoutes_1 = __importDefault(require("./routes/WorkoutCategoryRoutes"));
+const app = (0, express_1.default)();
+app.use(express_1.default.json());
+app.use('/api/users', UserRoutes_1.default);
+app.use('/api/workouts', WorkoutRoutes_1.default);
+app.use('/api/plans', PlanRoutes_1.default);
+app.use('/api/workout-plans', WorkoutPlanRoutes_1.default);
+app.use('/api/user-progress', UserProgressRoutes_1.default);
+app.use('/api/blog-posts', BlogPostRoutes_1.default);
+app.use('/api/categories', CategoryRoutes_1.default);
+app.use('/api/workout-categories', WorkoutCategoryRoutes_1.default);
+exports.default = app;
