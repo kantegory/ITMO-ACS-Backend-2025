@@ -1,0 +1,391 @@
+{
+	"info": {
+		"_postman_id": "18ee207d-d607-490f-bcc0-1b4b6f900825",
+		"name": "TravelApp API Tests",
+		"description": "Полная коллекция тестов для TravelApp API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "39753674"
+	},
+	"item": [
+		{
+			"name": "AuthController",
+			"item": [
+				{
+					"name": "Register User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status 201 on registration\", function() {",
+									"    pm.response.to.have.status(201);",
+									"    pm.expect(pm.response.json()).to.have.property('id');",
+									"});",
+									"if(pm.response.code === 400) {",
+									"    pm.test(\"Duplicate registration error\", function() {",
+									"        pm.expect(pm.response.json().message).to.include(\"already exists\");",
+									"    });",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"testuser{{$randomInt}}\",\n    \"email\": \"test{{$randomInt}}@example.com\",\n    \"password\": \"password123\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/register",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status 200 on login\", function() {",
+									"    pm.response.to.have.status(200);",
+									"    const response = pm.response.json();",
+									"    pm.expect(response).to.have.property('token');",
+									"    pm.environment.set(\"authToken\", response.token);",
+									"    pm.environment.set(\"userId\", response.id);",
+									"    console.log(\"Auth Token:\", pm.environment.get(\"authToken\"));",
+									"});",
+									"if(pm.response.code === 401) {",
+									"    pm.test(\"Invalid credentials\", function() {",
+									"        pm.expect(pm.response.json().message).to.equal(\"Invalid email or password\");",
+									"    });",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"test@example.com\",\n    \"password\": \"password123\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "RouteController + modifications",
+			"item": [
+				{
+					"name": "Create Route",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Route created successfully\", function() {",
+									"    pm.response.to.have.status(201);",
+									"    const response = pm.response.json();",
+									"    pm.expect(response).to.have.property('id');",
+									"    ",
+									"    // Сохраняем ID маршрута",
+									"    pm.environment.set(\"routeId\", response.id);",
+									"    console.log(\"Created Route ID:\", response.id);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Приключение на луну №{{$timestamp}}\",\n    \"description\": \"Невероятный поход\",\n    \"budget_min\": 5000,\n    \"budget_max\": 15000000,\n    \"duration_days\": 3,\n    \"travel_type\": \"на ракете\",\n    \"user\": \"{{userId}}\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/routes",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"routes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Booking",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Booking created\", function() {",
+									"    pm.response.to.have.status(201);",
+									"    const response = pm.response.json();",
+									"    pm.environment.set(\"bookingId\", response.id);",
+									"    console.log(\"Booking ID:\", response.id);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"route\": \"{{routeId}}\",\n    \"user\": \"{{userId}}\",\n    \"start_date\": \"2025-07-01\",\n    \"end_date\": \"2025-07-07\",\n    \"status\": \"pending\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/bookings",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"bookings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Review",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Review created\", function() {",
+									"    pm.response.to.have.status(201);",
+									"    pm.environment.set(\"reviewId\", pm.response.json().id);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"route\": \"{{routeId}}\",\n    \"rating\": 5,\n    \"comment\": \"Отличный маршрут!\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/reviews",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"reviews"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Route by ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Route retrieved successfully\", function() {",
+									"    pm.response.to.have.status(200);",
+									"    const response = pm.response.json();",
+									"    pm.expect(response.id).to.equal(pm.environment.get(\"routeId\"));",
+									"    pm.expect(response).to.have.property('title');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/routes/{{routeId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"routes",
+								"{{routeId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get ALL Route",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Route retrieved successfully\", function() {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/routes",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"routes"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{authToken}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"exec": [
+					"console.log(\"Starting test sequence...\");"
+				],
+				"type": "text/javascript"
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:3000/api"
+		},
+		{
+			"key": "authToken",
+			"value": ""
+		},
+		{
+			"key": "userId",
+			"value": ""
+		},
+		{
+			"key": "routeId",
+			"value": ""
+		},
+		{
+			"key": "bookingId",
+			"value": ""
+		},
+		{
+			"key": "reviewId",
+			"value": ""
+		}
+	]
+}
