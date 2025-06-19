@@ -1,0 +1,28 @@
+#POST http://localhost:3000/workouts
+{
+  "title": "Full Body HIIT",
+  "description": "Интенсивная тренировка всего тела",
+  "video_url": "https://example.com/fullbody-hiit",
+  "duration_minutes": 30,
+  "difficulty_level": "intermediate",
+  "type": "cardio",
+  "plan": {
+    "plan_id": 1
+  }
+}
+
+#GET http://localhost:3000/workouts
+
+#GET http://localhost:3000/workouts/1
+
+#PUT http://localhost:3000/workouts/1
+{
+  "title": "Full Body HIIT - Updated",
+  "description": "Обновлённая тренировка",
+  "video_url": "https://example.com/updated-video",
+  "duration_minutes": 35,
+  "difficulty_level": "advanced",
+  "type": "strength"
+}
+
+#DELETE http://localhost:3000/workouts/1
