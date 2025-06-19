@@ -1,0 +1,147 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:14
+    container_name: travel_postgres
+    environment:
+      POSTGRES_DB: travel_db
+      POSTGRES_USER: travel_user
+      POSTGRES_PASSWORD: password123
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - travel-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U travel_user -d travel_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: travel_pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - travel-network
+
+  user-service:
+    build:
+      context: .
+      dockerfile: ./user-service/Dockerfile
+    container_name: travel_user_service
+    environment:
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_USER: ${RABBITMQ_USER:-guest}
+      RABBITMQ_PASS: ${RABBITMQ_PASS:-guest}
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USERNAME: travel_user
+      DB_PASSWORD: password123
+      DB_DATABASE: travel_db
+      JWT_SECRET: your_jwt_secret_key_here
+      PORT: 3001
+    ports:
+      - "3001:3001"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - travel-network
+
+  content-service:
+    build:
+      context: .
+      dockerfile: ./content-service/Dockerfile
+    container_name: travel_content_service
+    environment:
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_USER: ${RABBITMQ_USER:-guest}
+      RABBITMQ_PASS: ${RABBITMQ_PASS:-guest}
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USERNAME: travel_user
+      DB_PASSWORD: password123
+      DB_DATABASE: travel_db
+      JWT_SECRET: your_jwt_secret_key_here
+      PORT: 3002
+      MEDIA_SERVICE_URL: http://media-service:3003
+      USER_SERVICE_URL: http://user-service:3001
+    ports:
+      - "3002:3002"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - travel-network
+
+  media-service:
+    build:
+      context: .
+      dockerfile: ./media-service/Dockerfile
+    container_name: travel_media_service
+    environment:
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_USER: ${RABBITMQ_USER:-guest}
+      RABBITMQ_PASS: ${RABBITMQ_PASS:-guest}
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USERNAME: travel_user
+      DB_PASSWORD: password123
+      DB_DATABASE: travel_db
+      JWT_SECRET: your_jwt_secret_key_here
+      PORT: 3003
+      CONTENT_SERVICE_URL: http://content-service:3002
+      USER_SERVICE_URL: http://user-service:3001
+    ports:
+      - "3003:3003"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - travel-network
+
+  nginx:
+    image: nginx:alpine
+    container_name: travel_nginx
+    volumes:
+      - ./apiGateway/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - "80:80"
+    depends_on:
+      - user-service
+      - content-service
+      - media-service
+    networks:
+      - travel-network
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: travel_rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER:-guest}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASS:-guest}
+    networks:
+      - travel-network
+
+networks:
+  travel-network:
+    driver: bridge
+
+volumes:
+  postgres-data:
