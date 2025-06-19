@@ -1,0 +1,30 @@
+USER CONTROLLER
+#POST http://localhost:3000/users
+{
+  "name": "John",
+  "email": "john@example.com",
+  "password": "123456",
+  "registration_date": "2025-04-28T14:30:00.000Z",
+  "age": "20",
+  "gender": "Male",
+  "weight": "75",
+  "height": "175"
+}
+
+#GET
+#http://localhost:3000/users
+
+#GET ПО ID ИЛИ EMAIL
+#http://localhost:3000/users/find?id=1
+#http://localhost:3000/users/find?email=alice@example.com
+
+#PUT http://localhost:3000/users/1
+{
+  "name": "Alice Updated",
+  "email": "alice@example.com"
+}
+
+#DELETE http://localhost:3000/users/1
+
+
+
