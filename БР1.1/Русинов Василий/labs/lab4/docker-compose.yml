@@ -1,0 +1,90 @@
+version: "3.8"
+
+services:
+  gateway:
+    build:
+      context: ./gateway
+    ports:
+      - "3000:3000"
+    depends_on:
+      - auth-service
+      - job-service
+      - application-service
+    networks:
+      - backend
+
+  auth-service:
+    build:
+      context: ./auth-service
+    ports:
+      - "3001:3001"
+    environment:
+      - DATABASE_URL=postgres://postgres:123@auth-db:5432/search_job
+    depends_on:
+      - auth-db
+    networks:
+      - backend
+
+  auth-db:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123
+      POSTGRES_DB: search_job
+    ports:
+      - "5433:5432"
+    networks:
+      - backend
+
+  job-service:
+    build:
+      context: ./job-service
+    ports:
+      - "3002:3002"
+    environment:
+      - DATABASE_URL=postgres://postgres:123@job-db:5432/search_job
+    depends_on:
+      - job-db
+    networks:
+      - backend
+
+  job-db:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123
+      POSTGRES_DB: search_job
+    ports:
+      - "5434:5432"
+    networks:
+      - backend
+
+  application-service:
+    build:
+      context: ./application-service
+    ports:
+      - "3003:3003"
+    environment:
+      - DATABASE_URL=postgres://postgres:123@application-db:5432/search_job
+    depends_on:
+      - application-db
+    networks:
+      - backend
+
+  application-db:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123
+      POSTGRES_DB: search_job
+    ports:
+      - "5435:5432"
+    networks:
+      - backend
+
+networks:
+  backend:
+    driver: bridge

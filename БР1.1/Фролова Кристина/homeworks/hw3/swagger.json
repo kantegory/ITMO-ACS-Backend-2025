@@ -1,0 +1,2580 @@
+{
+	"openapi": "3.0.0",
+	"components": {
+		"examples": {},
+		"headers": {},
+		"parameters": {},
+		"requestBodies": {},
+		"responses": {},
+		"schemas": {
+			"UserResponseDto": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"mail": {
+						"type": "string"
+					},
+					"firstName": {
+						"type": "string"
+					},
+					"lastName": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"required": [
+					"id",
+					"mail",
+					"firstName",
+					"lastName",
+					"createdAt",
+					"updatedAt"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"EntityNotFoundError": {
+				"properties": {
+					"message": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"message"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"AdvertisementStatus": {
+				"enum": [
+					"active",
+					"archived",
+					"pending"
+				],
+				"type": "string"
+			},
+			"RentType": {
+				"enum": [
+					"day",
+					"month"
+				],
+				"type": "string"
+			},
+			"CategoryResponseDto": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"name": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"id",
+					"name"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"LivingType": {
+				"enum": [
+					"country_house",
+					"flat",
+					"room"
+				],
+				"type": "string"
+			},
+			"ComfortResponseDto": {
+				"properties": {
+					"renovation": {
+						"type": "string"
+					},
+					"devices": {
+						"type": "string"
+					},
+					"internet": {
+						"type": "boolean"
+					},
+					"tv": {
+						"type": "boolean"
+					},
+					"furniture": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"renovation",
+					"devices",
+					"internet",
+					"tv",
+					"furniture"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"FlatResponseDto": {
+				"properties": {
+					"floor": {
+						"type": "number",
+						"format": "double"
+					},
+					"kitchenArea": {
+						"type": "number",
+						"format": "double"
+					},
+					"livingArea": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"floor",
+					"kitchenArea",
+					"livingArea"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"RoomType": {
+				"enum": [
+					"room",
+					"bed"
+				],
+				"type": "string"
+			},
+			"RoomResponseDto": {
+				"properties": {
+					"locatedIn": {
+						"type": "string"
+					},
+					"roomType": {
+						"$ref": "#/components/schemas/RoomType"
+					}
+				},
+				"required": [
+					"locatedIn",
+					"roomType"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"CountryHouseResponseDto": {
+				"properties": {
+					"landArea": {
+						"type": "number",
+						"format": "double"
+					},
+					"communications": {
+						"type": "string"
+					},
+					"recreations": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"landArea",
+					"communications",
+					"recreations"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"LivingResponseDto": {
+				"properties": {
+					"totalFloors": {
+						"type": "number",
+						"format": "double"
+					},
+					"totalRooms": {
+						"type": "number",
+						"format": "double"
+					},
+					"area": {
+						"type": "number",
+						"format": "double"
+					},
+					"meter": {
+						"type": "number",
+						"format": "double"
+					},
+					"other": {
+						"type": "number",
+						"format": "double"
+					},
+					"livingType": {
+						"$ref": "#/components/schemas/LivingType"
+					},
+					"comfort": {
+						"$ref": "#/components/schemas/ComfortResponseDto"
+					},
+					"flat": {
+						"$ref": "#/components/schemas/FlatResponseDto"
+					},
+					"room": {
+						"$ref": "#/components/schemas/RoomResponseDto"
+					},
+					"countryHouse": {
+						"$ref": "#/components/schemas/CountryHouseResponseDto"
+					}
+				},
+				"required": [
+					"totalFloors",
+					"totalRooms",
+					"area",
+					"meter",
+					"other",
+					"livingType",
+					"comfort"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"PropertyResponseDto": {
+				"properties": {
+					"totalArea": {
+						"type": "number",
+						"format": "double"
+					},
+					"location": {
+						"type": "string"
+					},
+					"living": {
+						"$ref": "#/components/schemas/LivingResponseDto"
+					}
+				},
+				"required": [
+					"totalArea",
+					"location",
+					"living"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"RulesResponseDto": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"checkInAfter": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"departureBefore": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"guestCount": {
+						"type": "number",
+						"format": "double"
+					},
+					"withChildren": {
+						"type": "boolean"
+					},
+					"withAnimals": {
+						"type": "boolean"
+					},
+					"allowedSmoking": {
+						"type": "boolean"
+					},
+					"allowedParties": {
+						"type": "boolean"
+					},
+					"report_docs": {
+						"type": "boolean"
+					}
+				},
+				"required": [
+					"id",
+					"checkInAfter",
+					"departureBefore",
+					"guestCount",
+					"withChildren",
+					"withAnimals",
+					"allowedSmoking",
+					"allowedParties",
+					"report_docs"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"PhotoResponseDto": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"path": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"id",
+					"path"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"AdvertisementResponseDto": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"title": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					},
+					"status": {
+						"$ref": "#/components/schemas/AdvertisementStatus"
+					},
+					"rentType": {
+						"$ref": "#/components/schemas/RentType"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"pricePerPeriod": {
+						"type": "number",
+						"format": "double"
+					},
+					"commission": {
+						"type": "number",
+						"format": "double"
+					},
+					"deposit": {
+						"type": "number",
+						"format": "double"
+					},
+					"owner": {
+						"$ref": "#/components/schemas/UserResponseDto"
+					},
+					"category": {
+						"$ref": "#/components/schemas/CategoryResponseDto"
+					},
+					"property": {
+						"$ref": "#/components/schemas/PropertyResponseDto"
+					},
+					"rules": {
+						"$ref": "#/components/schemas/RulesResponseDto"
+					},
+					"photos": {
+						"items": {
+							"$ref": "#/components/schemas/PhotoResponseDto"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"id",
+					"title",
+					"description",
+					"status",
+					"rentType",
+					"createdAt",
+					"pricePerPeriod",
+					"commission",
+					"deposit",
+					"owner",
+					"category"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"RentalResponseDto": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"advertisement": {
+						"$ref": "#/components/schemas/AdvertisementResponseDto"
+					},
+					"renter": {
+						"$ref": "#/components/schemas/UserResponseDto"
+					},
+					"totalPrice": {
+						"type": "number",
+						"format": "double"
+					},
+					"startDate": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"endDate": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"required": [
+					"id",
+					"advertisement",
+					"renter",
+					"totalPrice",
+					"startDate",
+					"endDate"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"UpdateUserRequestDto": {
+				"properties": {
+					"mail": {
+						"type": "string",
+						"example": "user@example.com",
+						"pattern": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
+					},
+					"firstName": {
+						"type": "string",
+						"minLength": 2,
+						"maxLength": 50
+					},
+					"lastName": {
+						"type": "string",
+						"minLength": 2,
+						"maxLength": 50
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"CreateRentalRequestDto": {
+				"properties": {
+					"advertisementId": {
+						"type": "integer",
+						"format": "int32",
+						"minimum": 1
+					},
+					"startDate": {
+						"type": "string",
+						"format": "date"
+					},
+					"endDate": {
+						"type": "string",
+						"format": "date"
+					},
+					"renterId": {
+						"type": "integer",
+						"format": "int32",
+						"minimum": 1
+					},
+					"totalPrice": {
+						"type": "number",
+						"format": "double",
+						"minimum": 0
+					}
+				},
+				"required": [
+					"advertisementId",
+					"startDate",
+					"endDate",
+					"renterId",
+					"totalPrice"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"UpdateRentalRequestDto": {
+				"properties": {
+					"startDate": {
+						"type": "string",
+						"format": "date"
+					},
+					"endDate": {
+						"type": "string",
+						"format": "date"
+					},
+					"totalPrice": {
+						"type": "number",
+						"format": "double",
+						"minimum": 0
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"UpdatePhotoRequestDto": {
+				"properties": {
+					"path": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"path"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"MessageResponseDto": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"sender": {
+						"$ref": "#/components/schemas/UserResponseDto"
+					},
+					"receiver": {
+						"$ref": "#/components/schemas/UserResponseDto"
+					},
+					"advertisement": {
+						"$ref": "#/components/schemas/AdvertisementResponseDto"
+					},
+					"text": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"required": [
+					"id",
+					"sender",
+					"receiver",
+					"advertisement",
+					"text",
+					"createdAt"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"CreateMessageRequestDto": {
+				"properties": {
+					"senderId": {
+						"type": "integer",
+						"format": "int32",
+						"minimum": 1
+					},
+					"receiverId": {
+						"type": "integer",
+						"format": "int32",
+						"minimum": 1
+					},
+					"advertisementId": {
+						"type": "integer",
+						"format": "int32",
+						"minimum": 1
+					},
+					"text": {
+						"type": "string",
+						"minLength": 1,
+						"maxLength": 1000
+					}
+				},
+				"required": [
+					"senderId",
+					"receiverId",
+					"advertisementId",
+					"text"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"CreateCategoryRequestDto": {
+				"properties": {
+					"name": {
+						"type": "string",
+						"minLength": 2,
+						"maxLength": 50
+					}
+				},
+				"required": [
+					"name"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"UpdateCategoryRequestDto": {
+				"properties": {
+					"name": {
+						"type": "string",
+						"minLength": 2,
+						"maxLength": 50
+					}
+				},
+				"required": [
+					"name"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"LoginResponseDto": {
+				"properties": {
+					"accessToken": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"accessToken"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"LoginRequestDto": {
+				"properties": {
+					"mail": {
+						"type": "string",
+						"example": "user@example.com",
+						"pattern": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
+					},
+					"password": {
+						"type": "string",
+						"minLength": 6
+					}
+				},
+				"required": [
+					"mail",
+					"password"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"RegisterResponseDto": {
+				"properties": {
+					"id": {
+						"type": "number",
+						"format": "double"
+					},
+					"mail": {
+						"type": "string"
+					},
+					"firstName": {
+						"type": "string"
+					},
+					"lastName": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"required": [
+					"id",
+					"mail",
+					"firstName",
+					"lastName",
+					"createdAt",
+					"updatedAt"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ValidateErrorJSON": {
+				"properties": {
+					"message": {
+						"type": "string",
+						"enum": [
+							"Validation failed"
+						],
+						"nullable": false
+					},
+					"details": {
+						"properties": {},
+						"additionalProperties": {},
+						"type": "object"
+					}
+				},
+				"required": [
+					"message",
+					"details"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"EntityExistsError": {
+				"properties": {
+					"message": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"message"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"RegisterRequestDto": {
+				"properties": {
+					"mail": {
+						"type": "string",
+						"example": "user@example.com",
+						"pattern": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
+					},
+					"password": {
+						"type": "string",
+						"minLength": 6
+					},
+					"firstName": {
+						"type": "string",
+						"minLength": 2,
+						"maxLength": 50
+					},
+					"lastName": {
+						"type": "string",
+						"minLength": 2,
+						"maxLength": 50
+					}
+				},
+				"required": [
+					"mail",
+					"password",
+					"firstName",
+					"lastName"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"CreateComfortRequestDto": {
+				"properties": {
+					"renovation": {
+						"type": "string"
+					},
+					"devices": {
+						"type": "string"
+					},
+					"internet": {
+						"type": "boolean"
+					},
+					"tv": {
+						"type": "boolean"
+					},
+					"furniture": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"renovation",
+					"devices",
+					"internet",
+					"tv",
+					"furniture"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"CreateFlatRequestDto": {
+				"properties": {
+					"floor": {
+						"type": "integer",
+						"format": "int32",
+						"minimum": 1
+					},
+					"kitchenArea": {
+						"type": "number",
+						"format": "double",
+						"minimum": 1
+					},
+					"livingArea": {
+						"type": "number",
+						"format": "double",
+						"minimum": 1
+					}
+				},
+				"required": [
+					"floor",
+					"kitchenArea",
+					"livingArea"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"CreateRoomRequestDto": {
+				"properties": {
+					"locatedIn": {
+						"type": "string"
+					},
+					"roomType": {
+						"$ref": "#/components/schemas/RoomType"
+					}
+				},
+				"required": [
+					"locatedIn",
+					"roomType"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"CreateCountryHouseRequestDto": {
+				"properties": {
+					"landArea": {
+						"type": "number",
+						"format": "double",
+						"minimum": 1
+					},
+					"communications": {
+						"type": "string"
+					},
+					"recreations": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"landArea",
+					"communications",
+					"recreations"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"CreateLivingRequestDto": {
+				"properties": {
+					"totalFloors": {
+						"type": "integer",
+						"format": "int32",
+						"minimum": 1
+					},
+					"totalRooms": {
+						"type": "integer",
+						"format": "int32",
+						"minimum": 1
+					},
+					"area": {
+						"type": "number",
+						"format": "double",
+						"minimum": 0
+					},
+					"meter": {
+						"type": "number",
+						"format": "double",
+						"minimum": 0
+					},
+					"other": {
+						"type": "number",
+						"format": "double",
+						"minimum": 0
+					},
+					"livingType": {
+						"$ref": "#/components/schemas/LivingType"
+					},
+					"comfort": {
+						"$ref": "#/components/schemas/CreateComfortRequestDto"
+					},
+					"flat": {
+						"$ref": "#/components/schemas/CreateFlatRequestDto"
+					},
+					"room": {
+						"$ref": "#/components/schemas/CreateRoomRequestDto"
+					},
+					"countryHouse": {
+						"$ref": "#/components/schemas/CreateCountryHouseRequestDto"
+					}
+				},
+				"required": [
+					"totalFloors",
+					"totalRooms",
+					"area",
+					"meter",
+					"other",
+					"livingType",
+					"comfort"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"CreatePropertyRequestDto": {
+				"properties": {
+					"totalArea": {
+						"type": "number",
+						"format": "double",
+						"minimum": 1
+					},
+					"location": {
+						"type": "string",
+						"minLength": 3,
+						"maxLength": 100
+					},
+					"living": {
+						"$ref": "#/components/schemas/CreateLivingRequestDto"
+					}
+				},
+				"required": [
+					"totalArea",
+					"location",
+					"living"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"CreateRulesRequestDto": {
+				"properties": {
+					"checkInAfter": {
+						"type": "string"
+					},
+					"departureBefore": {
+						"type": "string"
+					},
+					"guestCount": {
+						"type": "integer",
+						"format": "int32",
+						"minimum": 1
+					},
+					"withChildren": {
+						"type": "boolean"
+					},
+					"withAnimals": {
+						"type": "boolean"
+					},
+					"allowedSmoking": {
+						"type": "boolean"
+					},
+					"allowedParties": {
+						"type": "boolean"
+					},
+					"report_docs": {
+						"type": "boolean"
+					}
+				},
+				"required": [
+					"checkInAfter",
+					"departureBefore",
+					"guestCount",
+					"withChildren",
+					"withAnimals",
+					"allowedSmoking",
+					"allowedParties",
+					"report_docs"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"CreatePhotoRequestDto": {
+				"properties": {
+					"path": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"path"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"CreateAdvertisementRequestDto": {
+				"properties": {
+					"title": {
+						"type": "string",
+						"minLength": 5,
+						"maxLength": 100
+					},
+					"description": {
+						"type": "string",
+						"minLength": 10,
+						"maxLength": 2000
+					},
+					"categoryId": {
+						"type": "integer",
+						"format": "int32",
+						"minimum": 1
+					},
+					"rentType": {
+						"$ref": "#/components/schemas/RentType"
+					},
+					"pricePerPeriod": {
+						"type": "number",
+						"format": "double",
+						"minimum": 0
+					},
+					"commission": {
+						"type": "number",
+						"format": "double",
+						"minimum": 0
+					},
+					"deposit": {
+						"type": "number",
+						"format": "double",
+						"minimum": 0
+					},
+					"ownerId": {
+						"type": "integer",
+						"format": "int32",
+						"minimum": 1
+					},
+					"property": {
+						"$ref": "#/components/schemas/CreatePropertyRequestDto"
+					},
+					"rules": {
+						"$ref": "#/components/schemas/CreateRulesRequestDto"
+					},
+					"photos": {
+						"items": {
+							"$ref": "#/components/schemas/CreatePhotoRequestDto"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"title",
+					"description",
+					"categoryId",
+					"rentType",
+					"pricePerPeriod",
+					"commission",
+					"deposit",
+					"ownerId",
+					"property",
+					"rules",
+					"photos"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"UpdateAdvertisementRequestDto": {
+				"properties": {
+					"title": {
+						"type": "string",
+						"minLength": 5,
+						"maxLength": 100
+					},
+					"description": {
+						"type": "string",
+						"minLength": 10,
+						"maxLength": 2000
+					},
+					"rentType": {
+						"$ref": "#/components/schemas/RentType"
+					},
+					"status": {
+						"$ref": "#/components/schemas/AdvertisementStatus"
+					},
+					"pricePerPeriod": {
+						"type": "number",
+						"format": "double",
+						"minimum": 0
+					},
+					"commission": {
+						"type": "number",
+						"format": "double",
+						"minimum": 0
+					},
+					"deposit": {
+						"type": "number",
+						"format": "double",
+						"minimum": 0
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			}
+		},
+		"securitySchemes": {
+			"jwt": {
+				"type": "apiKey",
+				"name": "Authorization",
+				"in": "header",
+				"description": "Enter token like: Bearer <your_token>"
+			}
+		}
+	},
+	"info": {
+		"title": "rent_service_rest",
+		"version": "1.0.0",
+		"contact": {}
+	},
+	"paths": {
+		"/users": {
+			"get": {
+				"operationId": "GetUsers",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/UserResponseDto"
+									},
+									"type": "array"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Entity not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/EntityNotFoundError"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"User"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": []
+			}
+		},
+		"/users/me": {
+			"get": {
+				"operationId": "GetUser",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/UserResponseDto"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Entity not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/EntityNotFoundError"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"User"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": []
+			}
+		},
+		"/users/mail": {
+			"get": {
+				"operationId": "GetUserByMail",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/UserResponseDto"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Entity not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/EntityNotFoundError"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"User"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "mail",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/users/{userId}": {
+			"get": {
+				"operationId": "GetUserById",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/UserResponseDto"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Entity not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/EntityNotFoundError"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"User"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "userId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			},
+			"put": {
+				"operationId": "UpdateUser",
+				"responses": {
+					"200": {
+						"description": "Updated",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/UserResponseDto"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Entity not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/EntityNotFoundError"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"User"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "userId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateUserRequestDto"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"operationId": "DeleteUser",
+				"responses": {
+					"204": {
+						"description": "Deleted"
+					}
+				},
+				"tags": [
+					"User"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "userId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/users/{ownerId}/owner": {
+			"get": {
+				"operationId": "GetRentalsByOwnerId",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/RentalResponseDto"
+									},
+									"type": "array"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Entity not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/EntityNotFoundError"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"User"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "ownerId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/users/{renterId}/renter": {
+			"get": {
+				"operationId": "GetRentalsByRenterId",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/RentalResponseDto"
+									},
+									"type": "array"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Entity not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/EntityNotFoundError"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"User"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "renterId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/rentals": {
+			"get": {
+				"operationId": "GetRentals",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/RentalResponseDto"
+									},
+									"type": "array"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Entity not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/EntityNotFoundError"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Rental"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": []
+			},
+			"post": {
+				"operationId": "CreateRental",
+				"responses": {
+					"201": {
+						"description": "Created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/RentalResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Rental"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateRentalRequestDto"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/rentals/{rentalId}": {
+			"get": {
+				"operationId": "GetRentalById",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/RentalResponseDto"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Entity not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/EntityNotFoundError"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Rental"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "rentalId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			},
+			"put": {
+				"operationId": "UpdateRental",
+				"responses": {
+					"200": {
+						"description": "Updated",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/RentalResponseDto"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Entity not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/EntityNotFoundError"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Rental"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "rentalId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateRentalRequestDto"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"operationId": "DeleteRental",
+				"responses": {
+					"204": {
+						"description": "Deleted"
+					}
+				},
+				"tags": [
+					"Rental"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "rentalId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/photos": {
+			"get": {
+				"operationId": "GetPhotos",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/PhotoResponseDto"
+									},
+									"type": "array"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Entity not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/EntityNotFoundError"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Photo"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": []
+			}
+		},
+		"/photos/{photoId}": {
+			"get": {
+				"operationId": "GetPhotoById",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PhotoResponseDto"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Entity not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/EntityNotFoundError"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Photo"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "photoId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			},
+			"put": {
+				"operationId": "UpdatePhoto",
+				"responses": {
+					"200": {
+						"description": "Updated",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PhotoResponseDto"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Entity not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/EntityNotFoundError"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Photo"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "photoId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdatePhotoRequestDto"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"operationId": "DeletePhoto",
+				"responses": {
+					"204": {
+						"description": "Deleted"
+					}
+				},
+				"tags": [
+					"Photo"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "photoId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/messages": {
+			"post": {
+				"operationId": "CreateMessage",
+				"responses": {
+					"201": {
+						"description": "Created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/MessageResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Message"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateMessageRequestDto"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/messages/{messageId}": {
+			"get": {
+				"operationId": "GetMessageById",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/MessageResponseDto"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Entity not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/EntityNotFoundError"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Message"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "messageId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			},
+			"delete": {
+				"operationId": "DeleteMessage",
+				"responses": {
+					"204": {
+						"description": "Deleted"
+					}
+				},
+				"tags": [
+					"Message"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "messageId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/categories": {
+			"get": {
+				"operationId": "GetCategories",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/CategoryResponseDto"
+									},
+									"type": "array"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Entity not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/EntityNotFoundError"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Category"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": []
+			},
+			"post": {
+				"operationId": "CreateCategory",
+				"responses": {
+					"201": {
+						"description": "Created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CategoryResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Category"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateCategoryRequestDto"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/categories/{categoryId}": {
+			"get": {
+				"operationId": "GetCategoryById",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CategoryResponseDto"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Entity not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/EntityNotFoundError"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Category"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "categoryId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			},
+			"put": {
+				"operationId": "UpdateCategory",
+				"responses": {
+					"200": {
+						"description": "Updated",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/CategoryResponseDto"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Entity not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/EntityNotFoundError"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Category"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "categoryId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateCategoryRequestDto"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"operationId": "DeleteCategory",
+				"responses": {
+					"204": {
+						"description": "Deleted"
+					}
+				},
+				"tags": [
+					"Category"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "categoryId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/auth/login": {
+			"post": {
+				"operationId": "Login",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/LoginResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Auth"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/LoginRequestDto"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/auth/register": {
+			"post": {
+				"operationId": "Register",
+				"responses": {
+					"201": {
+						"description": "Created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/RegisterResponseDto"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "Bad request",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/EntityExistsError"
+								}
+							}
+						}
+					},
+					"422": {
+						"description": "Validation Failed",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ValidateErrorJSON"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Auth"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/RegisterRequestDto"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/advertisements": {
+			"get": {
+				"operationId": "GetAll",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/AdvertisementResponseDto"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Advertisement"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": []
+			},
+			"post": {
+				"operationId": "Create",
+				"responses": {
+					"201": {
+						"description": "Created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/AdvertisementResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Advertisement"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateAdvertisementRequestDto"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/advertisements/{advertisementId}": {
+			"get": {
+				"operationId": "GetById",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/AdvertisementResponseDto"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Entity not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/EntityNotFoundError"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Advertisement"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "advertisementId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			},
+			"put": {
+				"operationId": "Update",
+				"responses": {
+					"200": {
+						"description": "Updated",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/AdvertisementResponseDto"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Entity not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/EntityNotFoundError"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Advertisement"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "advertisementId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/UpdateAdvertisementRequestDto"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"operationId": "Delete",
+				"responses": {
+					"204": {
+						"description": "Deleted"
+					}
+				},
+				"tags": [
+					"Advertisement"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "advertisementId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/advertisements/{advertisementId}/rentals": {
+			"get": {
+				"operationId": "GetRentalsByAdvertisementId",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/RentalResponseDto"
+									},
+									"type": "array"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Entity not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/EntityNotFoundError"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Advertisement"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "advertisementId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/advertisements/{advertisementId}/photos": {
+			"get": {
+				"operationId": "GetPhotosByAdvertisement",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/PhotoResponseDto"
+									},
+									"type": "array"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Entity not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/EntityNotFoundError"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Advertisement"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "advertisementId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			},
+			"post": {
+				"operationId": "CreatePhoto",
+				"responses": {
+					"201": {
+						"description": "Created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/PhotoResponseDto"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Advertisement"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "advertisementId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreatePhotoRequestDto"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/advertisements/{advertisementId}/messages": {
+			"get": {
+				"operationId": "GetMessagesForAdvertisement",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/MessageResponseDto"
+									},
+									"type": "array"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "Entity not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/EntityNotFoundError"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Advertisement"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "advertisementId",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		}
+	},
+	"servers": [
+		{
+			"url": "/"
+		}
+	]
+}

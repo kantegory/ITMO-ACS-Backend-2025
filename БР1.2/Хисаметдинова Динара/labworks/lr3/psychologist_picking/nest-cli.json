@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json.schemastore.org/nest-cli",
+  "collection": "@nestjs/schematics",
+  "monorepo": true,
+  "root": "apps",
+  "sourceRoot": "apps",
+  "compilerOptions": {
+    "deleteOutDir": true
+  },
+  "projects": {
+    "user": {
+      "type": "application",
+      "root": "apps/user",
+      "entryFile": "main",
+      "sourceRoot": "apps/user/src"
+    },
+    "psychologist": {
+      "type": "application",
+      "root": "apps/psychologist",
+      "entryFile": "main",  
+      "sourceRoot": "apps/psychologist/src"
+    },
+    "chat": {
+      "type": "application",
+      "root": "apps/chat",
+      "entryFile": "main",
+      "sourceRoot": "apps/chat/src"
+    },
+    "review": {
+      "type": "application",
+      "root": "apps/review",
+      "entryFile": "main",
+      "sourceRoot": "apps/review/src"
+    },
+    "appointment": {
+      "type": "application",
+      "root": "apps/appointment",
+      "entryFile": "main",
+      "sourceRoot": "apps/appointment/src"
+    }
+  }
+}

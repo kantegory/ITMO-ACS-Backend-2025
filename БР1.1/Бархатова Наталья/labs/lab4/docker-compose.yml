@@ -1,0 +1,108 @@
+version: '3.8'
+
+services:
+  auth_service:
+    build: ./auth_service
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - AUTH_SECRET=supersecretkey
+    networks:
+      - fitness-network
+
+  user_service:
+    build: ./user_service
+    ports:
+      - "3001:3001"
+    depends_on:
+      - user_db
+      - auth_service
+    environment:
+      - PORT=3001
+      - DB_HOST=user_db
+      - DB_PORT=5432
+      - DB_USER=nata
+      - DB_PASSWORD=1
+      - DB_NAME=fitness_app_user
+      - AUTH_SERVICE_URL=http://auth_service:3000
+    networks:
+      - fitness-network
+
+  user_db:
+    image: postgres:15
+    environment:
+      - POSTGRES_USER=nata
+      - POSTGRES_PASSWORD=1
+      - POSTGRES_DB=fitness_app_user
+    volumes:
+      - user_db_data:/var/lib/postgresql/data
+    networks:
+      - fitness-network
+
+  workout_service:
+    build: ./workout_service
+    ports:
+      - "3002:3002"
+    depends_on:
+      - workout_db
+      - auth_service
+    environment:
+      - PORT=3002
+      - DB_HOST=workout_db
+      - DB_PORT=5432
+      - DB_USER=nata
+      - DB_PASSWORD=1
+      - DB_NAME=fitness_app_workout
+      - AUTH_SERVICE_URL=http://auth_service:3000
+    networks:
+      - fitness-network
+
+  workout_db:
+    image: postgres:15
+    environment:
+      - POSTGRES_USER=nata
+      - POSTGRES_PASSWORD=1
+      - POSTGRES_DB=fitness_app_workout
+    volumes:
+      - workout_db_data:/var/lib/postgresql/data
+    networks:
+      - fitness-network
+
+  blog_service:
+    build: ./blog_service
+    ports:
+      - "3003:3003"
+    depends_on:
+      - blog_db
+      - auth_service
+    environment:
+      - PORT=3003
+      - DB_HOST=blog_db
+      - DB_PORT=5432
+      - DB_USER=nata
+      - DB_PASSWORD=2
+      - DB_NAME=fitness_app_blog
+      - AUTH_SERVICE_URL=http://auth_service:3000
+    networks:
+      - fitness-network
+
+  blog_db:
+    image: postgres:15
+    environment:
+      - POSTGRES_USER=nata
+      - POSTGRES_PASSWORD=1
+      - POSTGRES_DB=fitness_app_blog
+    volumes:
+      - blog_db_data:/var/lib/postgresql/data
+    networks:
+      - fitness-network
+
+volumes:
+  user_db_data:
+  workout_db_data:
+  blog_db_data:
+
+networks:
+  fitness-network:
+    driver: bridge

@@ -1,0 +1,150 @@
+services:
+  user-db:
+    image: postgres:15
+    container_name: user-db
+    environment:
+      POSTGRES_DB: user
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - user_db_data:/var/lib/postgresql/data
+    restart: always
+
+  user:
+    build:
+      context: .
+      dockerfile: apps/user/Dockerfile
+    env_file:
+      - ./apps/user/.env
+    depends_on:
+      - user-db
+      - rabbitmq
+    ports:
+      - "3001:3000"
+    restart: always
+    container_name: user
+
+  psychologist-db:
+    image: postgres:15
+    container_name: psychologist-db
+    environment:
+      POSTGRES_DB: psychologist
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5433:5432"
+    volumes:
+      - psychologist_db_data:/var/lib/postgresql/data
+    restart: always
+
+  psychologist:
+    build:
+      context: .
+      dockerfile: apps/psychologist/Dockerfile
+    env_file:
+      - ./apps/psychologist/.env
+    depends_on:
+      - psychologist-db
+      - rabbitmq
+    ports:
+      - "3002:3000"
+    restart: always
+    container_name: psychologist
+
+  review-db:
+    image: postgres:15
+    container_name: review-db
+    environment:
+      POSTGRES_DB: review
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5434:5432"
+    volumes:
+      - review_db_data:/var/lib/postgresql/data
+    restart: always
+
+  review:
+    build:
+      context: .
+      dockerfile: apps/review/Dockerfile
+    env_file:
+      - ./apps/review/.env
+    depends_on:
+      - review-db
+      - rabbitmq
+    ports:
+      - "3003:3000"
+    restart: always
+    container_name: review
+
+  appointment-db:
+    image: postgres:15
+    container_name: appointment-db
+    environment:
+      POSTGRES_DB: appointment
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5435:5432"
+    volumes:
+      - appointment_db_data:/var/lib/postgresql/data
+    restart: always
+
+  appointment:
+    build:
+      context: .
+      dockerfile: apps/appointment/Dockerfile
+    env_file:
+      - ./apps/appointment/.env
+    depends_on:
+      - appointment-db
+      - rabbitmq
+    ports:
+      - "3004:3000"
+    restart: always
+    container_name: appointment
+
+  chat-db:
+    image: postgres:15
+    container_name: chat-db
+    environment:
+      POSTGRES_DB: chat
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5436:5432"
+    volumes:
+      - chat_db_data:/var/lib/postgresql/data
+    restart: always
+
+  chat:
+    build:
+      context: .
+      dockerfile: apps/chat/Dockerfile
+    env_file:
+      - ./apps/chat/.env
+    depends_on:
+      - chat-db
+      - rabbitmq
+    ports:
+      - "3005:3000"
+    restart: always
+    container_name: chat
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"     
+      - "15672:15672"    
+    restart: always
+
+volumes:
+  user_db_data:
+  psychologist_db_data:
+  review_db_data:
+  appointment_db_data:
+  chat_db_data:

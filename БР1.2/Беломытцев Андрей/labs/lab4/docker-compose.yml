@@ -1,0 +1,138 @@
+services:
+  rabbitmq:
+    image: rabbitmq:management
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
+    networks:
+      - backend
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 30s
+      timeout: 30s
+      retries: 3
+
+  user-db:
+    image: postgres
+    container_name: user-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+      PGPORT: ${DB_PORT_USER}
+    ports:
+      - "${DB_PORT_USER}:${DB_PORT_USER}"
+    volumes:
+      - user-db:/var/lib/postgresql/data
+    networks:
+      - backend
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  
+  channel-db:
+    image: postgres
+    container_name: channel-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+      PGPORT: ${DB_PORT_CHANNEL}
+    ports:
+      - "${DB_PORT_CHANNEL}:${DB_PORT_CHANNEL}"
+    volumes:
+      - channel-db:/var/lib/postgresql/data
+    networks:
+      - backend
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  
+  video-db:
+    image: postgres
+    container_name: video-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+      PGPORT: ${DB_PORT_VIDEO}
+    ports:
+      - "${DB_PORT_VIDEO}:${DB_PORT_VIDEO}"
+    volumes:
+      - video-db:/var/lib/postgresql/data
+    networks:
+      - backend
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  
+  user-service:
+    container_name: user-service
+    build:
+      context: ./user-service
+      dockerfile: Dockerfile
+    depends_on:
+      user-db:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    env_file:
+      - .env
+    ports:
+      - '3000:3000'
+    networks:
+      - backend
+  
+  channel-service:
+    container_name: channel-service
+    build: 
+      context: ./channel-service
+      dockerfile: Dockerfile
+    depends_on:
+      channel-db:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    env_file:
+      - .env
+    ports:
+      - '3001:3000'
+    networks:
+      - backend
+  
+  video-service:
+    container_name: video-service
+    build: 
+      context: ./video-service
+      dockerfile: Dockerfile
+    depends_on:
+      video-db:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    env_file:
+      - .env
+    ports:
+      - '3002:3000'
+    networks:
+      - backend
+
+volumes:
+  user-db:
+  channel-db:
+  video-db:
+
+networks:
+  backend:

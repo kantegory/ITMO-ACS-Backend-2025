@@ -1,0 +1,52 @@
+version: "3.9"
+services:
+  postgres:
+    image: postgres:15
+    env_file:
+      - .env
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - "5432:5432"
+
+  user-service:
+    build: ./microservices/user-service
+    ports:
+      - "8081:8081"
+    depends_on:
+      - postgres
+    env_file:
+      - .env
+
+  blog-service:
+    build: ./microservices/blog-service
+    ports:
+      - "8083:8083"
+    depends_on:
+      - postgres
+    env_file:
+      - .env
+
+  vacancy-service:
+    build: ./microservices/workout-service
+    ports:
+      - "8082:8082"
+    depends_on:
+      - postgres
+    env_file:
+      - .env
+
+  gateway:
+    build: ./microservices/gateway
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+
+  rabbitmq:
+    image: rabbitmq
+    ports:
+      - 5672:5672
+
+volumes:
+  postgres:
