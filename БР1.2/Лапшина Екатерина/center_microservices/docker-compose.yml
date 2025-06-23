@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  user-service:
+    build:
+      context: ./user-service
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    environment:
+      - PORT=3001
+      - NODE_ENV=development
+    volumes:
+      - /app/node_modules
+    networks:
+      - microservices-network
+
+  property-service:
+    build:
+      context: ./property-service
+      dockerfile: Dockerfile
+    ports:
+      - "3002:3002"
+    environment:
+      - PORT=3002
+      - NODE_ENV=development
+    volumes:
+      - /app/node_modules
+    networks:
+      - microservices-network
+
+  contract-service:
+    build:
+      context: ./contract-service
+      dockerfile: Dockerfile
+    ports:
+      - "3003:3003"
+    environment:
+      - PORT=3003
+      - NODE_ENV=development
+      - USER_SERVICE_URL=http://user-service:3001
+      - PROPERTY_SERVICE_URL=http://property-service:3002
+    volumes:
+      - /app/node_modules
+    depends_on:
+      - user-service
+      - property-service
+    networks:
+      - microservices-network
+
+networks:
+  microservices-network:
+    driver: bridge 

@@ -1,0 +1,251 @@
+{
+  "users": {
+    "admin": {
+      "username": "admin",
+      "first_name": "Администратор",
+      "last_name": "Системы",
+      "email": "admin@center.com",
+      "password": "admin123",
+      "Phone": "+79001234567",
+      "Passport": "1234567890",
+      "is_staff": true,
+      "is_superuser": true
+    },
+    "agent": {
+      "username": "agent1",
+      "first_name": "Иван",
+      "last_name": "Петров",
+      "email": "agent1@center.com",
+      "password": "agent123",
+      "Phone": "+79001234568",
+      "Passport": "1234567891",
+      "is_staff": true,
+      "is_superuser": false
+    },
+    "client": {
+      "username": "client1",
+      "first_name": "Мария",
+      "last_name": "Иванова",
+      "email": "client1@example.com",
+      "password": "client123",
+      "Phone": "+79001234569",
+      "Passport": "1234567892",
+      "is_staff": false,
+      "is_superuser": false
+    }
+  },
+  "buildings": {
+    "residential": {
+      "City": "Москва",
+      "Street": "Тверская",
+      "Number": "15",
+      "Type": "Жилой дом",
+      "Description": "Современный жилой комплекс с развитой инфраструктурой",
+      "Photo": "/uploads/building1.jpg"
+    },
+    "commercial": {
+      "City": "Санкт-Петербург",
+      "Street": "Невский проспект",
+      "Number": "25",
+      "Type": "Офисное здание",
+      "Description": "Бизнес-центр класса А",
+      "Photo": "/uploads/building2.jpg"
+    }
+  },
+  "apartments": {
+    "studio": {
+      "Number": 101,
+      "Square": 35,
+      "Description": "Уютная студия с современным ремонтом",
+      "Photo": "/uploads/apartment1.jpg",
+      "Cost": 3500000,
+      "BuildingID": 1
+    },
+    "two_room": {
+      "Number": 205,
+      "Square": 65,
+      "Description": "Двухкомнатная квартира с панорамными окнами",
+      "Photo": "/uploads/apartment2.jpg",
+      "Cost": 6500000,
+      "BuildingID": 1
+    },
+    "three_room": {
+      "Number": 310,
+      "Square": 85,
+      "Description": "Просторная трехкомнатная квартира",
+      "Photo": "/uploads/apartment3.jpg",
+      "Cost": 8500000,
+      "BuildingID": 1
+    }
+  },
+  "contracts": {
+    "rental": {
+      "AgentID": 2,
+      "ClientID": 3,
+      "ApartmentID": 1,
+      "Status": "v",
+      "startDate": "2024-01-01",
+      "endDate": "2024-12-31"
+    },
+    "sale": {
+      "AgentID": 2,
+      "ClientID": 3,
+      "ApartmentID": 2,
+      "Status": "l",
+      "startDate": "2024-02-01",
+      "endDate": "2024-03-01"
+    }
+  },
+  "test_scenarios": {
+    "user_registration": {
+      "valid_user": {
+        "username": "newuser",
+        "first_name": "Новый",
+        "last_name": "Пользователь",
+        "email": "newuser@example.com",
+        "password": "password123",
+        "Phone": "+79001234570",
+        "Passport": "1234567893"
+      },
+      "invalid_user": {
+        "username": "",
+        "email": "invalid-email",
+        "password": "123"
+      }
+    },
+    "building_creation": {
+      "valid_building": {
+        "City": "Казань",
+        "Street": "Баумана",
+        "Number": "10",
+        "Type": "Жилой комплекс",
+        "Description": "Новый жилой комплекс в центре города"
+      },
+      "invalid_building": {
+        "City": "",
+        "Street": "",
+        "Number": ""
+      }
+    },
+    "apartment_creation": {
+      "valid_apartment": {
+        "Number": 505,
+        "Square": 120,
+        "Description": "Элитная квартира с дизайнерским ремонтом",
+        "Cost": 15000000,
+        "BuildingID": 1
+      },
+      "invalid_apartment": {
+        "Number": -1,
+        "Square": 0,
+        "Cost": -1000000,
+        "BuildingID": 999
+      }
+    }
+  },
+  "error_responses": {
+    "400_bad_request": {
+      "message": "Bad Request",
+      "error": "Validation failed"
+    },
+    "401_unauthorized": {
+      "message": "Unauthorized",
+      "error": "No token provided"
+    },
+    "404_not_found": {
+      "message": "Not Found",
+      "error": "Resource not found"
+    },
+    "500_internal_error": {
+      "message": "Internal Server Error",
+      "error": "Something went wrong"
+    }
+  },
+  "validation_rules": {
+    "user": {
+      "username": {
+        "required": true,
+        "min_length": 3,
+        "max_length": 150,
+        "pattern": "^[a-zA-Z0-9_]+$"
+      },
+      "email": {
+        "required": true,
+        "format": "email",
+        "max_length": 254
+      },
+      "password": {
+        "required": true,
+        "min_length": 8
+      },
+      "Phone": {
+        "format": "^\\+7[0-9]{10}$"
+      },
+      "Passport": {
+        "format": "^[0-9]{10}$"
+      }
+    },
+    "building": {
+      "City": {
+        "required": true,
+        "max_length": 100
+      },
+      "Street": {
+        "required": true,
+        "max_length": 100
+      },
+      "Number": {
+        "required": true,
+        "max_length": 100
+      }
+    },
+    "apartment": {
+      "Number": {
+        "required": true,
+        "type": "integer",
+        "min": 1
+      },
+      "Square": {
+        "required": true,
+        "type": "integer",
+        "min": 1
+      },
+      "Cost": {
+        "required": true,
+        "type": "integer",
+        "min": 0
+      },
+      "BuildingID": {
+        "required": true,
+        "type": "integer",
+        "exists": "buildings"
+      }
+    },
+    "contract": {
+      "AgentID": {
+        "required": true,
+        "type": "integer",
+        "exists": "users"
+      },
+      "ClientID": {
+        "required": true,
+        "type": "integer",
+        "exists": "users"
+      },
+      "ApartmentID": {
+        "required": true,
+        "type": "integer",
+        "exists": "apartments"
+      },
+      "Status": {
+        "enum": ["v", "l", "f"]
+      },
+      "startDate": {
+        "format": "date"
+      },
+      "endDate": {
+        "format": "date"
+      }
+    }
+  }
+} 
