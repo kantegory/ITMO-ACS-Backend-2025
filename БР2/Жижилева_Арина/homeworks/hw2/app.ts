@@ -18,4 +18,5 @@ app.use('/api', userWorkoutProgressRoutes);
 app.use('/api', userMeasurementsProgressRoutes);
 app.use('/api', workoutPlanRoutes);
 app.use('/api', workoutRoutes);
+
 app.use('/api', userRoutes);

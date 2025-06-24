@@ -16,3 +16,4 @@ router.delete('/posts/:id', deletePost);
 router.get('/posts', listPosts);
 
 export default router;
+

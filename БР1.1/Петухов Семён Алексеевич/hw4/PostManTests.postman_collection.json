@@ -1,0 +1,932 @@
+{
+	"info": {
+		"_postman_id": "0b6aa6c2-eab8-4c84-8608-03fded825a28",
+		"name": "Resume Platform API Tests Copy",
+		"description": "Postman collection for testing Resume Platform models",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "40206336"
+	},
+	"item": [
+		{
+			"name": "Create User",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"username\": \"johndoe\", \"email\": \"john1234@example.com\", \"password\": \"securepassword123\", \"role\": \"соискатель\"}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get users by ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/users/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"users",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update users by ID",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"username\": \"johndoe1\", \"email\": \"john12345@example.com\", \"password\": \"securepassword123\", \"role\": \"соискатель\"}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/users/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"users",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete users by ID",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/users/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"users",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Company",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\": \"Tech Corp\", \"description\": \"Software development company\"}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/companies",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"companies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get companies by ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/companies/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"companies",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update companies by ID",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"example\": \"updated data\"}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/companies/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"companies",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete companies by ID",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/companies/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"companies",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Skill",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"skill_name\": \"C++\", \"description\": \"Frontend development\"}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/skills",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"skills"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get skills by ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/skills/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"skills",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update skills by ID",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"skill_name\": \"Pascal\", \"description\": \"School teacher\"}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/skills/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"skills",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete skills by ID",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/skills/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"skills",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Education",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"education_level\": \"Cреднее общее\"}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/educations",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"educations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get educations by ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/educations/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"educations",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update educations by ID",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"education_level\": \"Cреднее специальное\"}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/educations/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"educations",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete educations by ID",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/educations/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"educations",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Resume",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"user\": 2, \"full_name\": \"John Doe\", \"date_of_birth\": \"1990-05-15\", \"work_experience\": \"5 лет в IT\", \"skills\": \"JavaScript, React\", \"salary\": 120000, \"education\": 1, \"additional_information\": \"Готов к переезду\"}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/resumes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"resumes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get resumes by ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/resumes/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"resumes",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update resumes by ID",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"user\": 2, \"full_name\": \"John\", \"date_of_birth\": \"1990-05-15\", \"work_experience\": \"5 лет в IT\", \"skills\": \"JavaScript, React\", \"salary\": 120000, \"education\": 1, \"additional_information\": \"Готов к переезду\"}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/resumes/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"resumes",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete resumes by ID",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/resumes/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"resumes",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create work-experiences",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"resume\": 2,\r\n  \"company\": \"Tech Corp\",\r\n  \"role\": \"Frontend Developer\",\r\n  \"description\": \"Worked on SPA applications\",\r\n  \"duration\": \"3 года\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/work-experiences",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"work-experiences"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get work-experiences by ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/work-experiences/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"work-experiences",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update work-experiences by ID",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"resume\": 2,\r\n  \"company\": \"Tech Corp1\",\r\n  \"role\": \"Frontend Developer\",\r\n  \"description\": \"Worked on SPA applications\",\r\n  \"duration\": \"3 года\"\r\n}\r\n"
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/work-experiences/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"work-experiences",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete work-experiences by ID",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/work-experiences/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"work-experiences",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create vacancies",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"title\": \"Backend Developer\",\r\n  \"description\": \"Работа с Node.js и PostgreSQL\",\r\n  \"industry\": \"IT\",\r\n  \"requirements\": \"Опыт от 3 лет, знание TypeScript\",\r\n  \"salary\": 150000,\r\n  \"work_exp\": \"3 года\",\r\n  \"companyId\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/vacancies",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"vacancies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get vacancies by ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/vacancies/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"vacancies",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update vacancies by ID",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"title\": \"Backend Developer\",\r\n  \"description\": \"Работа с Node.js и PostgreSQL\",\r\n  \"industry\": \"IT\",\r\n  \"requirements\": \"Опыт от 3 лет, знание TypeScript\",\r\n  \"salary\": 150000,\r\n  \"work_exp\": \"3 года\",\r\n  \"companyId\": 1\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/vacancies/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"vacancies",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete vacancies by ID",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/vacancies/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"vacancies",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create vacancy-skills",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"vacancy\": 1,\r\n  \"skill\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/vacancy-skills",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"vacancy-skills"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get vacancy-skills by ID",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/vacancy-skills/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"vacancy-skills",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update vacancy-skills by ID",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"vacancy\": 1,\r\n  \"skill\": 1\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/vacancy-skills/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"vacancy-skills",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete vacancy-skills by ID",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/vacancy-skills/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"vacancy-skills",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create motivation-letters",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"user\": 1,\r\n  \"vacancy\": 1,\r\n  \"title\": \"Хочу работать в вашей компании\",\r\n  \"content\": \"У меня большой опыт и мотивация работать именно у вас\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/motivation-letters",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"motivation-letters"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get motivation-letters by ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/motivation-letters/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"motivation-letters",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update motivation-letters by ID",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"user\": 1,\r\n  \"vacancy\": 1,\r\n  \"title\": \"Хочу работать в вашей компании\",\r\n  \"content\": \"У меня большой опыт и мотивация работать именно у вас\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/motivation-letters/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"motivation-letters",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete motivation-letters by ID",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/motivation-letters/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"motivation-letters",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

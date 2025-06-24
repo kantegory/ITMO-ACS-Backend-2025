@@ -1,0 +1,689 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Job Board API",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/applications": {
+      "post": {
+        "summary": "Create a job application",
+        "tags": [
+          "Applications"
+        ],
+        "responses": {
+          "201": {
+            "description": "Application created"
+          }
+        }
+      },
+      "get": {
+        "summary": "Get all applications",
+        "tags": [
+          "Applications"
+        ],
+        "responses": {
+          "200": {
+            "description": "List of applications"
+          }
+        }
+      }
+    },
+    "/applications/{id}": {
+      "get": {
+        "summary": "Get application by ID",
+        "tags": [
+          "Applications"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Application found"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update an application",
+        "tags": [
+          "Applications"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Application updated"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete an application",
+        "tags": [
+          "Applications"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Application deleted"
+          }
+        }
+      }
+    },
+    "/auth/register": {
+      "post": {
+        "summary": "Register a new user",
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User registered"
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "summary": "User login",
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Authenticated successfully"
+          }
+        }
+      }
+    },
+    "/employers": {
+      "post": {
+        "summary": "Create an employer",
+        "tags": [
+          "Employers"
+        ],
+        "responses": {
+          "201": {
+            "description": "Employer created"
+          }
+        }
+      },
+      "get": {
+        "summary": "Get all employers",
+        "tags": [
+          "Employers"
+        ],
+        "responses": {
+          "200": {
+            "description": "List of employers"
+          }
+        }
+      }
+    },
+    "/employers/{id}": {
+      "get": {
+        "summary": "Get employer by ID",
+        "tags": [
+          "Employers"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Employer found"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update an employer",
+        "tags": [
+          "Employers"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Employer updated"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete an employer",
+        "tags": [
+          "Employers"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Employer deleted"
+          }
+        }
+      }
+    },
+    "/industries": {
+      "post": {
+        "summary": "Create an industry",
+        "tags": [
+          "Industries"
+        ],
+        "responses": {
+          "201": {
+            "description": "Industry created"
+          }
+        }
+      },
+      "get": {
+        "summary": "Get all industries",
+        "tags": [
+          "Industries"
+        ],
+        "responses": {
+          "200": {
+            "description": "List of industries"
+          }
+        }
+      }
+    },
+    "/industries/{id}": {
+      "get": {
+        "summary": "Get industry by ID",
+        "tags": [
+          "Industries"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Industry found"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update an industry",
+        "tags": [
+          "Industries"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Industry updated"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete an industry",
+        "tags": [
+          "Industries"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Industry deleted"
+          }
+        }
+      }
+    },
+    "/jobs": {
+      "post": {
+        "summary": "Create a job",
+        "tags": [
+          "Jobs"
+        ],
+        "responses": {
+          "201": {
+            "description": "Job created"
+          }
+        }
+      },
+      "get": {
+        "summary": "Get all jobs",
+        "tags": [
+          "Jobs"
+        ],
+        "responses": {
+          "200": {
+            "description": "List of jobs"
+          }
+        }
+      }
+    },
+    "/jobs/{id}": {
+      "get": {
+        "summary": "Get job by ID",
+        "tags": [
+          "Jobs"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Job found"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a job",
+        "tags": [
+          "Jobs"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Job updated"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a job",
+        "tags": [
+          "Jobs"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Job deleted"
+          }
+        }
+      }
+    },
+    "/resumes": {
+      "post": {
+        "summary": "Create a resume",
+        "tags": [
+          "Resumes"
+        ],
+        "responses": {
+          "201": {
+            "description": "Resume created"
+          }
+        }
+      },
+      "get": {
+        "summary": "Get all resumes",
+        "tags": [
+          "Resumes"
+        ],
+        "responses": {
+          "200": {
+            "description": "List of resumes"
+          }
+        }
+      }
+    },
+    "/resumes/{id}": {
+      "get": {
+        "summary": "Get resume by ID",
+        "tags": [
+          "Resumes"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Resume found"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a resume",
+        "tags": [
+          "Resumes"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Resume updated"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a resume",
+        "tags": [
+          "Resumes"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Resume deleted"
+          }
+        }
+      }
+    },
+    "/users": {
+      "post": {
+        "summary": "Create a user",
+        "tags": [
+          "Users"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "User created"
+          }
+        }
+      },
+      "get": {
+        "summary": "Get all users",
+        "tags": [
+          "Users"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of users"
+          }
+        }
+      }
+    },
+    "/users/email/{email}": {
+      "get": {
+        "summary": "Get user by email",
+        "tags": [
+          "Users"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "email",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User found"
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "summary": "Get user by ID",
+        "tags": [
+          "Users"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User found"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a user",
+        "tags": [
+          "Users"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User updated"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a user",
+        "tags": [
+          "Users"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "User deleted"
+          }
+        }
+      }
+    }
+  },
+  "components": {},
+  "tags": [
+    {
+      "name": "Applications",
+      "description": "Job applications"
+    },
+    {
+      "name": "Auth",
+      "description": "Authentication"
+    },
+    {
+      "name": "Employers",
+      "description": "Employer management"
+    },
+    {
+      "name": "Industries",
+      "description": "Industry management"
+    },
+    {
+      "name": "Jobs",
+      "description": "Job management"
+    },
+    {
+      "name": "Resumes",
+      "description": "Resume management"
+    },
+    {
+      "name": "Users",
+      "description": "User management"
+    }
+  ]
+}

@@ -16,3 +16,4 @@ router.delete('/workouts/:id', deleteWorkout);
 router.get('/workouts', listWorkouts);
 
 export default router;
+

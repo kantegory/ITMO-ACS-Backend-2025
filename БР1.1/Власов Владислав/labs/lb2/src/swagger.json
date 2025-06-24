@@ -1,0 +1,2054 @@
+{
+    "openapi": "3.0.0",
+    "info": { 
+        "title": "Hello World",
+        "version":"1.0.0"
+    },
+    "paths": { 
+        "/api/auth/login": { 
+            "post": {
+                "tags": ["Authentication"],
+                "description": "Получить токен по данным авторизации",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": { "type": "string" },
+                                    "password": { "type": "string" }
+                                },
+                                "required": ["email", "password"],
+                                "example": {
+                                    "username": "admin",
+                                    "password": "123456"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает токен авторизации"
+                    }
+                
+                }
+            }
+        },
+        "/api/battle/:attackCharId/attack/:defenceCharId/": { 
+            "patch": { 
+                "tags": ["Battle"],
+                "description": "Атаковать одним персонажем другого",
+                "parameters": [
+                    {
+                        "name": "attackCharId",
+                        "in": "formData",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "name": "defenceCharId",
+                        "in": "formData",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": { 
+                    "200": { 
+                        "description": "ММожет нанести рану или ввергнуть в шок"
+                    }
+                
+                }
+            }
+        },
+        "/api/characters/create/": { 
+            "post": { 
+                "tags": ["Characters"],
+                "description": "Создать персонажа",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "playerId": { "type": "number" },
+                                    "isWildCard": { "type": "boolean" }
+                                },
+                                "required": ["playerId"],
+                                "example": {
+                                    "playerId": 1,
+                                    "isWildCard": true
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает созданого персонажа"
+                    }
+                
+                }
+            }
+        },
+        "/api/characters/": { 
+            "get": {
+                "tags": ["Characters"],
+                "description": "Получить своеих персонажей",
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает персонажей игрока"
+                    }
+                
+                }
+            }
+        },
+        "/api/characters/:id": { 
+            "get": {
+                "tags": ["Characters"],
+                "description": "Получить персонажа по id",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "formData",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает персонажа"
+                    }
+                
+                }
+            }
+        },
+        "/api/characters/update/:id": { 
+            "patch": {
+                "tags": ["Characters"],
+                "description": "Обновить характеристики и описание персонажа",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "formData",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "weight": {
+                                        "type": "number"
+                                    },
+                                    "agility": {
+                                        "type": "number"
+                                    },
+                                    "smarts": {
+                                        "type": "number"
+                                    },
+                                    "spirit": {
+                                        "type": "number"
+                                    },
+                                    "strenght": {
+                                        "type": "number"
+                                    },
+                                    "vigor": {
+                                        "type": "number"
+                                    },
+                                    "pace": {
+                                        "type": "number"
+                                    },
+                                    "run": {
+                                        "type": "number"
+                                    },
+                                    "parry": {
+                                        "type": "number"
+                                    },
+                                    "toughness": {
+                                        "type": "number"
+                                    },
+                                    "armor": {
+                                        "type": "number"
+                                    },
+                                    "hp": {
+                                        "type": "number"
+                                    },
+                                    "wounds": {
+                                        "type": "number"
+                                    },
+                                    "fatigue": {
+                                        "type": "number"
+                                    },
+                                    "maxFatigue": {
+                                        "type": "number"
+                                    },
+                                    "isShaken": {
+                                        "type": "boolean"
+                                    },
+                                    "isDead": {
+                                        "type": "boolean"
+                                    },
+                                    "maxWeight": {
+                                        "type": "number"
+                                    },
+                                    "wildDice": {
+                                        "type": "number"
+                                    },
+                                    "advance": {
+                                        "type": "number"
+                                    },
+                                    "rank": {
+                                        "type": "string",
+                                        "enum": ["novice", "seasoner", "veteran", "heroic", "legendary"]
+                                    },
+                                    "isVisible": {
+                                        "type": "boolean"
+                                    },
+                                    "description": {
+                                        "type": "object",
+                                        "properties": {
+                                            "background": {
+                                                "type": "string"
+                                            },
+                                            "description": {
+                                                "type": "string"
+                                            },
+                                            "gender": {
+                                                "type": "string"
+                                            },
+                                            "age": {
+                                                "type": "string"
+                                            },
+                                            "height": {
+                                                "type": "number",
+                                                "format": "float"
+                                            },
+                                            "notes": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                },
+                                "example": {
+                                    "name": "Name",
+                                    "weight": 80,
+                                    "agility": 6,
+                                    "smarts": 8,
+                                    "spirit": 6,
+                                    "strenght": 8,
+                                    "vigor": 6,
+                                    "pace": 6,
+                                    "run": 12,
+                                    "parry": 6,
+                                    "toughness": 8,
+                                    "armor": 2,
+                                    "hp": 3,
+                                    "wounds": 0,
+                                    "fatigue": 0,
+                                    "maxFatigue": 3,
+                                    "isShaken": false,
+                                    "isDead": false,
+                                    "maxWeight": 100,
+                                    "wildDice": 1,
+                                    "advance": 0,
+                                    "rank": "Novice",
+                                    "isVisible": true,
+                                    "description": {
+                                        "background": "Orphaned at young age",
+                                        "description": "Brave warrior with scar on left cheek",
+                                        "gender": "Male",
+                                        "age": "32",
+                                        "height": 185.5,
+                                        "notes": "Allergic to potions"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                  },
+                "responses": { 
+                    "200": { 
+                        "description": "Изменяет персонажа"
+                    }
+                
+                }
+            }
+        },
+        "/api/characters/delete/:id": { 
+            "delete": {
+                "tags": ["Characters"],
+                "description": "Удалить персонажа",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "formData",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает сообщение об успешном удалении"
+                    }
+                }
+            }
+        },
+        "/api/characters/:charId/race/:raceId": { 
+            "patch": {
+                "tags": ["Characters"],
+                "description": "Изменить или добавить расу персонажу",
+                "parameters": [
+                    {
+                        "name": "charId",
+                        "in": "formData",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "name": "raceId",
+                        "in": "formData",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает сообщение об успехе"
+                    }
+                }
+            }
+        },
+        "/api/characters/:charId/visibility/:status": { 
+            "patch": {
+                "tags": ["Characters"],
+                "description": "Изменить видимость персонажа",
+                "parameters": [
+                    {
+                        "name": "charId",
+                        "in": "formData",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "name": "status",
+                        "in": "formData",
+                        "required": true,
+                        "type": "boolean"
+                    }
+                ],
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает сообщение об успехе"
+                    }
+                }
+            }
+        },
+        "/api/characters/:charId/items": { 
+            "post": {
+                "tags": ["Characters"],
+                "description": "Добавить предметы персонажу",
+                "parameters": [
+                    {
+                        "name": "charId",
+                        "in": "formData",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "array",
+                                "items": {
+                                    "type": "integer",
+                                    "format": "int32"
+                                },
+                                "example": [1, 2, 3, 4, 5]
+                            }
+                        }
+                    }
+                },
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает сообщение об успехе"
+                    }
+                }
+            }
+        },
+        "/api/characters/:charId/items/:itemId/status": { 
+            "patch": {
+                "tags": ["Characters"],
+                "description": "Изменить статус предмета персонажа",
+                "parameters": [
+                    {
+                        "name": "charId",
+                        "in": "formData",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "name": "itemId",
+                        "in": "formData",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "status": {
+                                        "type": "string",
+                                        "enum": ["moving", "equipped", "stored"]
+                                    }
+                                    
+                                },
+                                "required": ["status"],
+                                "example": {
+                                    "status": "moving"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает сообщение об успехе"
+                    }
+                }
+            }
+        },
+        "/api/characters/items/delete": { 
+            "delete": {
+                "tags": ["Characters"],
+                "description": "Удалить предметы персонажа. Принимает id из таблицы предметов Персонажа!",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "array",
+                                "items": {
+                                    "type": "integer",
+                                    "format": "int32"
+                                },
+                                "example": [1, 2, 3, 4, 5]
+                            }
+                        }
+                    }
+                },
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает сообщение об успехе"
+                    }
+                }
+            }
+        },
+        "/api/characters/:charId/effects": { 
+            "post": {
+                "tags": ["Characters"],
+                "description": "Добавить эффекты персонажу",
+                "parameters": [
+                    {
+                        "name": "charId",
+                        "in": "formData",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "array",
+                                "items": {
+                                    "type": "integer",
+                                    "format": "int32"
+                                },
+                                "example": [1, 2, 3, 4, 5]
+                            }
+                        }
+                    }
+                },
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает сообщение об успехе"
+                    }
+                }
+            }
+        },
+        "/api/characters/effects/delete": { 
+            "delete": {
+                "tags": ["Characters"],
+                "description": "Удалить эффекты персонажа. Принимает id из таблицы эффектов Персонажа!",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "array",
+                                "items": {
+                                    "type": "integer",
+                                    "format": "int32"
+                                },
+                                "example": [1, 2, 3, 4, 5]
+                            }
+                        }
+                    }
+                },
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает сообщение об успехе"
+                    }
+                }
+            }
+        },
+        "/api/characters/:charId/skills": { 
+            "post": {
+                "tags": ["Characters"],
+                "description": "Добавить навыки персонажу",
+                "parameters": [
+                    {
+                        "name": "charId",
+                        "in": "formData",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "array",
+                                "items": {
+                                    "type": "integer",
+                                    "format": "int32"
+                                },
+                                "example": [1, 2, 3, 4, 5]
+                            }
+                        }
+                    }
+                },
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает сообщение об успехе"
+                    }
+                }
+            }
+        },
+        "/api/characters/skills/:skillId/level/:level": { 
+            "patch": {
+                "tags": ["Characters"],
+                "description": "Изменить уровень навыка персонажа",
+                "parameters": [
+                    {
+                        "name": "charId",
+                        "in": "formData",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "name": "level",
+                        "in": "formData",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает сообщение об успехе"
+                    }
+                }
+            }
+        },
+        "/api/characters/skills/delete": { 
+            "delete": {
+                "tags": ["Characters"],
+                "description": "Удалить навыки персонажа. Принимает id из таблицы навыков Персонажа!",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "array",
+                                "items": {
+                                    "type": "integer",
+                                    "format": "int32"
+                                },
+                                "example": [1, 2, 3, 4, 5]
+                            }
+                        }
+                    }
+                },
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает сообщение об успехе"
+                    }
+                }
+            }
+        },
+        "/api/characters/:charId/edges": { 
+            "post": {
+                "tags": ["Characters"],
+                "description": "Добавить черты персонажу",
+                "parameters": [
+                    {
+                        "name": "charId",
+                        "in": "formData",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "array",
+                                "items": {
+                                    "type": "integer",
+                                    "format": "int32"
+                                },
+                                "example": [1, 2, 3, 4, 5]
+                            }
+                        }
+                    }
+                },
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает сообщение об успехе"
+                    }
+                }
+            }
+        },
+        "/api/characters/:charId/edges/delete": { 
+            "delete": {
+                "tags": ["Characters"],
+                "description": "Удалить черты персонажа. Принимает id из Черт!",
+                "parameters": [
+                    {
+                        "name": "charId",
+                        "in": "formData",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "array",
+                                "items": {
+                                    "type": "integer",
+                                    "format": "int32"
+                                },
+                                "example": [1, 2, 3, 4, 5]
+                            }
+                        }
+                    }
+                },
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает сообщение об успехе"
+                    }
+                }
+            }
+        },
+        "/api/characters/:charId/effects/attack": { 
+            "get": {
+                "tags": ["Characters"],
+                "description": "Вернуть список атакующих эффектов, связанных с персонажем",
+                "parameters": [
+                    {
+                        "name": "charId",
+                        "in": "formData",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает сообщение об успехе"
+                    }
+                }
+            }
+        },
+        "/api/characters/:charId/effects/defence": { 
+            "get": {
+                "tags": ["Characters"],
+                "description": "Вернуть список защищающих эффектов, связанных с персонажем",
+                "parameters": [
+                    {
+                        "name": "charId",
+                        "in": "formData",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает сообщение об успехе"
+                    }
+                }
+            }
+        },
+        "/api/characters/:charId/effects/uni": { 
+            "get": {
+                "tags": ["Characters"],
+                "description": "Вернуть список универсальных эффектов, связанных с персонажем",
+                "parameters": [
+                    {
+                        "name": "charId",
+                        "in": "formData",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает сообщение об успехе"
+                    }
+                }
+            }
+        },
+        "/api/edges/create": { 
+            "post": {
+                "tags": ["Edges"],
+                "description": "Создать новую черту",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "type": {
+                                        "type": "string",
+                                        "enum": ["edge", "hindrances", "raceEdge", "raceHindrances"]
+                                    }
+                                },
+                                "required": ["name", "type"],
+                                "example": {
+                                    "name": "Обояние",
+                                    "type": "edge"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает созданный объект"
+                    }
+                }
+            }
+        },
+        "/api/edges/": { 
+            "get": {
+                "tags": ["Edges"],
+                "description": "Получить список всех черт",
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает список объектов"
+                    }
+                }
+            }
+        },
+        "/api/edges/:id": { 
+            "get": {
+                "tags": ["Edges"],
+                "description": "Получить черту по id",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "formData",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает запрошенный объект"
+                    }
+                }
+            }
+        },
+        "/api/edges/update/:id": { 
+            "patch": {
+                "tags": ["Edges"],
+                "description": "Обновить черту",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "formData",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "type": {
+                                        "type": "string",
+                                        "enum": ["edge", "hindrances", "raceEdge", "raceHindrances"]
+                                    }
+                                },
+                                "example": {
+                                    "name": "Обояние",
+                                    "type": "edge"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает обновлённый объект"
+                    }
+                }
+            }
+        },
+        "/api/edges/delete/:id": { 
+            "patch": {
+                "tags": ["Edges"],
+                "description": "Удалить черту",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "formData",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает сообщение об успехе"
+                    }
+                }
+            }
+        },
+        "/api/edges/effects/give": { 
+            "post": {
+                "tags": ["Edges"],
+                "description": "Добавить эффекты для черты",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "entityId": {
+                                        "type": "integer",
+                                        "format": "int32"
+                                    },
+                                    "effectsId": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer",
+                                            "format": "int32"
+                                        }
+                                    }
+                                },
+                                "required": ["entityId", "effectsId"],
+                                "example": {
+                                    "entityId": 1,
+                                    "effectsId": [10, 20, 30]
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает сообщение об успехе"
+                    }
+                }
+            }
+        },
+        "/api/edges/effects/delete": { 
+            "post": {
+                "tags": ["Edges"],
+                "description": "Удалить эффекты для черты",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "entityId": {
+                                        "type": "integer",
+                                        "format": "int32"
+                                    },
+                                    "effectsId": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer",
+                                            "format": "int32"
+                                        }
+                                    }
+                                },
+                                "required": ["entityId", "effectsId"],
+                                "example": {
+                                    "entityId": 1,
+                                    "effectsId": [10, 20, 30]
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает сообщение об успехе"
+                    }
+                }
+            }
+        },
+        "/api/conditions/create": { 
+            "post": {
+                "tags": ["Conditions"],
+                "description": "Создать новое условие",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "type": {
+                                        "type": "string",
+                                        "enum": ["triggering", "effect", "ending"]
+                                    },
+                                    "targetType": {
+                                        "type": "string",
+                                        "enum": ["target", "self"]
+                                    },
+                                    "parameter": {
+                                        "type": "string"
+                                    },
+                                    "operand": {
+                                        "type": "string"
+                                    },
+                                    "value": {
+                                        "type": "string"
+                                    },
+                                    "effect": {
+                                        "type": "integer",
+                                        "format": "int32"
+                                    }
+                                },
+                                "required": ["type", "targetType", "parameter", "operand", "value", "effect"],
+                                "example": {
+                                    "type": "effect",
+                                    "targetType": "target",
+                                    "parameter": "health",
+                                    "operand": "add",
+                                    "value": "10",
+                                    "effect": 123
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает созданный объект"
+                    }
+                }
+            }
+        },
+        "/api/conditions/": { 
+            "get": {
+                "tags": ["Conditions"],
+                "description": "Получить список всех условий",
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает список объектов"
+                    }
+                }
+            }
+        },
+        "/api/conditions/:id": { 
+            "get": {
+                "tags": ["Conditions"],
+                "description": "Получить условие по id",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "formData",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает запрошенный объект"
+                    }
+                }
+            }
+        },
+        "/api/conditions/update/:id": { 
+            "patch": {
+                "tags": ["Conditions"],
+                "description": "Обновить условие",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "formData",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "type": {
+                                        "type": "string",
+                                        "enum": ["triggering", "effect", "ending"]
+                                    },
+                                    "targetType": {
+                                        "type": "string",
+                                        "enum": ["target", "self"]
+                                    },
+                                    "parameter": {
+                                        "type": "string"
+                                    },
+                                    "operand": {
+                                        "type": "string"
+                                    },
+                                    "value": {
+                                        "type": "string"
+                                    },
+                                    "effect": {
+                                        "type": "integer",
+                                        "format": "int32"
+                                    }
+                                },
+                                "example": {
+                                    "type": "effect",
+                                    "targetType": "target",
+                                    "parameter": "health",
+                                    "operand": "add",
+                                    "value": "10",
+                                    "effect": 123
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает обновлённый объект"
+                    }
+                }
+            }
+        },
+        "/api/conditions/delete/:id": { 
+            "patch": {
+                "tags": ["Conditions"],
+                "description": "Удалить условие",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "formData",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает сообщение об успехе"
+                    }
+                }
+            }
+        },
+        "/api/effects/create": { 
+            "post": {
+                "tags": ["Effects"],
+                "description": "Создать новый эффект",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "isPassive": {
+                                        "type": "boolean"
+                                    },
+                                    "isTemp": {
+                                        "type": "boolean"
+                                    },
+                                    "ActionTime": {
+                                        "type": "number",
+                                        "format": "int32"
+                                    },
+                                    "type": {
+                                        "type": "string",
+                                        "enum": ["attack", "defence", "universal"]
+                                    }
+                                },
+                                "required": ["name", "isTemp"],
+                                "example": {
+                                    "name": "Fire Shield",
+                                    "description": "Reduces fire damage by 50%",
+                                    "isPassive": false,
+                                    "isTemp": true,
+                                    "ActionTime": 2,
+                                    "type": "defence"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает созданный объект"
+                    }
+                }
+            }
+        },
+        "/api/effects/": { 
+            "get": {
+                "tags": ["Effects"],
+                "description": "Получить список всех эффектов",
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает список объектов"
+                    }
+                }
+            }
+        },
+        "/api/effects/:id": { 
+            "get": {
+                "tags": ["Effects"],
+                "description": "Получить условие по id",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "formData",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает запрошенный объект"
+                    }
+                }
+            }
+        },
+        "/api/effects/update/:id": { 
+            "patch": {
+                "tags": ["Effects"],
+                "description": "Обновить эффект",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "formData",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "isPassive": {
+                                        "type": "boolean"
+                                    },
+                                    "isTemp": {
+                                        "type": "boolean"
+                                    },
+                                    "ActionTime": {
+                                        "type": "number",
+                                        "format": "int32"
+                                    },
+                                    "type": {
+                                        "type": "string",
+                                        "enum": ["attack", "defence", "universal"]
+                                    }
+                                },
+                                "example": {
+                                    "name": "Fire Shield",
+                                    "description": "Reduces fire damage by 50%",
+                                    "isPassive": false,
+                                    "isTemp": true,
+                                    "ActionTime": 2,
+                                    "type": "defence"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает обновлённый объект"
+                    }
+                }
+            }
+        },
+        "/api/effects/delete/:id": { 
+            "patch": {
+                "tags": ["Effects"],
+                "description": "Удалить эффект",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "formData",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает сообщение об успехе"
+                    }
+                }
+            }
+        },
+        "/api/effects/:id/conditions": { 
+            "get": {
+                "tags": ["Effects"],
+                "description": "Получить условия эффекта",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "formData",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает список условий"
+                    }
+                }
+            }
+        },
+        "/api/items/create": { 
+            "post": {
+                "tags": ["Items"],
+                "description": "Создать новый предмет",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "type": {
+                                        "type": "string",
+                                        "enum": ["weapon", "armor", "equipment"]
+                                    },
+                                    "cost": {
+                                        "type": "number",
+                                        "format": "int32"
+                                    },
+                                    "weight": {
+                                        "type": "number",
+                                        "format": "float"
+                                    }
+                                },
+                                "required": ["name", "type"],
+                                "example": {
+                                    "name": "Health Potion",
+                                    "description": "Restores 50 HP",
+                                    "type": "weapon",
+                                    "cost": 25,
+                                    "weight": 0.5
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает созданный объект"
+                    }
+                }
+            }
+        },
+        "/api/items/": { 
+            "get": {
+                "tags": ["Items"],
+                "description": "Получить список всех предметов",
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает список объектов"
+                    }
+                }
+            }
+        },
+        "/api/items/:id": { 
+            "get": {
+                "tags": ["Items"],
+                "description": "Получить предмет по id",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "formData",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает запрошенный объект"
+                    }
+                }
+            }
+        },
+        "/api/items/update/:id": { 
+            "patch": {
+                "tags": ["Items"],
+                "description": "Обновить предмет",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "formData",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "type": {
+                                        "type": "string",
+                                        "enum": ["weapon", "armor", "equipment"]
+                                    },
+                                    "cost": {
+                                        "type": "number",
+                                        "format": "int32"
+                                    },
+                                    "weight": {
+                                        "type": "number",
+                                        "format": "float"
+                                    }
+                                },
+                                "example": {
+                                    "name": "Health Potion",
+                                    "description": "Restores 50 HP",
+                                    "type": "consumable",
+                                    "cost": 25,
+                                    "weight": 0.5
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает обновлённый объект"
+                    }
+                }
+            }
+        },
+        "/api/items/delete/:id": { 
+            "patch": {
+                "tags": ["Items"],
+                "description": "Удалить предмет",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "formData",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает сообщение об успехе"
+                    }
+                }
+            }
+        },
+        "/api/items/effects/give": { 
+            "post": {
+                "tags": ["Items"],
+                "description": "Добавить эффекты для предмета",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "entityId": {
+                                        "type": "integer",
+                                        "format": "int32"
+                                    },
+                                    "effectsId": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer",
+                                            "format": "int32"
+                                        }
+                                    }
+                                },
+                                "required": ["entityId", "effectsId"],
+                                "example": {
+                                    "entityId": 1,
+                                    "effectsId": [10, 20, 30]
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает сообщение об успехе"
+                    }
+                }
+            }
+        },
+        "/api/items/effects/delete": { 
+            "post": {
+                "tags": ["Items"],
+                "description": "Удалить эффекты для предмета",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "entityId": {
+                                        "type": "integer",
+                                        "format": "int32"
+                                    },
+                                    "effectsId": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer",
+                                            "format": "int32"
+                                        }
+                                    }
+                                },
+                                "required": ["entityId", "effectsId"],
+                                "example": {
+                                    "entityId": 1,
+                                    "effectsId": [10, 20, 30]
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает сообщение об успехе"
+                    }
+                }
+            }
+        },
+        "/api/races/create": { 
+            "post": {
+                "tags": ["Races"],
+                "description": "Создать новую расу",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": ["name"],
+                                "example": {
+                                    "name": "Example Item",
+                                    "description": "This is an example description"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает созданный объект"
+                    }
+                }
+            }
+        },
+        "/api/races/": { 
+            "get": {
+                "tags": ["Races"],
+                "description": "Получить список всех рас",
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает список объектов"
+                    }
+                }
+            }
+        },
+        "/api/races/:id": { 
+            "get": {
+                "tags": ["Races"],
+                "description": "Получить расу по id",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "formData",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает запрошенный объект"
+                    }
+                }
+            }
+        },
+        "/api/races/update/:id": { 
+            "patch": {
+                "tags": ["Races"],
+                "description": "Обновить расу",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "formData",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    }
+                                },
+                                "example": {
+                                    "name": "Example Item",
+                                    "description": "This is an example description"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает обновлённый объект"
+                    }
+                }
+            }
+        },
+        "/api/races/delete/:id": { 
+            "patch": {
+                "tags": ["Races"],
+                "description": "Удалить расу",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "formData",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает сообщение об успехе"
+                    }
+                }
+            }
+        },
+        "/api/races/effects/give": { 
+            "post": {
+                "tags": ["Races"],
+                "description": "Добавить черты для расы",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "entityId": {
+                                        "type": "integer",
+                                        "format": "int32"
+                                    },
+                                    "effectsId": {
+                                        "type": "array",
+                                        "races": {
+                                            "type": "integer",
+                                            "format": "int32"
+                                        }
+                                    }
+                                },
+                                "required": ["entityId", "effectsId"],
+                                "example": {
+                                    "entityId": 1,
+                                    "effectsId": [10, 20, 30]
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает сообщение об успехе"
+                    }
+                }
+            }
+        },
+        "/api/races/effects/delete": { 
+            "patch": {
+                "tags": ["Races"],
+                "description": "Удалить черты для расы",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "entityId": {
+                                        "type": "integer",
+                                        "format": "int32"
+                                    },
+                                    "effectsId": {
+                                        "type": "array",
+                                        "races": {
+                                            "type": "integer",
+                                            "format": "int32"
+                                        }
+                                    }
+                                },
+                                "required": ["entityId", "effectsId"],
+                                "example": {
+                                    "entityId": 1,
+                                    "effectsId": [10, 20, 30]
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает сообщение об успехе"
+                    }
+                }
+            }
+        },
+        "/api/skills/create": { 
+            "post": {
+                "tags": ["Skills"],
+                "description": "Создать новый навык",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "attribute": {
+                                        "type": "string",
+                                        "enum": ["agility", "smarts", "spirit", "strenght", "vigor"]
+                                    }
+                                },
+                                "required": ["name", "attribute"],
+                                "example": {
+                                    "name": "Example Item",
+                                    "description": "This is an example description"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает созданный объект"
+                    }
+                }
+            }
+        },
+        "/api/skills/": { 
+            "get": {
+                "tags": ["Skills"],
+                "description": "Получить список всех навыков",
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает список объектов"
+                    }
+                }
+            }
+        },
+        "/api/skills/:id": { 
+            "get": {
+                "tags": ["Skills"],
+                "description": "Получить навык по id",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "formData",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает запрошенный объект"
+                    }
+                }
+            }
+        },
+        "/api/skills/update/:id": { 
+            "patch": {
+                "tags": ["Skills"],
+                "description": "Обновить навык",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "formData",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "attribute": {
+                                        "type": "string",
+                                        "enum": ["agility", "smarts", "spirit", "strenght", "vigor"]
+                                    }
+                                },
+                                "example": {
+                                    "name": "Example Item",
+                                    "description": "This is an example description"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает обновлённый объект"
+                    }
+                }
+            }
+        },
+        "/api/skills/delete/:id": { 
+            "patch": {
+                "tags": ["Skills"],
+                "description": "Удалить навык",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "formData",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает сообщение об успехе"
+                    }
+                }
+            }
+        },
+        "/api/users/create": { 
+            "post": {
+                "tags": ["Users"],
+                "description": "Создать нового пользователя",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email"
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password"
+                                    }
+                                },
+                                "required": ["email", "name", "password"],
+                                "example": {
+                                    "email": "user@example.com",
+                                    "name": "John Doe",
+                                    "password": "securePassword123!"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает созданный объект"
+                    }
+                }
+            }
+        },
+        "/api/users/": { 
+            "get": {
+                "tags": ["Users"],
+                "description": "Получить список всех пользователей",
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает список объектов"
+                    }
+                }
+            }
+        },
+        "/api/users/:id": { 
+            "get": {
+                "tags": ["Users"],
+                "description": "Получить пользователя по id",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "formData",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает запрошенный объект"
+                    }
+                }
+            }
+        },
+        "/api/users/email/:email": { 
+            "get": {
+                "tags": ["Users"],
+                "description": "Получить пользователя по email",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "formData",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает запрошенный объект"
+                    }
+                }
+            }
+        },
+        "/api/users/update/:id": { 
+            "patch": {
+                "tags": ["Users"],
+                "description": "Обновить пользователя",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "formData",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email"
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password"
+                                    }
+                                },
+                                "example": {
+                                    "email": "user@example.com",
+                                    "name": "John Doe",
+                                    "password": "securePassword123!"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает обновлённый объект"
+                    }
+                }
+            }
+        },
+        "/api/users/delete/:id": { 
+            "patch": {
+                "tags": ["Users"],
+                "description": "Удалить пользователя",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "formData",
+                        "required": true,
+                        "type": "number"
+                    }
+                ],
+                "responses": { 
+                    "200": { 
+                        "description": "Возвращает сообщение об успехе"
+                    }
+                }
+            }
+        }
+    },
+    
+    
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT",
+                "description": "JWT токен в формате: Bearer <token>"
+            }
+        }
+    },
+    "tags": [
+        {
+          "name": "Characters",
+          "description": "Управление персонажами"
+        },
+        {
+          "name": "Authentication",
+          "description": "Авторизация"
+        },
+        {
+            "name": "Battle",
+            "description": "Управления сражениями"
+        },
+        {
+            "name": "Edges",
+            "description": "Управление чертами"
+        },
+        {
+            "name": "Conditions",
+            "description": "Управление условиями"
+        },
+        {
+            "name": "Effects",
+            "description": "Управление эффектами"
+        }
+        ,
+        {
+            "name": "Items",
+            "description": "Управление предметами"
+        },
+        {
+            "name": "Races",
+            "description": "Управление расами"
+        },
+        {
+            "name": "Skills",
+            "description": "Управление навыками"
+        },
+        {
+            "name": "Users",
+            "description": "Управление пользователями"
+        }
+    ]
+}

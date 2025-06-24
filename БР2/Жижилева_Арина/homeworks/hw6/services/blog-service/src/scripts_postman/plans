@@ -1,0 +1,21 @@
+#POST http://localhost:3000/workout-plans
+{
+  "title": "Summer Shred",
+  "description": "План для жиросжигания перед летом",
+  "level": "intermediate",
+  "duration_weeks": 6
+}
+
+#GET http://localhost:3000/workout-plans
+
+#GET http://localhost:3000/workout-plans/1
+
+#PUT http://localhost:3000/workout-plans/1
+{
+  "title": "Summer Shred - Advanced",
+  "description": "Теперь с повышенной нагрузкой!",
+  "level": "advanced",
+  "duration_weeks": 8
+}
+
+#DELETE http://localhost:3000/workout-plans/1
