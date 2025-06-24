@@ -1,0 +1,131 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         Int      @id @default(autoincrement())
+  email      String   @unique
+  password   String
+  role       Role     @default(USER)
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now()) @updatedAt
+
+  company      Company?
+  resume       Resume?
+  applications Application[]
+}
+
+enum Role {
+  ADMIN
+  USER
+  MODERATOR
+  GUEST
+}
+
+enum ApplicationStatus {
+  pending
+  accepted
+  rejected
+}
+
+model Industry {
+  id        Int       @id @default(autoincrement())
+  name      String
+  companies Company[]
+  vacancies Vacancy[]
+}
+
+model Company {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String?
+  website     String?
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+
+  user_id Int  @unique
+  user    User @relation(fields: [user_id], references: [id])
+
+  industry_id Int?
+  industry    Industry? @relation(fields: [industry_id], references: [id])
+
+  vacancies Vacancy[]
+}
+
+model Resume {
+  id                  Int      @id @default(autoincrement())
+  title               String
+  experience_summary  String?
+  salary_expectations Float?
+  skills              String?
+  created_at          DateTime @default(now())
+  updated_at          DateTime @updatedAt
+
+  user_id Int  @unique
+  user    User @relation(fields: [user_id], references: [id])
+
+  work_experiences WorkExperience[]
+  educations       Education[]
+}
+
+model WorkExperience {
+  id           Int       @id @default(autoincrement())
+  company_name String
+  position     String
+  start_date   DateTime
+  end_date     DateTime?
+  description  String?
+  resume_id    Int
+  resume       Resume    @relation(fields: [resume_id], references: [id])
+}
+
+model Education {
+  id             Int       @id @default(autoincrement())
+  institution    String
+  degree         String
+  field_of_study String?
+  start_date     DateTime
+  end_date       DateTime?
+
+  resume_id Int
+  resume    Resume @relation(fields: [resume_id], references: [id])
+}
+
+model Vacancy {
+  id           Int      @id @default(autoincrement())
+  title        String
+  description  String?
+  requirements String?
+  salary_from  Float?
+  salary_to    Float?
+  experience   String?
+  created_at   DateTime @default(now())
+  updated_at   DateTime @updatedAt
+
+  company_id Int
+  company    Company @relation(fields: [company_id], references: [id])
+
+  industry_id Int?
+  industry    Industry? @relation(fields: [industry_id], references: [id])
+
+  applications Application[]
+}
+
+model Application {
+  id         Int               @id @default(autoincrement())
+  message    String?
+  status     ApplicationStatus @default(pending)
+  created_at DateTime          @default(now())
+  updated_at DateTime          @updatedAt
+
+  user_id Int
+  user    User @relation(fields: [user_id], references: [id])
+
+  vacancy_id Int
+  vacancy    Vacancy @relation(fields: [vacancy_id], references: [id])
+}

@@ -1,0 +1,24 @@
+POST http://localhost:3000/measurements
+{
+  "user": {
+    "user_id": 1
+  },
+  "weight": 70.5,
+  "height": 175.2,
+  "date": "2025-04-28",
+  "notes": "Первое измерение"
+}
+
+GET http://localhost:3000/measurements
+
+GET http://localhost:3000/measurements/1
+
+PUT http://localhost:3000/measurements/1
+{
+  "weight": 71.2,
+  "height": 175.2,
+  "date": "2025-04-29",
+  "notes": "Немного прибавил в весе"
+}
+
+DELETE http://localhost:3000/measurements/1

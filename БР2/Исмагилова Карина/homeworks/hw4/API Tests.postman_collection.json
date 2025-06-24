@@ -1,0 +1,504 @@
+{
+	"info": {
+		"_postman_id": "3a82fc94-a690-4e5d-961a-4455e8f488c0",
+		"name": "API Tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "39672564",
+		"_collection_link": "https://orange-meteor-831540.postman.co/workspace/recipe~72192e64-7498-41e8-b2bf-90655029049d/collection/39672564-3a82fc94-a690-4e5d-961a-4455e8f488c0?action=share&source=collection_link&creator=39672564"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"Статус ответа — 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ответ — JSON\", function () {\r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Ответ содержит токен\", function () {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property(\"token\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"const jsonData = pm.response.json();\r",
+							"pm.environment.set(\"token\", jsonData.token);\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoyLCJlbWFpbCI6IkFubmFAZXhhbXBsZS5jb20ifSwiaWF0IjoxNzQ3OTAxNzIxLCJleHAiOjE3NDc5MDUzMjF9.Uk5vDI66ORKOoMXJgTNsUSfD9RAUVjxwMO0CopgIqt8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"Anna@example.com\",\r\n  \"password\": \"securePassword123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update recipe",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус код — 200 OK\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ответ — JSON\", function () {\r",
+							"    pm.response.to.be.withBody;\r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							"\r",
+							"\r",
+							"const updatedFields = request.data ? JSON.parse(request.data) : {};\r",
+							"const responseData = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Проверка обновлённых полей\", function () {\r",
+							"    for (let key in updatedFields) {\r",
+							"        pm.expect(responseData[key]).to.eql(updatedFields[key]);\r",
+							"    }\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Ответ содержит ID рецепта\", function () {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property(\"recipe_id\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"console.log(\"Ответ от сервера:\", pm.response.json());\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoyLCJlbWFpbCI6IkFubmFAZXhhbXBsZS5jb20ifSwiaWF0IjoxNzQ3OTAyNTM2LCJleHAiOjE3NDc5MDYxMzZ9.9mqrB7InluI2pgNizGPu5G8B9e8c77YvONkfwdtBTts",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"title\": \"Шоколадный торт\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/recipes/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"recipes",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create recipe",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"Статус код — 201 Created\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Ответ — JSON\", function () {\r",
+							"    pm.response.to.be.withBody;\r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ответ содержит данные, отправленные при создании рецепта\", function () {\r",
+							"    let requestData = {};\r",
+							"    try {\r",
+							"        requestData = JSON.parse(pm.request.body.raw);\r",
+							"    } catch (e) {\r",
+							"        console.warn(\"Не удалось распарсить тело запроса:\", e);\r",
+							"    }\r",
+							"\r",
+							"    const responseData = pm.response.json();\r",
+							"\r",
+							"    for (const key in requestData) {\r",
+							"        pm.expect(responseData[key], `Поле '${key}' должно совпадать`).to.eql(requestData[key]);\r",
+							"    }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoyLCJlbWFpbCI6IkFubmFAZXhhbXBsZS5jb20ifSwiaWF0IjoxNzQ3OTAyNTM2LCJleHAiOjE3NDc5MDYxMzZ9.9mqrB7InluI2pgNizGPu5G8B9e8c77YvONkfwdtBTts",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"title\": \"Яблочный пирог\",\r\n  \"description\": \"Классический ароматный пирог с сочными яблоками и корицей.\",\r\n  \"ingredients\": \"Мука, яйца, сахар, сливочное масло, яблоки, корица, разрыхлитель\",\r\n  \"instructions\": \"1. Нарезать яблоки\\n2. Приготовить тесто\\n3. Выложить яблоки в форму\\n4. Залить тестом и выпекать при 180°С 40 минут\",\r\n  \"difficulty_level\": \"легкий\",\r\n  \"preparation_time\": 60\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/recipes/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"recipes",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create comments",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус код — 201 Created\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ответ — JSON\", function () {\r",
+							"    pm.response.to.be.withBody;\r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Комментарий прикреплён к нужному рецепту\", function () {\r",
+							"    const requestData = JSON.parse(pm.request.body.raw);\r",
+							"    const responseData = pm.response.json();\r",
+							"\r",
+							"    pm.expect(responseData).to.have.property(\"recipe\");\r",
+							"    pm.expect(responseData.recipe).to.have.property(\"recipe_id\");\r",
+							"    pm.expect(responseData.recipe.recipe_id).to.eql(requestData.recipe_id);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoyLCJlbWFpbCI6IkFubmFAZXhhbXBsZS5jb20ifSwiaWF0IjoxNzQ3OTAyNTM2LCJleHAiOjE3NDc5MDYxMzZ9.9mqrB7InluI2pgNizGPu5G8B9e8c77YvONkfwdtBTts",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"recipe_id\": 1,\r\n  \"text\": \"This is a great recipe! Loved it.\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/comments",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"comments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "All recipes",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"Статус код — 200 OK\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ответ — JSON и содержит тело\", function () {\r",
+							"    pm.response.to.be.withBody;\r",
+							"    pm.response.to.be.json;\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ответ содержит массив рецептов\", function () {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an(\"array\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Каждый рецепт содержит обязательные поля\", function () {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    \r",
+							"    jsonData.forEach(recipe => {\r",
+							"        pm.expect(recipe).to.have.property(\"title\");\r",
+							"        pm.expect(recipe).to.have.property(\"description\");\r",
+							"        pm.expect(recipe).to.have.property(\"ingredients\");\r",
+							"        pm.expect(recipe).to.have.property(\"instructions\");\r",
+							"        pm.expect(recipe).to.have.property(\"difficulty_level\");\r",
+							"        pm.expect(recipe).to.have.property(\"preparation_time\");\r",
+							"    });\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoyLCJlbWFpbCI6IkFubmFAZXhhbXBsZS5jb20ifSwiaWF0IjoxNzQ3OTAyNTM2LCJleHAiOjE3NDc5MDYxMzZ9.9mqrB7InluI2pgNizGPu5G8B9e8c77YvONkfwdtBTts",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/recipes/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"recipes",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete comment",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус код — 200 OK или 204 No Content\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 204]);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ответ содержит поле affected и оно равно 1\", function () {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property(\"affected\");\r",
+							"    pm.expect(jsonData.affected).to.eql(1);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoyLCJlbWFpbCI6IkFubmFAZXhhbXBsZS5jb20ifSwiaWF0IjoxNzQ3OTA0NTU5LCJleHAiOjE3NDc5MDgxNTl9.XprvrbWACIP4US0abUIAVptTtH2f7uNh51lVYnMA7zc",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/comments/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"comments",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get certain file",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Статус код — 200 OK\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Ответ содержит необходимые поля файла\", function () {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property(\"file_path\");\r",
+							"    pm.expect(jsonData).to.have.property(\"user\");\r",
+							"    pm.expect(jsonData.user).to.have.property(\"user_id\");\r",
+							"    pm.expect(jsonData).to.have.property(\"article\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Проверка пользователя\", function () {\r",
+							"    const user = pm.response.json().user;\r",
+							"    pm.expect(user).to.have.property(\"username\");\r",
+							"    pm.expect(user).to.have.property(\"email\");\r",
+							"    pm.expect(user).to.have.property(\"bio\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Проверка статьи (если есть)\", function () {\r",
+							"    const article = pm.response.json().article;\r",
+							"    if (article !== null) {\r",
+							"        pm.expect(article).to.have.property(\"article_id\");\r",
+							"        pm.expect(article).to.have.property(\"title\");\r",
+							"        pm.expect(article).to.have.property(\"content\");\r",
+							"    }\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/files/7",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"files",
+						"7"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

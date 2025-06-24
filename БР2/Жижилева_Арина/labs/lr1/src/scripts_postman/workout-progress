@@ -1,0 +1,11 @@
+#POST http://localhost:3000/workout-progress
+{
+  "user": {
+    "user_id": 3
+  },
+  "workout": {
+    "workout_id": 1
+  },
+  "date": "2025-04-30T14:30:00.000Z",
+  "status": "Done"
+}

@@ -1,0 +1,26 @@
+{
+  "entryFile": "src/app.ts",
+  "noImplicitAdditionalProperties": "silently-remove-extras",
+  "controllerPathGlobs": ["src/controllers/*.ts"],
+  "spec": {
+    "outputDirectory": ".",
+    "specVersion": 3,
+    "basePath": "/api",
+    "components": {
+      "securitySchemes": {
+        "bearerAuth": {
+          "type": "http",
+          "scheme": "bearer",
+          "bearerFormat": "JWT",
+          "description": "Enter your JWT token as `Bearer <token>`"
+        }
+      }
+    }
+  },
+  "routes": {
+    "routesDir": "src",
+    "basePath": "/api",
+    "middleware": "express",
+    "authenticationModule": "src/middlewares/auth.ts"
+  }
+}

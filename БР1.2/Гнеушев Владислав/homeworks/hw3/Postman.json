@@ -1,0 +1,609 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "Headhunter Competitor API",
+      "version": "1.0.0",
+      "description": "API documentation",
+      "contact": {
+        "name": "Gneushev Vladislav",
+        "email": "vladgneushev@gmail.com"
+      }
+    },
+    "servers": [
+      {
+        "url": "http://localhost:8080",
+        "description": "Development server"
+      }
+    ],
+    "externalDocs": {
+      "description": "swagger.json",
+      "url": "/swagger.json"
+    },
+    "paths": {
+      "/api/companies": {
+        "get": {
+          "tags": [
+            "Companies"
+          ],
+          "summary": "List all companies"
+        },
+        "post": {
+          "tags": [
+            "Companies"
+          ],
+          "summary": "Create company"
+        }
+      },
+      "/api/companies/employer/{employerId}": {
+        "get": {
+          "tags": [
+            "Companies"
+          ],
+          "summary": "Get companies by employer ID",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "employerId",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ]
+        }
+      },
+      "/api/companies/{id}": {
+        "get": {
+          "tags": [
+            "Companies"
+          ],
+          "summary": "Get company details",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ]
+        },
+        "put": {
+          "tags": [
+            "Companies"
+          ],
+          "summary": "Update company",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ]
+        },
+        "delete": {
+          "tags": [
+            "Companies"
+          ],
+          "summary": "Delete company",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ]
+        }
+      },
+      "/api/employee-cabinets": {
+        "get": {
+          "tags": [
+            "Employee Cabinets"
+          ],
+          "summary": "List all employee cabinets"
+        },
+        "post": {
+          "tags": [
+            "Employee Cabinets"
+          ],
+          "summary": "Create employee cabinet"
+        }
+      },
+      "/api/employee-cabinets/user/{userId}": {
+        "get": {
+          "tags": [
+            "Employee Cabinets"
+          ],
+          "summary": "Get employee cabinet by user ID",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "userId",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ]
+        }
+      },
+      "/api/employee-cabinets/{id}": {
+        "get": {
+          "tags": [
+            "Employee Cabinets"
+          ],
+          "summary": "Get employee cabinet details",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ]
+        },
+        "put": {
+          "tags": [
+            "Employee Cabinets"
+          ],
+          "summary": "Update employee cabinet",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ]
+        },
+        "delete": {
+          "tags": [
+            "Employee Cabinets"
+          ],
+          "summary": "Delete employee cabinet",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ]
+        }
+      },
+      "/api/employer-cabinets": {
+        "get": {
+          "tags": [
+            "Employer Cabinets"
+          ],
+          "summary": "List all employer cabinets"
+        },
+        "post": {
+          "tags": [
+            "Employer Cabinets"
+          ],
+          "summary": "Create employer cabinet"
+        }
+      },
+      "/api/employer-cabinets/user/{userId}": {
+        "get": {
+          "tags": [
+            "Employer Cabinets"
+          ],
+          "summary": "Get employer cabinet by user ID",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "userId",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ]
+        }
+      },
+      "/api/employer-cabinets/{id}": {
+        "get": {
+          "tags": [
+            "Employer Cabinets"
+          ],
+          "summary": "Get employer cabinet details",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ]
+        },
+        "put": {
+          "tags": [
+            "Employer Cabinets"
+          ],
+          "summary": "Update employer cabinet",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ]
+        },
+        "delete": {
+          "tags": [
+            "Employer Cabinets"
+          ],
+          "summary": "Delete employer cabinet",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ]
+        }
+      },
+      "/api/job-categories": {
+        "get": {
+          "tags": [
+            "Job Categories"
+          ],
+          "summary": "List all job categories"
+        },
+        "post": {
+          "tags": [
+            "Job Categories"
+          ],
+          "summary": "Create job category"
+        }
+      },
+      "/api/job-categories/{id}": {
+        "get": {
+          "tags": [
+            "Job Categories"
+          ],
+          "summary": "Get job category details",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ]
+        },
+        "put": {
+          "tags": [
+            "Job Categories"
+          ],
+          "summary": "Update job category",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ]
+        },
+        "delete": {
+          "tags": [
+            "Job Categories"
+          ],
+          "summary": "Delete job category",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ]
+        }
+      },
+      "/api/job-offers": {
+        "get": {
+          "tags": [
+            "Job Offers"
+          ],
+          "summary": "List all job offers"
+        },
+        "post": {
+          "tags": [
+            "Job Offers"
+          ],
+          "summary": "Create job offer"
+        }
+      },
+      "/api/job-offers/company/{companyId}": {
+        "get": {
+          "tags": [
+            "Job Offers"
+          ],
+          "summary": "Get job offers by company ID",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "companyId",
+              "required": true,
+              "schema": {
+                "type": "integer"
+              },
+              "description": "The ID of the company"
+            }
+          ]
+        }
+      },
+      "/api/job-offers/category/{categoryId}": {
+        "get": {
+          "tags": [
+            "Job Offers"
+          ],
+          "summary": "Get job offers by category ID",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "categoryId",
+              "required": true,
+              "schema": {
+                "type": "integer"
+              },
+              "description": "The ID of the job category"
+            }
+          ]
+        }
+      },
+      "/api/job-offers/{id}": {
+        "get": {
+          "tags": [
+            "Job Offers"
+          ],
+          "summary": "Get job offer details",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "schema": {
+                "type": "integer"
+              },
+              "description": "The ID of the job offer"
+            }
+          ]
+        },
+        "put": {
+          "tags": [
+            "Job Offers"
+          ],
+          "summary": "Update job offer",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "schema": {
+                "type": "integer"
+              },
+              "description": "The ID of the job offer to update"
+            }
+          ]
+        },
+        "delete": {
+          "tags": [
+            "Job Offers"
+          ],
+          "summary": "Delete job offer",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "schema": {
+                "type": "integer"
+              },
+              "description": "The ID of the job offer to delete"
+            }
+          ]
+        }
+      },
+      "/api/resumes": {
+        "get": {
+          "tags": [
+            "Resumes"
+          ],
+          "summary": "List all resumes"
+        },
+        "post": {
+          "tags": [
+            "Resumes"
+          ],
+          "summary": "Create resume"
+        }
+      },
+      "/api/resumes/employee/{employeeId}": {
+        "get": {
+          "tags": [
+            "Resumes"
+          ],
+          "summary": "Get resumes by employee ID",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "employeeId",
+              "required": true,
+              "schema": {
+                "type": "integer"
+              },
+              "description": "The ID of the employee"
+            }
+          ]
+        }
+      },
+      "/api/resumes/{id}": {
+        "get": {
+          "tags": [
+            "Resumes"
+          ],
+          "summary": "Get resume details",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "schema": {
+                "type": "integer"
+              },
+              "description": "The ID of the resume"
+            }
+          ]
+        },
+        "put": {
+          "tags": [
+            "Resumes"
+          ],
+          "summary": "Update resume",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "schema": {
+                "type": "integer"
+              },
+              "description": "The ID of the resume to update"
+            }
+          ]
+        },
+        "delete": {
+          "tags": [
+            "Resumes"
+          ],
+          "summary": "Delete resume",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "schema": {
+                "type": "integer"
+              },
+              "description": "The ID of the resume to delete"
+            }
+          ]
+        }
+      },
+      "/api/skills": {
+        "get": {
+          "tags": [
+            "Skills"
+          ],
+          "summary": "List all skills"
+        },
+        "post": {
+          "tags": [
+            "Skills"
+          ],
+          "summary": "Create skill"
+        }
+      },
+      "/api/skills/{id}": {
+        "get": {
+          "tags": [
+            "Skills"
+          ],
+          "summary": "Get skill details",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "schema": {
+                "type": "integer"
+              },
+              "description": "The ID of the skill"
+            }
+          ]
+        },
+        "put": {
+          "tags": [
+            "Skills"
+          ],
+          "summary": "Update skill",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "schema": {
+                "type": "integer"
+              },
+              "description": "The ID of the skill to update"
+            }
+          ]
+        },
+        "delete": {
+          "tags": [
+            "Skills"
+          ],
+          "summary": "Delete skill",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "schema": {
+                "type": "integer"
+              },
+              "description": "The ID of the skill to delete"
+            }
+          ]
+        }
+      },
+      "/api/users/register": {
+        "post": {
+          "tags": [
+            "Users"
+          ],
+          "summary": "Register new user"
+        }
+      },
+      "/api/users/login": {
+        "post": {
+          "tags": [
+            "Users"
+          ],
+          "summary": "Login user"
+        }
+      }
+    },
+    "tags": []
+  }
